@@ -61,13 +61,26 @@ function TimelineSection({
   );
 }
 
+/* ─── Play Icon SVG ─── */
+function PlayIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M5.33 3.33L12 8L5.33 12.67V3.33Z" fill="white" />
+    </svg>
+  );
+}
+
 /* ─── Streak Bar ─── */
 function StreakBar({
-  playerRanges,
-  opponentRanges,
+  playerLabel,
+  opponentLabel,
+  onClickPlayer,
+  onClickOpponent,
 }: {
-  playerRanges: { label: string; widthPct: number }[];
-  opponentRanges: { label: string; widthPct: number }[];
+  playerLabel: string;
+  opponentLabel: string;
+  onClickPlayer?: () => void;
+  onClickOpponent?: () => void;
 }) {
   return (
     <div className="flex flex-col gap-6 p-1 w-full">
@@ -78,22 +91,28 @@ function StreakBar({
 
       {/* Bar track */}
       <div className="relative h-[31px] w-full rounded bg-[#eee]">
-        {playerRanges.map((r, i) => (
-          <div key={`p-${i}`} className="absolute flex flex-col gap-0.5 items-center" style={{ left: `${i * 25 + 22}%`, top: -21, width: `${r.widthPct}%` }}>
-            <span className="text-xs font-medium text-[#2990fd] leading-[1.6] text-center w-full">{r.label}</span>
-            <div className="bg-[#3e95f3] border border-[#111d69] h-8 rounded w-full flex items-center justify-center">
-              <svg width="8" height="10" viewBox="0 0 8 10" fill="white"><path d="M1 1l6 4-6 4V1z" /></svg>
-            </div>
-          </div>
-        ))}
-        {opponentRanges.map((r, i) => (
-          <div key={`o-${i}`} className="absolute flex flex-col gap-0.5 items-center" style={{ left: `${i * 30 + 46}%`, top: 0, width: `${r.widthPct}%` }}>
-            <div className="bg-[#f5364d] border border-[#a22618] h-8 rounded w-full flex items-center justify-center">
-              <svg width="8" height="10" viewBox="0 0 8 10" fill="white"><path d="M1 1l6 4-6 4V1z" /></svg>
-            </div>
-            <span className="text-xs font-medium text-[#f5364d] leading-[1.6] text-center w-full">{r.label}</span>
-          </div>
-        ))}
+        {/* Player streak block */}
+        <div className="absolute flex flex-col gap-0.5 items-center" style={{ left: "30%", top: -21, width: "22%" }}>
+          <span className="text-xs font-medium text-[#2990fd] leading-[1.6] text-center w-full">{playerLabel}</span>
+          <button
+            type="button"
+            onClick={onClickPlayer}
+            className="bg-[#3e95f3] border border-[#111d69] h-8 rounded w-full flex items-center justify-center cursor-pointer active:opacity-80"
+          >
+            <PlayIcon />
+          </button>
+        </div>
+        {/* Opponent streak blocks */}
+        <div className="absolute flex flex-col gap-0.5 items-center" style={{ left: "52%", top: 0, width: "24%" }}>
+          <button
+            type="button"
+            onClick={onClickOpponent}
+            className="bg-[#f5364d] border border-[#a22618] h-8 rounded w-full flex items-center justify-center cursor-pointer active:opacity-80"
+          >
+            <PlayIcon />
+          </button>
+          <span className="text-xs font-medium text-[#f5364d] leading-[1.6] text-center w-full">{opponentLabel}</span>
+        </div>
       </div>
 
       {/* Opp label */}
@@ -137,14 +156,12 @@ function TriggerShotCard({
   return (
     <div className="bg-[var(--bg-elv-1,#fafafa)] border border-[var(--stroke-st-elv1,#f5f5f5)] flex flex-col gap-3 p-2 rounded-lg w-full">
       <div className="flex flex-col gap-2 w-full">
-        {/* Badge */}
         <div
           className="flex items-center justify-center px-2 py-0.5 rounded w-fit border"
           style={{ backgroundColor: badgeBg, borderColor: badgeBorder }}
         >
           <span className="text-xs font-medium" style={{ color: badgeColor }}>{badge}</span>
         </div>
-        {/* Shot name + eff arrow */}
         <div className="flex flex-col gap-1 w-full">
           <div className="flex items-center justify-between w-full">
             <span className="text-sm font-semibold text-[var(--text-heading,#161616)] tracking-[-0.5px]">
@@ -154,7 +171,6 @@ function TriggerShotCard({
               <span className="text-xs font-semibold" style={{ color: normalEffColor }}>
                 {normalEff}
               </span>
-              {/* Arrow → */}
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M3.33 8h9.34" stroke={arrowColor} strokeWidth="1.5" strokeLinecap="round" />
                 <path d="M8.67 4L12.67 8L8.67 12" stroke={arrowColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -233,6 +249,16 @@ export function DynamicsTab({ report, narrative, analysisView = "your", onOpenVi
   const narr = narrative.section_narratives.pressure_dynamics;
   const pp = md.pressure_profile;
 
+  const openStreakVideo = (tp: { moment: string; insight: string; evidence?: { rally_frames: number[] | null } }) => {
+    if (!onOpenVideo) return;
+    onOpenVideo({
+      title: tp.moment,
+      description: tp.insight,
+      timestamps: tp.evidence?.rally_frames?.map((f: number) => f / 30) ?? [],
+      sectionLabel: "STREAKS",
+    });
+  };
+
   return (
     <div className="bg-white w-full overflow-auto">
       <div className="flex flex-col gap-8 px-4 pt-[18px] pb-[141px]">
@@ -247,40 +273,32 @@ export function DynamicsTab({ report, narrative, analysisView = "your", onOpenVi
           {/* 1. STREAKS */}
           <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="STREAKS">
             <div className="flex flex-col gap-3 w-full">
-              {narr.turning_points && narr.turning_points.map((tp: { moment: string; insight: string; evidence?: { rally_frames: number[] | null; trigger_shot: string | null; impact_score: number } }, i: number) => (
-                <div key={i} className="bg-[var(--bg-elv-1,#fafafa)] border border-[var(--stroke-st-elv1,#f5f5f5)] flex flex-col gap-4 p-2 rounded-lg w-full">
-                  <div className="flex flex-col gap-2 w-full">
+              {narr.turning_points && narr.turning_points.map((tp: { moment: string; insight: string; evidence?: { rally_frames: number[] | null; trigger_shot: string | null; impact_score: number } }, i: number) => {
+                const scoreBefore = tp.moment.match(/from (\S+)/)?.[1] ?? "";
+                const scoreAfter = tp.moment.match(/to (\S+)/)?.[1] ?? "";
+                const gameLabel = tp.moment.includes("Game") ? tp.moment.split(",")[0] : `Game ${i + 1}`;
+
+                return (
+                  <div key={i} className="bg-[var(--bg-elv-2,#f6f6f6)] border border-[var(--stroke-st-elv2,#eee)] flex flex-col gap-4 p-2 rounded-lg shadow-[0px_4px_7.8px_0px_rgba(186,186,186,0.25)] w-full">
                     <div className="flex flex-col gap-1 w-full">
-                      <span className="text-sm font-semibold text-[var(--text-heading,#161616)] tracking-[-0.5px]">
-                        {tp.moment.includes("Game") ? tp.moment.split(",")[0] : `Game ${i + 1}`}
+                      <span className="text-lg font-semibold text-[var(--text-heading,#161616)] tracking-[-1px] leading-[1.2]">
+                        {gameLabel}
                       </span>
-                      <p className="text-xs font-normal text-[var(--text-subtext,#6d6d6d)] leading-[1.6] w-full">
+                      <p className="text-sm font-normal text-[var(--text-subtext,#6d6d6d)] leading-[1.4] w-full">
                         {tp.insight}
                       </p>
                     </div>
-                  </div>
 
-                  {/* Streak visualization bar */}
-                  <StreakBar
-                    playerRanges={[{ label: tp.moment.match(/from (\S+)/)?.[1] ?? "", widthPct: 23 }]}
-                    opponentRanges={[{ label: tp.moment.match(/to (\S+)/)?.[1] ?? "", widthPct: 26 }]}
-                  />
-
-                  {onOpenVideo && (
-                    <ViewButton
-                      label="View Streak"
-                      onClick={() =>
-                        onOpenVideo({
-                          title: tp.moment,
-                          description: tp.insight,
-                          timestamps: tp.evidence?.rally_frames?.map((f: number) => f / 30) ?? [],
-                          sectionLabel: "STREAKS",
-                        })
-                      }
+                    {/* Streak visualization bar — play buttons open video sheet */}
+                    <StreakBar
+                      playerLabel={scoreBefore}
+                      opponentLabel={scoreAfter}
+                      onClickPlayer={() => openStreakVideo(tp)}
+                      onClickOpponent={() => openStreakVideo(tp)}
                     />
-                  )}
-                </div>
-              ))}
+                  </div>
+                );
+              })}
               {(!narr.turning_points || narr.turning_points.length === 0) && (
                 <p className="text-xs text-[var(--text-subtext,#6d6d6d)]">No significant streaks identified.</p>
               )}
@@ -290,56 +308,48 @@ export function DynamicsTab({ report, narrative, analysisView = "your", onOpenVi
           {/* 2. TRIGGER SHOTS */}
           <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="TRIGGER SHOTS">
             <div className="flex flex-col gap-3 w-full">
-              {/* Insight text */}
               {narr.rally_level_turning_points_insight && (
                 <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full">
                   {narr.rally_level_turning_points_insight}
                 </p>
               )}
 
-              {/* Positive trigger shots (clutch) */}
-              {pp.clutch_shots.map((s: any, i: number) => {
-                const evidenceFrames = s.crucial_example ? [s.crucial_example.rally_id] : [];
-                return (
-                  <TriggerShotCard
-                    key={`clutch-${i}`}
-                    badge="Positive trigger shot"
-                    badgeBg="rgba(117, 235, 62, 0.19)"
-                    badgeBorder="#bdf6c0"
-                    badgeColor="#359707"
-                    shotName={formatStroke(s.stroke)}
-                    normalEff={`${s.normal_eff?.toFixed(0) ?? s.crucial_eff?.toFixed(0)}% Eff.`}
-                    normalEffColor="#2dbd1a"
-                    pressureEff={`${s.crucial_eff?.toFixed(0) ?? "—"}% Eff.`}
-                    pressureEffColor="#2dbd1a"
-                    arrowColor="#2dbd1a"
-                    description={
-                      narr.clutch_shots?.find((c: any) => (c.shot || "").replace(/_/g, " ").toLowerCase() === s.stroke.replace(/_/g, " ").toLowerCase())?.insight
-                      ?? `Effectiveness jumps from ${s.normal_eff?.toFixed(0)}% to ${s.crucial_eff?.toFixed(0)}% under pressure.`
-                    }
-                    buttonLabel={`View ${formatStroke(s.stroke)}`}
-                    onClickView={
-                      onOpenVideo
-                        ? () =>
-                            onOpenVideo({
-                              title: formatStroke(s.stroke),
-                              subtitle: `+${s.delta.toFixed(1)} delta`,
-                              description: `${s.n_crucial} crucial shots under pressure with elevated effectiveness.`,
-                              timestamps: evidenceFrames.length > 0 ? [s.crucial_example?.effectiveness ?? 0] : [],
-                              sectionLabel: "TRIGGER SHOTS",
-                            })
-                        : undefined
-                    }
-                  />
-                );
-              })}
+              {pp.clutch_shots.map((s: any, i: number) => (
+                <TriggerShotCard
+                  key={`clutch-${i}`}
+                  badge="Positive trigger shot"
+                  badgeBg="rgba(117, 235, 62, 0.19)"
+                  badgeBorder="#bdf6c0"
+                  badgeColor="#359707"
+                  shotName={formatStroke(s.stroke)}
+                  normalEff={`${s.normal_eff?.toFixed(0) ?? s.crucial_eff?.toFixed(0)}% Eff.`}
+                  normalEffColor="#2dbd1a"
+                  pressureEff={`${s.crucial_eff?.toFixed(0) ?? "—"}% Eff.`}
+                  pressureEffColor="#2dbd1a"
+                  arrowColor="#2dbd1a"
+                  description={
+                    narr.clutch_shots?.find((c: any) => (c.shot || "").replace(/_/g, " ").toLowerCase() === s.stroke.replace(/_/g, " ").toLowerCase())?.insight
+                    ?? `Effectiveness jumps from ${s.normal_eff?.toFixed(0)}% to ${s.crucial_eff?.toFixed(0)}% under pressure.`
+                  }
+                  buttonLabel={`View ${formatStroke(s.stroke)}`}
+                  onClickView={
+                    onOpenVideo
+                      ? () => onOpenVideo({
+                          title: formatStroke(s.stroke),
+                          subtitle: `+${s.delta.toFixed(1)} delta`,
+                          description: `${s.n_crucial} crucial shots under pressure with elevated effectiveness.`,
+                          timestamps: [],
+                          sectionLabel: "TRIGGER SHOTS",
+                        })
+                      : undefined
+                  }
+                />
+              ))}
 
-              {/* Divider */}
               {pp.clutch_shots.length > 0 && pp.fragile_shots.length > 0 && (
                 <div className="h-px w-full bg-[var(--grey-900,#efece6)]" />
               )}
 
-              {/* Negative trigger shots (fragile) */}
               {pp.fragile_shots.map((s: any, i: number) => (
                 <TriggerShotCard
                   key={`fragile-${i}`}
@@ -360,14 +370,13 @@ export function DynamicsTab({ report, narrative, analysisView = "your", onOpenVi
                   buttonLabel={`View ${formatStroke(s.stroke)}`}
                   onClickView={
                     onOpenVideo
-                      ? () =>
-                          onOpenVideo({
-                            title: formatStroke(s.stroke),
-                            subtitle: `${s.delta.toFixed(1)} delta`,
-                            description: `${s.n_crucial} crucial shots where effectiveness dropped under pressure.`,
-                            timestamps: [],
-                            sectionLabel: "TRIGGER SHOTS",
-                          })
+                      ? () => onOpenVideo({
+                          title: formatStroke(s.stroke),
+                          subtitle: `${s.delta.toFixed(1)} delta`,
+                          description: `${s.n_crucial} crucial shots where effectiveness dropped under pressure.`,
+                          timestamps: [],
+                          sectionLabel: "TRIGGER SHOTS",
+                        })
                       : undefined
                   }
                 />
@@ -386,14 +395,12 @@ export function DynamicsTab({ report, narrative, analysisView = "your", onOpenVi
           {/* 4. OPPONENT PRESSURE */}
           <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="OPPONENT PRESSURE" isLast>
             <div className="flex flex-col gap-3 w-full">
-              {/* Headline */}
               {narr.opponent_pressure?.headline && (
                 <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full">
                   {narr.opponent_pressure.headline}
                 </p>
               )}
 
-              {/* Clutch tendencies */}
               {narr.opponent_pressure?.clutch_tendencies && (
                 <OpponentPressureCard
                   badge="Clutch tendencies"
@@ -405,13 +412,12 @@ export function DynamicsTab({ report, narrative, analysisView = "your", onOpenVi
                   buttonLabel="View Evidence"
                   onClickView={
                     onOpenVideo
-                      ? () =>
-                          onOpenVideo({
-                            title: "Opponent Clutch Tendencies",
-                            description: narr.opponent_pressure.clutch_tendencies,
-                            timestamps: [],
-                            sectionLabel: "OPPONENT PRESSURE",
-                          })
+                      ? () => onOpenVideo({
+                          title: "Opponent Clutch Tendencies",
+                          description: narr.opponent_pressure.clutch_tendencies,
+                          timestamps: [],
+                          sectionLabel: "OPPONENT PRESSURE",
+                        })
                       : undefined
                   }
                 />
@@ -421,7 +427,6 @@ export function DynamicsTab({ report, narrative, analysisView = "your", onOpenVi
                 <div className="h-px w-full bg-[var(--grey-900,#efece6)]" />
               )}
 
-              {/* Fragile tendencies */}
               {narr.opponent_pressure?.fragile_tendencies && (
                 <OpponentPressureCard
                   badge="Fragile tendencies"
@@ -433,13 +438,12 @@ export function DynamicsTab({ report, narrative, analysisView = "your", onOpenVi
                   buttonLabel="View Evidence"
                   onClickView={
                     onOpenVideo
-                      ? () =>
-                          onOpenVideo({
-                            title: "Opponent Fragile Tendencies",
-                            description: narr.opponent_pressure.fragile_tendencies,
-                            timestamps: [],
-                            sectionLabel: "OPPONENT PRESSURE",
-                          })
+                      ? () => onOpenVideo({
+                          title: "Opponent Fragile Tendencies",
+                          description: narr.opponent_pressure.fragile_tendencies,
+                          timestamps: [],
+                          sectionLabel: "OPPONENT PRESSURE",
+                        })
                       : undefined
                   }
                 />
@@ -449,7 +453,6 @@ export function DynamicsTab({ report, narrative, analysisView = "your", onOpenVi
                 <div className="h-px w-full bg-[var(--grey-900,#efece6)]" />
               )}
 
-              {/* Championship performance */}
               {narr.opponent_pressure?.championship_performance && (
                 <OpponentPressureCard
                   badge="Championship performance"
@@ -461,13 +464,12 @@ export function DynamicsTab({ report, narrative, analysisView = "your", onOpenVi
                   buttonLabel="View Evidence"
                   onClickView={
                     onOpenVideo
-                      ? () =>
-                          onOpenVideo({
-                            title: "Opponent Championship Performance",
-                            description: narr.opponent_pressure.championship_performance,
-                            timestamps: [],
-                            sectionLabel: "OPPONENT PRESSURE",
-                          })
+                      ? () => onOpenVideo({
+                          title: "Opponent Championship Performance",
+                          description: narr.opponent_pressure.championship_performance,
+                          timestamps: [],
+                          sectionLabel: "OPPONENT PRESSURE",
+                        })
                       : undefined
                   }
                 />
