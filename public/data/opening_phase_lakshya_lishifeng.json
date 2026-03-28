@@ -1,0 +1,549 @@
+{
+  "opening_phase": {
+    "your_analysis": {
+      "headline": "[narrative: opening_headline]",
+      "serve_predictability": {
+        "percentage": "97%",
+        "message": "Your serve is too predictable, your opponent can read this.",
+        "variant": "danger",
+        "serve_bars": [
+          {
+            "label": "Serve Middle",
+            "count": "37x",
+            "pct": 97.4,
+            "win_rate": 0.65,
+            "win_rate_label": "65% Win rate"
+          }
+        ],
+        "insight_text": "[narrative: serve_predictability_insight]"
+      },
+      "serve_insight": "[narrative: serve_insight]",
+      "receive_game": {
+        "best": {
+          "badge": "Best receive",
+          "badge_style": "success",
+          "shot_name": "FH Dribble",
+          "eff_value": 87.5,
+          "eff_label": "88% Eff.",
+          "description": "[narrative: best receive receive description]",
+          "button_label": "View FH Dribble",
+          "evidence_frames": [
+            9704,
+            13063,
+            18395,
+            18954
+          ],
+          "timestamps_seconds": [
+            323.5,
+            435.4,
+            613.2,
+            631.8
+          ]
+        },
+        "worst": {
+          "badge": "Worst receive",
+          "badge_style": "danger",
+          "shot_name": "FH Lift",
+          "eff_value": 32.5,
+          "eff_label": "32% Eff.",
+          "description": "[narrative: worst receive receive description]",
+          "button_label": "View FH Lift",
+          "evidence_frames": [
+            11670,
+            25517,
+            27270,
+            3187
+          ],
+          "timestamps_seconds": [
+            106.2,
+            389.0,
+            850.6,
+            909.0
+          ]
+        }
+      },
+      "receive_predictability": {
+        "percentage": "21.1%",
+        "message": "Your receive variety is adequate.",
+        "variant": "warning",
+        "rows": [
+          {
+            "label": "Serve Middle → FH Lift",
+            "serve": "Serve Middle",
+            "receive": "FH Lift",
+            "frequency": 4,
+            "total_for_serve": 19,
+            "pct": 21.1,
+            "eff_value": 32.5,
+            "eff_label": "32% Eff.",
+            "count": "4x",
+            "button_label": "View FH Lift",
+            "evidence_frames": [
+              3187,
+              11670,
+              25517,
+              27270
+            ],
+            "timestamps_seconds": [
+              106.2,
+              389.0,
+              850.6,
+              909.0
+            ]
+          },
+          {
+            "label": "Serve Middle → FH Dribble",
+            "serve": "Serve Middle",
+            "receive": "FH Dribble",
+            "frequency": 4,
+            "total_for_serve": 19,
+            "pct": 21.1,
+            "eff_value": 87.5,
+            "eff_label": "88% Eff.",
+            "count": "4x",
+            "button_label": "View FH Dribble",
+            "evidence_frames": [
+              9704,
+              13063,
+              18395,
+              18954
+            ],
+            "timestamps_seconds": [
+              323.5,
+              435.4,
+              613.2,
+              631.8
+            ]
+          },
+          {
+            "label": "Serve Middle → FH Netkeep",
+            "serve": "Serve Middle",
+            "receive": "FH Netkeep",
+            "frequency": 3,
+            "total_for_serve": 19,
+            "pct": 15.8,
+            "eff_value": 74.3,
+            "eff_label": "74% Eff.",
+            "count": "3x",
+            "button_label": "View FH Netkeep",
+            "evidence_frames": [
+              2364,
+              5082,
+              33801
+            ],
+            "timestamps_seconds": [
+              78.8,
+              169.4,
+              1126.7
+            ]
+          },
+          {
+            "label": "Serve Middle → FH Lift Cross",
+            "serve": "Serve Middle",
+            "receive": "FH Lift Cross",
+            "frequency": 3,
+            "total_for_serve": 19,
+            "pct": 15.8,
+            "eff_value": 46.7,
+            "eff_label": "47% Eff.",
+            "count": "3x",
+            "button_label": "View FH Lift Cross",
+            "evidence_frames": [
+              7479,
+              19888,
+              24817
+            ],
+            "timestamps_seconds": [
+              249.3,
+              662.9,
+              827.2
+            ]
+          }
+        ],
+        "insight_text": "[narrative: receive_predictability_insight]"
+      },
+      "receive_insight": "[narrative: receive_insight]",
+      "winning_openings": [
+        {
+          "title": "4-shot sequence",
+          "eff_label": "60% Win rate",
+          "eff_color": "#2dbd1a",
+          "count": "10x",
+          "description": "[narrative: sequence description]",
+          "steps": [
+            {
+              "who": "You",
+              "action": "Serve",
+              "eff_label": "",
+              "eff_color": "#888"
+            },
+            {
+              "who": "Opp",
+              "action": "Reset",
+              "eff_label": "0% Eff.",
+              "eff_color": "#ff4e64"
+            },
+            {
+              "who": "You",
+              "action": "Attack",
+              "eff_label": "97% Eff.",
+              "eff_color": "#2dbd1a"
+            },
+            {
+              "who": "Opp",
+              "action": "Defense",
+              "eff_label": "39% Eff.",
+              "eff_color": "#ff4e64"
+            }
+          ],
+          "button_label": "View 4 Shot Sequence",
+          "evidence_frames": [
+            4548,
+            10867,
+            15363,
+            17357,
+            17973
+          ],
+          "timestamps_seconds": [
+            151.6,
+            362.2,
+            512.1,
+            578.6,
+            599.1
+          ]
+        }
+      ],
+      "losing_openings": [
+        {
+          "title": "4-shot sequence",
+          "eff_label": "40% Win rate",
+          "eff_color": "#f59e0b",
+          "count": "5x",
+          "description": "[narrative: sequence description]",
+          "steps": [
+            {
+              "who": "Opp",
+              "action": "Serve",
+              "eff_label": "",
+              "eff_color": "#888"
+            },
+            {
+              "who": "You",
+              "action": "Net",
+              "eff_label": "95% Eff.",
+              "eff_color": "#2dbd1a"
+            },
+            {
+              "who": "Opp",
+              "action": "Reset",
+              "eff_label": "8% Eff.",
+              "eff_color": "#ff4e64"
+            },
+            {
+              "who": "You",
+              "action": "Attack",
+              "eff_label": "85% Eff.",
+              "eff_color": "#2dbd1a"
+            }
+          ],
+          "button_label": "View 4 Shot Sequence",
+          "evidence_frames": [
+            2340,
+            9681,
+            13043,
+            18366,
+            27596
+          ],
+          "timestamps_seconds": [
+            78.0,
+            322.7,
+            434.8,
+            612.2,
+            919.9
+          ]
+        }
+      ]
+    },
+    "opponent_analysis": {
+      "headline": "[narrative: opening_headline]",
+      "serve_predictability": {
+        "percentage": "92%",
+        "message": "Your serve is too predictable, your opponent can read this.",
+        "variant": "danger",
+        "serve_bars": [
+          {
+            "label": "Serve Middle",
+            "count": "24x",
+            "pct": 92.3,
+            "win_rate": 0.5,
+            "win_rate_label": "50% Win rate"
+          },
+          {
+            "label": "High Serve",
+            "count": "2x",
+            "pct": 7.7,
+            "win_rate": 0.0,
+            "win_rate_label": "0% Win rate"
+          }
+        ],
+        "insight_text": "[narrative: serve_predictability_insight]"
+      },
+      "serve_insight": "[narrative: serve_insight]",
+      "receive_game": {
+        "best": {
+          "badge": "Best receive",
+          "badge_style": "success",
+          "shot_name": "FH Netkeep Cross",
+          "eff_value": 86.5,
+          "eff_label": "86% Eff.",
+          "description": "[narrative: best receive receive description]",
+          "button_label": "View FH Netkeep Cross",
+          "evidence_frames": [
+            604,
+            31272
+          ],
+          "timestamps_seconds": [
+            20.1,
+            1042.4
+          ]
+        },
+        "worst": {
+          "badge": "Worst receive",
+          "badge_style": "danger",
+          "shot_name": "FH Lift Cross",
+          "eff_value": 18.2,
+          "eff_label": "18% Eff.",
+          "description": "[narrative: worst receive receive description]",
+          "button_label": "View FH Lift Cross",
+          "evidence_frames": [
+            15396,
+            18006,
+            22328,
+            3512,
+            8555,
+            10219
+          ],
+          "timestamps_seconds": [
+            117.1,
+            285.2,
+            340.6,
+            513.2,
+            600.2,
+            744.3
+          ]
+        }
+      },
+      "receive_predictability": {
+        "percentage": "23.5%",
+        "message": "Your receive variety is adequate.",
+        "variant": "warning",
+        "rows": [
+          {
+            "label": "Serve Middle → FH Lift",
+            "serve": "Serve Middle",
+            "receive": "FH Lift",
+            "frequency": 8,
+            "total_for_serve": 34,
+            "pct": 23.5,
+            "eff_value": 27.4,
+            "eff_label": "27% Eff.",
+            "count": "8x",
+            "button_label": "View FH Lift",
+            "evidence_frames": [
+              2664,
+              10631,
+              10906,
+              16174,
+              17398
+            ],
+            "timestamps_seconds": [
+              88.8,
+              354.4,
+              363.5,
+              539.1,
+              579.9
+            ]
+          },
+          {
+            "label": "Serve Middle → BH Netkeep",
+            "serve": "Serve Middle",
+            "receive": "BH Netkeep",
+            "frequency": 6,
+            "total_for_serve": 34,
+            "pct": 17.6,
+            "eff_value": 62.0,
+            "eff_label": "62% Eff.",
+            "count": "6x",
+            "button_label": "View BH Netkeep",
+            "evidence_frames": [
+              960,
+              6199,
+              12413,
+              15768,
+              29351
+            ],
+            "timestamps_seconds": [
+              32.0,
+              206.6,
+              413.8,
+              525.6,
+              978.4
+            ]
+          },
+          {
+            "label": "Serve Middle → FH Lift Cross",
+            "serve": "Serve Middle",
+            "receive": "FH Lift Cross",
+            "frequency": 6,
+            "total_for_serve": 34,
+            "pct": 17.6,
+            "eff_value": 18.2,
+            "eff_label": "18% Eff.",
+            "count": "6x",
+            "button_label": "View FH Lift Cross",
+            "evidence_frames": [
+              3512,
+              8555,
+              10219,
+              15396,
+              18006
+            ],
+            "timestamps_seconds": [
+              117.1,
+              285.2,
+              340.6,
+              513.2,
+              600.2
+            ]
+          },
+          {
+            "label": "Serve Middle → BH Lift",
+            "serve": "Serve Middle",
+            "receive": "BH Lift",
+            "frequency": 4,
+            "total_for_serve": 34,
+            "pct": 11.8,
+            "eff_value": 32.8,
+            "eff_label": "33% Eff.",
+            "count": "4x",
+            "button_label": "View BH Lift",
+            "evidence_frames": [
+              2234,
+              7194,
+              25953,
+              36817
+            ],
+            "timestamps_seconds": [
+              74.5,
+              239.8,
+              865.1,
+              1227.2
+            ]
+          }
+        ],
+        "insight_text": "[narrative: receive_predictability_insight]"
+      },
+      "receive_insight": "[narrative: receive_insight]",
+      "winning_openings": [
+        {
+          "title": "4-shot sequence",
+          "eff_label": "60% Win rate",
+          "eff_color": "#2dbd1a",
+          "count": "5x",
+          "description": "[narrative: sequence description]",
+          "steps": [
+            {
+              "who": "You",
+              "action": "Serve",
+              "eff_label": "",
+              "eff_color": "#888"
+            },
+            {
+              "who": "Opp",
+              "action": "Net",
+              "eff_label": "95% Eff.",
+              "eff_color": "#2dbd1a"
+            },
+            {
+              "who": "You",
+              "action": "Reset",
+              "eff_label": "8% Eff.",
+              "eff_color": "#ff4e64"
+            },
+            {
+              "who": "Opp",
+              "action": "Attack",
+              "eff_label": "85% Eff.",
+              "eff_color": "#2dbd1a"
+            }
+          ],
+          "button_label": "View 4 Shot Sequence",
+          "evidence_frames": [
+            2340,
+            9681,
+            13043,
+            18366,
+            27596
+          ],
+          "timestamps_seconds": [
+            78.0,
+            322.7,
+            434.8,
+            612.2,
+            919.9
+          ]
+        }
+      ],
+      "losing_openings": [
+        {
+          "title": "4-shot sequence",
+          "eff_label": "40% Win rate",
+          "eff_color": "#f59e0b",
+          "count": "10x",
+          "description": "[narrative: sequence description]",
+          "steps": [
+            {
+              "who": "Opp",
+              "action": "Serve",
+              "eff_label": "",
+              "eff_color": "#888"
+            },
+            {
+              "who": "You",
+              "action": "Reset",
+              "eff_label": "0% Eff.",
+              "eff_color": "#ff4e64"
+            },
+            {
+              "who": "Opp",
+              "action": "Attack",
+              "eff_label": "97% Eff.",
+              "eff_color": "#2dbd1a"
+            },
+            {
+              "who": "You",
+              "action": "Defense",
+              "eff_label": "39% Eff.",
+              "eff_color": "#ff4e64"
+            }
+          ],
+          "button_label": "View 4 Shot Sequence",
+          "evidence_frames": [
+            4548,
+            10867,
+            15363,
+            17357,
+            17973
+          ],
+          "timestamps_seconds": [
+            151.6,
+            362.2,
+            512.1,
+            578.6,
+            599.1
+          ]
+        }
+      ]
+    }
+  }
+}
