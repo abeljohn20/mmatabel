@@ -400,8 +400,209 @@
         ],
         "insight_text": "[narrative: predictability_insight]"
       },
-      "winning_patterns": [],
-      "losing_patterns": []
+      "winning_patterns": [
+        {
+          "title": "[narrative: pattern title]",
+          "count": "15x",
+          "win_rate": 0.93,
+          "description": "[narrative: pattern description]",
+          "steps": [
+            {
+              "who": "Opp",
+              "action": "Net"
+            },
+            {
+              "who": "You",
+              "action": "Reset"
+            },
+            {
+              "who": "Opp",
+              "action": "Attack"
+            },
+            {
+              "who": "You",
+              "action": "Defense"
+            },
+            {
+              "who": "Opp",
+              "action": "Defense"
+            },
+            {
+              "who": "You",
+              "action": "Attack"
+            },
+            {
+              "who": "Opp",
+              "action": "Defense"
+            }
+          ],
+          "button_label": "View Pattern",
+          "evidence_frames": [
+            604,
+            960,
+            2664,
+            7898,
+            20640,
+            22328,
+            28626,
+            28931,
+            36278,
+            3187,
+            30553,
+            30866,
+            19888,
+            23451,
+            32417
+          ],
+          "timestamps_seconds": [
+            20.1,
+            32.0,
+            88.8,
+            106.2,
+            263.3,
+            662.9,
+            688.0,
+            744.3,
+            781.7,
+            954.2,
+            964.4,
+            1018.4,
+            1028.9,
+            1080.6,
+            1209.3
+          ]
+        },
+        {
+          "title": "[narrative: pattern title]",
+          "count": "5x",
+          "win_rate": 1.0,
+          "description": "[narrative: pattern description]",
+          "steps": [
+            {
+              "who": "Opp",
+              "action": "Def Placement"
+            },
+            {
+              "who": "You",
+              "action": "Net"
+            },
+            {
+              "who": "Opp",
+              "action": "Pressure"
+            },
+            {
+              "who": "You",
+              "action": "Reset"
+            },
+            {
+              "who": "Opp",
+              "action": "Reset"
+            },
+            {
+              "who": "You",
+              "action": "Attack"
+            },
+            {
+              "who": "Opp",
+              "action": "Defense"
+            }
+          ],
+          "button_label": "View Pattern",
+          "evidence_frames": [
+            15768,
+            31272,
+            2364,
+            1995,
+            16174
+          ],
+          "timestamps_seconds": [
+            66.5,
+            78.8,
+            525.6,
+            539.1,
+            1042.4
+          ]
+        }
+      ],
+      "losing_patterns": [
+        {
+          "title": "[narrative: pattern title]",
+          "count": "18x",
+          "win_rate": 0.17,
+          "description": "[narrative: pattern description]",
+          "steps": [
+            {
+              "who": "Opp",
+              "action": "Reset"
+            },
+            {
+              "who": "You",
+              "action": "Attack"
+            },
+            {
+              "who": "Opp",
+              "action": "Defense"
+            },
+            {
+              "who": "You",
+              "action": "Net"
+            },
+            {
+              "who": "Opp",
+              "action": "Net"
+            },
+            {
+              "who": "You",
+              "action": "Reset"
+            },
+            {
+              "who": "Opp",
+              "action": "Placement"
+            }
+          ],
+          "button_label": "View Pattern",
+          "evidence_frames": [
+            4583,
+            8555,
+            9386,
+            10906,
+            13063,
+            18006,
+            18395,
+            18954,
+            23858,
+            24367,
+            26119,
+            27613,
+            29351,
+            34698,
+            33400,
+            10219,
+            17398,
+            20422
+          ],
+          "timestamps_seconds": [
+            152.8,
+            285.2,
+            312.9,
+            340.6,
+            363.5,
+            435.4,
+            579.9,
+            600.2,
+            613.2,
+            631.8,
+            680.7,
+            795.3,
+            812.2,
+            870.6,
+            920.4,
+            978.4,
+            1113.3,
+            1156.6
+          ]
+        }
+      ]
     },
     "opponent_analysis": {
       "headline": "[narrative: patterns_headline]",
@@ -876,8 +1077,213 @@
         ],
         "insight_text": "[narrative: predictability_insight]"
       },
-      "winning_patterns": [],
-      "losing_patterns": []
+      "winning_patterns": [
+        {
+          "title": "[narrative: pattern title]",
+          "count": "15x",
+          "win_rate": 0.53,
+          "description": "[narrative: pattern description]",
+          "steps": [
+            {
+              "who": "Opp",
+              "action": "Serve"
+            },
+            {
+              "who": "You",
+              "action": "Net"
+            },
+            {
+              "who": "Opp",
+              "action": "Reset"
+            },
+            {
+              "who": "You",
+              "action": "Reset"
+            },
+            {
+              "who": "Opp",
+              "action": "Attack"
+            },
+            {
+              "who": "You",
+              "action": "Defense"
+            },
+            {
+              "who": "Opp",
+              "action": "Reset"
+            }
+          ],
+          "button_label": "View Pattern",
+          "evidence_frames": [
+            960,
+            2364,
+            6199,
+            8555,
+            10906,
+            13063,
+            16174,
+            16839,
+            17398,
+            27613,
+            29351,
+            32417,
+            34698,
+            7479,
+            26119
+          ],
+          "timestamps_seconds": [
+            32.0,
+            78.8,
+            206.6,
+            249.3,
+            285.2,
+            363.5,
+            435.4,
+            539.1,
+            561.3,
+            579.9,
+            870.6,
+            920.4,
+            978.4,
+            1080.6,
+            1156.6
+          ]
+        },
+        {
+          "title": "[narrative: pattern title]",
+          "count": "9x",
+          "win_rate": 0.78,
+          "description": "[narrative: pattern description]",
+          "steps": [
+            {
+              "who": "Opp",
+              "action": "Defense"
+            },
+            {
+              "who": "You",
+              "action": "Net"
+            },
+            {
+              "who": "Opp",
+              "action": "Net"
+            },
+            {
+              "who": "You",
+              "action": "Reset"
+            },
+            {
+              "who": "Opp",
+              "action": "Reset"
+            },
+            {
+              "who": "You",
+              "action": "Attack"
+            },
+            {
+              "who": "Opp",
+              "action": "Defense"
+            }
+          ],
+          "button_label": "View Pattern",
+          "evidence_frames": [
+            2664,
+            7194,
+            18006,
+            24367,
+            31272,
+            9704,
+            4583,
+            11180,
+            27270
+          ],
+          "timestamps_seconds": [
+            88.8,
+            152.8,
+            239.8,
+            323.5,
+            372.7,
+            600.2,
+            812.2,
+            909.0,
+            1042.4
+          ]
+        }
+      ],
+      "losing_patterns": [
+        {
+          "title": "[narrative: pattern title]",
+          "count": "16x",
+          "win_rate": 0.12,
+          "description": "[narrative: pattern description]",
+          "steps": [
+            {
+              "who": "Opp",
+              "action": "Reset"
+            },
+            {
+              "who": "You",
+              "action": "Attack"
+            },
+            {
+              "who": "Opp",
+              "action": "Defense"
+            },
+            {
+              "who": "You",
+              "action": "Defense"
+            },
+            {
+              "who": "Opp",
+              "action": "Attack"
+            },
+            {
+              "who": "You",
+              "action": "Defense"
+            },
+            {
+              "who": "Opp",
+              "action": "Net"
+            }
+          ],
+          "button_label": "View Pattern",
+          "evidence_frames": [
+            604,
+            7898,
+            11670,
+            15768,
+            20640,
+            22328,
+            23858,
+            28626,
+            28931,
+            36278,
+            36817,
+            33400,
+            3187,
+            19888,
+            23451,
+            25517
+          ],
+          "timestamps_seconds": [
+            20.1,
+            106.2,
+            263.3,
+            389.0,
+            525.6,
+            662.9,
+            688.0,
+            744.3,
+            781.7,
+            795.3,
+            850.6,
+            954.2,
+            964.4,
+            1113.3,
+            1209.3,
+            1227.2
+          ]
+        }
+      ]
     }
   }
 }
