@@ -1,4 +1,168 @@
+"use client";
+
+import Image from "next/image";
 import type { MatchReport, Narrative } from "@/lib/types";
+
+/* ─── Timeline Section Wrapper ─── */
+function TimelineSection({
+  color,
+  icon,
+  label,
+  children,
+  isLast = false,
+}: {
+  color: "orange" | "green" | "red";
+  icon: string;
+  label: string;
+  children: React.ReactNode;
+  isLast?: boolean;
+}) {
+  const lineColor =
+    color === "orange" ? "#ff7441" : color === "green" ? "#23a62a" : "#eb3030";
+  const labelColor =
+    color === "orange"
+      ? "var(--brand-orange, #fa642d)"
+      : color === "green"
+        ? "#23a62a"
+        : "#eb3030";
+
+  return (
+    <div className="flex flex-col items-start w-full">
+      <div className="flex gap-3 items-start w-full">
+        <div className="flex flex-col items-center justify-between self-stretch shrink-0">
+          <Image src={icon} alt="" width={24} height={24} />
+          <div className="flex-1 w-px min-h-0" style={{ backgroundColor: lineColor }} />
+        </div>
+        <div className="flex-1 flex flex-col gap-3 min-w-0">
+          <div className="flex gap-3 items-center w-full">
+            <span className="text-sm font-normal whitespace-nowrap" style={{ color: labelColor }}>
+              {label}
+            </span>
+            <div className="flex-1 h-px" style={{ backgroundColor: labelColor }} />
+          </div>
+          {children}
+        </div>
+      </div>
+      {!isLast && (
+        <div className="flex items-center h-8 overflow-hidden px-[11.5px]">
+          <div className="w-px h-full" style={{ backgroundColor: lineColor }} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ─── Category Comparison Bar ─── */
+function ComparisonBar({
+  category,
+  playerEff,
+  opponentEff,
+}: {
+  category: string;
+  playerEff: number;
+  opponentEff: number;
+}) {
+  const total = playerEff + opponentEff;
+  const playerPct = total > 0 ? (playerEff / total) * 100 : 50;
+
+  return (
+    <div className="flex flex-col gap-1 items-center w-full">
+      <span className="text-xs font-normal text-[#5c5850] leading-[1.6] text-center w-full">
+        {category}
+      </span>
+      <div className="flex gap-[7px] items-center w-full">
+        <span className="text-xs font-semibold text-[#2990fd] text-center w-6">
+          {playerEff.toFixed(0)}
+        </span>
+        <div className="flex-1 flex gap-1 items-center">
+          <div
+            className="h-3 rounded bg-[#2990fd]"
+            style={{ width: `${playerPct}%` }}
+          />
+          <div
+            className="h-3 rounded bg-[#f02a2d] flex-1"
+          />
+        </div>
+        <span className="text-xs font-semibold text-[#f02a2d] text-center w-6">
+          {opponentEff.toFixed(0)}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Style illustration map ─── */
+const STYLE_ILLUSTRATIONS: Record<string, string> = {
+  attacking: "/h2h_style_character-illustrations/Attacking.png",
+  balanced: "/h2h_style_character-illustrations/Balanced.png",
+  defensive: "/h2h_style_character-illustrations/Defensive.png",
+  "net player": "/h2h_style_character-illustrations/Net Player.png",
+  net: "/h2h_style_character-illustrations/Net Player.png",
+};
+
+function getStyleImage(style: string): string | null {
+  const key = style.toLowerCase().trim();
+  return STYLE_ILLUSTRATIONS[key] ?? null;
+}
+
+/* ─── Style Card ─── */
+function StyleCard({
+  label,
+  styleName,
+  styleKey,
+  description,
+}: {
+  label: string;
+  styleName: string;
+  styleKey: string;
+  description: string;
+}) {
+  const illustration = getStyleImage(styleKey);
+
+  return (
+    <div
+      className="flex flex-col gap-1 pt-6 pb-3 px-3 rounded-lg w-full relative"
+      style={{
+        background: "var(--bg-elv-1, #fafafa)",
+        border: "1px solid rgba(255,158,123,0.4)",
+        overflow: "visible",
+      }}
+    >
+      <div className="flex flex-col">
+        <span className="text-xs font-medium text-[#8a8a8a] leading-[1.6]">{label}</span>
+        <span
+          className="text-sm font-medium leading-[1.4] bg-clip-text"
+          style={{
+            backgroundImage: "linear-gradient(104deg, #fa591f 1%, #edb91c 50%, #f5612b 99%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            color: "transparent",
+          }}
+        >
+          {styleName}
+        </span>
+      </div>
+      <p className="text-xs font-normal text-[var(--text-subtext,#6d6d6d)] leading-[1.6] w-[80%]">
+        {description}
+      </p>
+      {illustration && (
+        <div className="absolute" style={{ right: 4, top: -20, width: 64, height: 67 }}>
+          <Image
+            src={illustration}
+            alt={styleKey}
+            width={64}
+            height={67}
+            style={{ objectFit: "contain", width: 64, height: 67 }}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════
+   MAIN COMPONENT
+   ═══════════════════════════════════════════ */
 
 interface Props {
   report: MatchReport;
@@ -6,160 +170,172 @@ interface Props {
   analysisView?: "your" | "opponent";
 }
 
-export function HeadToHeadTab({ report, narrative, analysisView = "your" }: Props) {
+export function HeadToHeadTab({ report, narrative }: Props) {
   const h2h = report.deep_match_report.match_dynamics.head_to_head;
   const narr = narrative.section_narratives.head_to_head;
-  const isOpponent = analysisView === "opponent";
   const wed = h2h.winner_error_difference;
-  const rla = h2h.rally_length_advantage;
+
+  // Filter out UNKNOWN category and sort by gap descending
+  const categories = (h2h.by_category ?? [])
+    .filter((c: any) => c.category !== "UNKNOWN")
+    .sort((a: any, b: any) => b.gap - a.gap);
+
+  // Format category display name
+  const formatCategory = (cat: string) => {
+    return cat.replace(/_/g, " ").replace(/SHOTS?$/i, "").trim().toUpperCase();
+  };
+
+  const playerStyle = h2h.style_comparison?.player_style ?? "balanced";
+  const opponentStyle = h2h.style_comparison?.opponent_style ?? "balanced";
 
   return (
-    <div className="p-4 space-y-5">
-      <h2 className="text-2xl font-medium text-[var(--text-heading)] tracking-[-1px] leading-[1.2]">
-        {isOpponent ? "Head to Head (Opponent View)" : (narr.h2h_headline || "Head to Head")}
-      </h2>
+    <div className="bg-white w-full overflow-auto">
+      <div className="flex flex-col gap-8 px-4 pt-[18px] pb-[141px]">
+        {/* ─── Headline ─── */}
+        <p className="text-[20px] font-medium leading-[1.32] text-[var(--text-heading,#161616)] tracking-[-0.5px]">
+          {narr.h2h_headline || "Head to Head"}
+        </p>
 
-      {/* Winner/Error Balance */}
-      <div className="bg-[var(--bg-elv-2)] rounded-xl p-4 space-y-3">
-        <h3 className="text-sm font-semibold text-[var(--grey-250)]">Winners vs Errors</h3>
-        <div className="grid grid-cols-2 gap-3">
-          <div className="bg-white rounded-lg p-3 border border-[var(--grey-850)] text-center">
-            <span className="text-xs text-[var(--text-subtext)]">{isOpponent ? "Opponent" : "You"}</span>
-            <div className="flex items-center justify-center gap-3 mt-1">
-              <div>
-                <span className="text-lg font-semibold text-[var(--success)]">
-                  {isOpponent ? wed.opponent_winners : wed.player_winners}
-                </span>
-                <p className="text-[10px] text-[var(--text-subtext)]">Winners</p>
+        {/* ─── Timeline ─── */}
+        <div className="flex flex-col items-start w-full">
+
+          {/* 1. STATS — Category comparison bars */}
+          <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="STATS">
+            <div className="flex flex-col gap-3 w-full">
+              <div className="bg-[var(--bg-elv-1,#fafafa)] border border-[var(--stroke-st-elv1,#f5f5f5)] flex flex-col gap-[18px] p-3 rounded-lg w-full">
+                {/* You vs Opp header */}
+                <div className="flex gap-2 items-center w-full">
+                  <div className="flex items-center justify-center px-2 rounded bg-[#dfefff]">
+                    <span className="text-sm font-medium text-[#2990fd] leading-[1.4]">You</span>
+                  </div>
+                  <div className="flex-1 h-px bg-[#dfdfdf]" />
+                  <div className="flex items-center justify-center px-2 rounded bg-[#fcd4d9]">
+                    <span className="text-sm font-medium text-[#a22618] leading-[1.4]">Opp</span>
+                  </div>
+                </div>
+
+                {/* Bars */}
+                <div className="flex flex-col gap-2 w-full">
+                  {categories.map((c: any, i: number) => (
+                    <ComparisonBar
+                      key={i}
+                      category={formatCategory(c.category)}
+                      playerEff={c.player_eff}
+                      opponentEff={c.opponent_eff}
+                    />
+                  ))}
+                </div>
               </div>
-              <div>
-                <span className="text-lg font-semibold text-[var(--danger)]">
-                  {isOpponent ? wed.opponent_ue : wed.player_ue}
-                </span>
-                <p className="text-[10px] text-[var(--text-subtext)]">UE</p>
-              </div>
+
+              {/* Insight */}
+              {narr.category_comparison_insight && (
+                <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full">
+                  {narr.category_comparison_insight}
+                </p>
+              )}
             </div>
-          </div>
-          <div className="bg-white rounded-lg p-3 border border-[var(--grey-850)] text-center">
-            <span className="text-xs text-[var(--text-subtext)]">{isOpponent ? "You" : "Opponent"}</span>
-            <div className="flex items-center justify-center gap-3 mt-1">
-              <div>
-                <span className="text-lg font-semibold text-[var(--success)]">
-                  {isOpponent ? wed.player_winners : wed.opponent_winners}
-                </span>
-                <p className="text-[10px] text-[var(--text-subtext)]">Winners</p>
+          </TimelineSection>
+
+          {/* 2. WINNERS AND ERRORS */}
+          <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="WINNERS AND ERRORS">
+            <div className="flex flex-col gap-3 w-full">
+              <div className="bg-[var(--bg-elv-1,#fafafa)] border border-[var(--stroke-st-elv1,#f5f5f5)] flex flex-col gap-3 p-3 rounded-lg w-full">
+                {/* You section */}
+                <div className="flex flex-col gap-2 w-full">
+                  <div className="flex items-center justify-center px-2 rounded bg-[#dfefff] w-full">
+                    <span className="text-sm font-medium text-[#2990fd] leading-[1.4]">You</span>
+                  </div>
+                  <div className="flex gap-2 w-full text-center">
+                    <div className="flex-1 bg-[#dfffe0] rounded flex flex-col gap-2.5 items-start justify-center px-2 py-2">
+                      <span className="text-2xl font-semibold text-[#1ea223] tracking-[-1px] leading-[1.2]">
+                        {wed.player_winners}
+                      </span>
+                      <span className="text-xs font-light text-[var(--text-subtext,#6d6d6d)] leading-[1.6]">
+                        WINNERS
+                      </span>
+                    </div>
+                    <div className="flex-1 bg-[#fcd4d9] rounded flex flex-col gap-2.5 items-start justify-center px-2 py-2">
+                      <span className="text-2xl font-semibold text-[#ff4e64] tracking-[-1px] leading-[1.2]">
+                        {wed.player_ue}
+                      </span>
+                      <span className="text-xs font-light text-[var(--text-subtext,#6d6d6d)] leading-[1.6]">
+                        UNFORCED ERRORS
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* V/S divider */}
+                <div className="flex gap-2 items-center w-full">
+                  <div className="flex-1 h-px bg-[#dfdfdf]" />
+                  <span className="text-sm font-medium text-[#969696] leading-[1.4]">V/S</span>
+                  <div className="flex-1 h-px bg-[#dfdfdf]" />
+                </div>
+
+                {/* Opp section */}
+                <div className="flex flex-col gap-2 w-full">
+                  <div className="flex items-center justify-center px-2 rounded bg-[#fcd4d9] w-full">
+                    <span className="text-sm font-medium text-[#a22618] leading-[1.4]">Opp</span>
+                  </div>
+                  <div className="flex gap-2 w-full text-center">
+                    <div className="flex-1 bg-[#ededed] rounded flex flex-col gap-2.5 items-start justify-center px-2 py-2">
+                      <span className="text-2xl font-semibold text-[#373737] tracking-[-1px] leading-[1.2]">
+                        {wed.opponent_winners}
+                      </span>
+                      <span className="text-xs font-light text-[var(--text-subtext,#6d6d6d)] leading-[1.6]">
+                        WINNERS
+                      </span>
+                    </div>
+                    <div className="flex-1 bg-[#ededed] rounded flex flex-col gap-2.5 items-start justify-center px-2 py-2">
+                      <span className="text-2xl font-semibold text-[#373737] tracking-[-1px] leading-[1.2]">
+                        {wed.opponent_ue}
+                      </span>
+                      <span className="text-xs font-light text-[var(--text-subtext,#6d6d6d)] leading-[1.6]">
+                        UNFORCED ERRORS
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div>
-                <span className="text-lg font-semibold text-[var(--danger)]">
-                  {isOpponent ? wed.player_ue : wed.opponent_ue}
-                </span>
-                <p className="text-[10px] text-[var(--text-subtext)]">UE</p>
-              </div>
+
+              {/* Insight */}
+              {narr.winner_error_insight && (
+                <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full">
+                  {narr.winner_error_insight}
+                </p>
+              )}
             </div>
-          </div>
+          </TimelineSection>
+
+          {/* 3. STYLE */}
+          <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="STYLE" isLast>
+            <div className="flex flex-col gap-3 w-full" style={{ overflow: "visible" }}>
+              {/* Player style card */}
+              <StyleCard
+                label="You are an"
+                styleName={`${playerStyle.toUpperCase()} PLAYER`}
+                styleKey={playerStyle}
+                description={narr.style_comparison_insight ?? "Your aggressive play style creates consistent pressure."}
+              />
+
+              {/* V/S divider */}
+              <div className="flex gap-2 items-center w-full">
+                <div className="flex-1 h-px bg-[#dfdfdf]" />
+                <span className="text-sm font-medium text-[#969696] leading-[1.4]">V/S</span>
+                <div className="flex-1 h-px bg-[#dfdfdf]" />
+              </div>
+
+              {/* Opponent style card */}
+              <StyleCard
+                label="Your opponent was a"
+                styleName={`${opponentStyle.toUpperCase()} PLAYER`}
+                styleKey={opponentStyle}
+                description={narr.rally_length_comparison?.overall_insight ?? "Your opponent played a reactive, balanced game."}
+              />
+            </div>
+          </TimelineSection>
         </div>
-        <div className="text-center">
-          <span className={`text-sm font-semibold ${(isOpponent ? -wed.delta : wed.delta) >= 0 ? "text-[var(--success)]" : "text-[var(--danger)]"}`}>
-            {(isOpponent ? -wed.delta : wed.delta) >= 0 ? "+" : ""}{isOpponent ? -wed.delta : wed.delta} net W/E
-          </span>
-        </div>
-        {narr.winner_error_insight && (
-          <p className="text-xs text-[var(--grey-400)] leading-relaxed">{narr.winner_error_insight}</p>
-        )}
       </div>
-
-      {/* Rally Length Advantage */}
-      {rla && (
-        <div className="bg-[var(--bg-elv-2)] rounded-xl p-4 space-y-3">
-          <h3 className="text-sm font-semibold text-[var(--grey-250)]">Rally Length Advantage</h3>
-          {Object.entries(rla).map(([length, data]) => {
-            const pwr = isOpponent ? (1 - data.player_win_rate) : data.player_win_rate;
-            return (
-              <div key={length} className="space-y-1">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-medium text-[var(--grey-400)] capitalize">{length}</span>
-                  <span className={pwr >= 0.55 ? "text-[var(--success)] font-medium" : pwr <= 0.45 ? "text-[var(--danger)] font-medium" : "text-[var(--grey-400)]"}>
-                    {(pwr * 100).toFixed(0)}% win rate
-                  </span>
-                </div>
-                <div className="h-2 bg-[#f0f0f0] rounded-full overflow-hidden">
-                  <div
-                    className="h-full rounded-full transition-all"
-                    style={{
-                      width: `${pwr * 100}%`,
-                      backgroundColor: pwr >= 0.55 ? "var(--success)" : pwr >= 0.45 ? "var(--warning)" : "var(--danger)",
-                    }}
-                  />
-                </div>
-              </div>
-            );
-          })}
-
-          {narr.rally_length_comparison && (
-            <div className="space-y-1 pt-1">
-              {typeof narr.rally_length_comparison === "object" &&
-                Object.entries(narr.rally_length_comparison as Record<string, string>).map(([k, v]) => (
-                  v && <p key={k} className="text-xs text-[var(--grey-400)]"><span className="font-medium capitalize">{k}:</span> {v}</p>
-                ))
-              }
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Style Comparison */}
-      {h2h.style_comparison && (
-        <div className="bg-[var(--bg-elv-2)] rounded-xl p-4 flex items-center justify-between">
-          <div className="text-center flex-1">
-            <span className="text-xs text-[var(--text-subtext)]">
-              {isOpponent ? "Opponent Style" : "Your Style"}
-            </span>
-            <p className="text-sm font-semibold text-[var(--grey-250)] capitalize mt-0.5">
-              {isOpponent ? h2h.style_comparison.opponent_style : h2h.style_comparison.player_style}
-            </p>
-          </div>
-          <div className="w-px h-8 bg-[var(--grey-800)]" />
-          <div className="text-center flex-1">
-            <span className="text-xs text-[var(--text-subtext)]">
-              {isOpponent ? "Your Style" : "Opponent Style"}
-            </span>
-            <p className="text-sm font-semibold text-[var(--grey-250)] capitalize mt-0.5">
-              {isOpponent ? h2h.style_comparison.player_style : h2h.style_comparison.opponent_style}
-            </p>
-          </div>
-        </div>
-      )}
-
-      {/* Category comparison */}
-      {h2h.by_category && h2h.by_category.length > 0 && (
-        <div className="bg-[var(--bg-elv-2)] rounded-xl p-4 space-y-2">
-          <h3 className="text-sm font-semibold text-[var(--grey-250)]">Category Comparison</h3>
-          {h2h.by_category.map((c: { category: string; player_eff: number; opponent_eff: number; gap: number }, i: number) => (
-            <div key={i} className="flex items-center justify-between text-xs">
-              <span className="text-[var(--grey-400)] capitalize">{c.category?.replace(/_/g, " ")}</span>
-              <div className="flex gap-3">
-                <span className={(isOpponent ? -c.gap : c.gap) >= 0 ? "text-[var(--success)] font-medium" : "text-[var(--danger)] font-medium"}>
-                  {isOpponent ? "Opp" : "You"}: {isOpponent ? c.opponent_eff?.toFixed(0) : c.player_eff?.toFixed(0)}%
-                </span>
-                <span className="text-[var(--text-subtext)]">
-                  {isOpponent ? "You" : "Opp"}: {isOpponent ? c.player_eff?.toFixed(0) : c.opponent_eff?.toFixed(0)}%
-                </span>
-                <span className={(isOpponent ? -c.gap : c.gap) >= 0 ? "text-[var(--success)]" : "text-[var(--danger)]"}>
-                  {(isOpponent ? -c.gap : c.gap) >= 0 ? "+" : ""}{(isOpponent ? -c.gap : c.gap)?.toFixed(1)}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* Narrative */}
-      {narr.category_comparison_insight && (
-        <p className="text-xs text-[var(--grey-400)] leading-relaxed">{narr.category_comparison_insight}</p>
-      )}
-      {narr.style_comparison_insight && (
-        <p className="text-xs text-[var(--grey-400)] leading-relaxed">{narr.style_comparison_insight}</p>
-      )}
     </div>
   );
 }

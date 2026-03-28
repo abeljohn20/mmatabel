@@ -5,11 +5,20 @@ import Image from "next/image";
 
 /* ─── Types ─── */
 
+export interface VideoTimelineRange {
+  start: number;   // seconds
+  end: number;     // seconds
+  type: "player" | "opponent";
+  label: string;   // e.g. "11-14 pts"
+}
+
 export interface VideoSheetData {
   title: string;
   subtitle?: string;
   description?: string;
   timestamps: number[];
+  /** Streak ranges — when provided, timeline shows colored blocks instead of ticks */
+  streakRanges?: VideoTimelineRange[];
   sectionLabel?: string;
 }
 
@@ -65,6 +74,7 @@ export function VideoSheet({
   description,
   videoSrc,
   timestamps,
+  streakRanges,
   sectionLabel,
 }: VideoSheetProps) {
   const [visible, setVisible] = useState(false);
@@ -125,6 +135,9 @@ export function VideoSheet({
 
   if (!rendered) return null;
 
+  const hasStreakRanges = streakRanges && streakRanges.length > 0;
+  const videoDuration = videoRef.current?.duration || 2377;
+
   const subtitleColor = (() => {
     if (!subtitle) return "#888";
     const num = parseFloat(subtitle);
@@ -171,7 +184,7 @@ export function VideoSheet({
         aria-modal="true"
         aria-label={`${title} video`}
       >
-        {/* ─── Floating close button (above the sheet) ─── */}
+        {/* Floating close button */}
         <button
           onClick={onClose}
           style={{
@@ -195,7 +208,7 @@ export function VideoSheet({
           </svg>
         </button>
 
-        {/* ─── Sheet ─── */}
+        {/* Sheet */}
         <div
           style={{
             background: "var(--bg-elv-1, #fafafa)",
@@ -209,7 +222,7 @@ export function VideoSheet({
             pointerEvents: "auto",
           }}
         >
-          {/* ─── Section label header ─── */}
+          {/* Section label header */}
           <div
             style={{
               padding: "16px 16px 0",
@@ -237,7 +250,7 @@ export function VideoSheet({
             <div style={{ flex: 1, height: 1, background: "var(--brand-orange, #fa642d)" }} />
           </div>
 
-          {/* ─── Scrollable content ─── */}
+          {/* Scrollable content */}
           <div
             style={{
               flex: 1,
@@ -246,7 +259,7 @@ export function VideoSheet({
               WebkitOverflowScrolling: "touch",
             }}
           >
-            {/* ─── Video player ─── */}
+            {/* Video player */}
             <div
               style={{
                 background: "#363636",
@@ -298,7 +311,7 @@ export function VideoSheet({
                 </TransportButton>
               </div>
 
-              {/* Timeline bar with instance ticks */}
+              {/* Timeline bar */}
               <div
                 style={{
                   position: "absolute",
@@ -316,60 +329,97 @@ export function VideoSheet({
                     background: "rgba(214,214,214,0.58)",
                     borderRadius: 20,
                     position: "relative",
+                    overflow: "visible",
                   }}
                 >
                   {/* Progress fill */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      left: 0,
-                      top: 0,
-                      height: 4,
-                      width: `${((timestamps[currentIndex] || 0) / (videoRef.current?.duration || 2377)) * 100}%`,
-                      background: "white",
-                      borderRadius: 20,
-                    }}
-                  />
+                  {!hasStreakRanges && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        left: 0,
+                        top: 0,
+                        height: 4,
+                        width: `${((timestamps[currentIndex] || 0) / videoDuration) * 100}%`,
+                        background: "white",
+                        borderRadius: 20,
+                      }}
+                    />
+                  )}
+
+                  {/* Streak range blocks on the timeline */}
+                  {hasStreakRanges && streakRanges.map((range, i) => {
+                    const leftPct = (range.start / videoDuration) * 100;
+                    const widthPct = ((range.end - range.start) / videoDuration) * 100;
+                    const isPlayer = range.type === "player";
+                    const color = isPlayer ? "#3e95f3" : "#f5364d";
+
+                    return (
+                      <div
+                        key={i}
+                        onClick={() => {
+                          // Find the closest timestamp within this range
+                          const closest = timestamps.reduce((best, ts, idx) =>
+                            ts >= range.start && ts <= range.end ? idx : best, 0
+                          );
+                          setCurrentIndex(closest);
+                          if (videoRef.current) videoRef.current.currentTime = range.start;
+                        }}
+                        style={{
+                          position: "absolute",
+                          left: `${leftPct}%`,
+                          top: -3,
+                          width: `${Math.max(widthPct, 2)}%`,
+                          height: 10,
+                          background: color,
+                          borderRadius: 15,
+                          cursor: "pointer",
+                          zIndex: 2,
+                        }}
+                      />
+                    );
+                  })}
                 </div>
               </div>
 
-              {/* Instance tick marks */}
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: 12,
-                  right: 12,
-                  height: 24,
-                }}
-              >
-                {timestamps.map((ts, i) => {
-                  const duration = videoRef.current?.duration || 2377;
-                  const pos = (ts / duration) * 100;
-                  const isActive = i === currentIndex;
-                  return (
-                    <div
-                      key={i}
-                      onClick={() => {
-                        setCurrentIndex(i);
-                        seekTo(i);
-                      }}
-                      style={{
-                        position: "absolute",
-                        left: `${pos}%`,
-                        bottom: 5,
-                        width: 4,
-                        height: 14,
-                        background: isActive ? "#ec5e26" : "white",
-                        borderRadius: 15,
-                        transform: "translateX(-2px)",
-                        cursor: "pointer",
-                        zIndex: isActive ? 2 : 1,
-                      }}
-                    />
-                  );
-                })}
-              </div>
+              {/* Instance tick marks (only when no streak ranges) */}
+              {!hasStreakRanges && (
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: 12,
+                    right: 12,
+                    height: 24,
+                  }}
+                >
+                  {timestamps.map((ts, i) => {
+                    const pos = (ts / videoDuration) * 100;
+                    const isActive = i === currentIndex;
+                    return (
+                      <div
+                        key={i}
+                        onClick={() => {
+                          setCurrentIndex(i);
+                          seekTo(i);
+                        }}
+                        style={{
+                          position: "absolute",
+                          left: `${pos}%`,
+                          bottom: 5,
+                          width: 4,
+                          height: 14,
+                          background: isActive ? "#ec5e26" : "white",
+                          borderRadius: 15,
+                          transform: "translateX(-2px)",
+                          cursor: "pointer",
+                          zIndex: isActive ? 2 : 1,
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+              )}
 
               {/* Shot counter */}
               <div
@@ -388,7 +438,7 @@ export function VideoSheet({
               </div>
             </div>
 
-            {/* ─── Title + eff row ─── */}
+            {/* Title + subtitle row */}
             <div style={{ padding: "20px 16px 0" }}>
               <div
                 style={{

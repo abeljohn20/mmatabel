@@ -7,6 +7,7 @@ import { ShotArsenalTab } from "@/components/tabs/ShotArsenalTab";
 import { OpeningPhaseTab } from "@/components/tabs/OpeningPhaseTab";
 import { PatternsTab } from "@/components/tabs/PatternsTab";
 import { DynamicsTab } from "@/components/tabs/DynamicsTab";
+import { HeadToHeadTab } from "@/components/tabs/HeadToHeadTab";
 
 import { VideoSheet } from "@/components/VideoSheet";
 import type { VideoSheetData } from "@/components/VideoSheet";
@@ -16,6 +17,7 @@ const TABS: { id: TabId; label: string }[] = [
   { id: "opening", label: "Opening Phase" },
   { id: "patterns", label: "Patterns" },
   { id: "dynamics", label: "Dynamics" },
+  { id: "h2h", label: "Head To Head" },
 ];
 
 const MATCH_FILES = [
@@ -122,7 +124,7 @@ export default function Home() {
       </div>
 
       {/* Your / Opponent Analysis toggle — fixed below tabs, hidden on Match Report */}
-      {activeTab !== "report" && (
+      {activeTab !== "report" && activeTab !== "dynamics" && activeTab !== "h2h" && (
         <div
           style={{
             display: "flex",
@@ -180,6 +182,7 @@ export default function Home() {
             {activeTab === "opening" && <OpeningPhaseTab analysisView={analysisView} onOpenVideo={openVideoSheet} />}
             {activeTab === "patterns" && <PatternsTab analysisView={analysisView} onOpenVideo={openVideoSheet} />}
             {activeTab === "dynamics" && <DynamicsTab report={report} narrative={narrative} analysisView={analysisView} onOpenVideo={openVideoSheet} />}
+            {activeTab === "h2h" && <HeadToHeadTab report={report} narrative={narrative} analysisView={analysisView} />}
           </>
         )}
       </div>
@@ -193,6 +196,7 @@ export default function Home() {
         description={videoSheet?.description}
         videoSrc="/match-video.mp4"
         timestamps={videoSheet?.timestamps ?? []}
+        streakRanges={videoSheet?.streakRanges}
         sectionLabel={videoSheet?.sectionLabel}
       />
     </div>
