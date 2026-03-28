@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Match Analysis</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif; background: #fff; color: #161616; max-width: 430px; margin: 0 auto; }
+
+  .header { padding: 8px 16px; display: flex; justify-content: space-between; align-items: center; }
+  .header .back { font-size: 12px; color: #1a1a1a; }
+  .header select { font-size: 12px; border: none; color: #6d6d6d; background: transparent; }
+
+  .tabs { display: flex; gap: 16px; padding: 12px 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; border-bottom: 1px solid #eee; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { white-space: nowrap; flex-shrink: 0; padding: 8px 0; font-size: 14px; font-weight: 400; color: #908c83; border-bottom: 2px solid transparent; cursor: pointer; user-select: none; -webkit-tap-highlight-color: rgba(0,0,0,0.05); }
+  .tab.active { font-size: 17px; font-weight: 600; color: #322e27; border-bottom-color: #fa642d; }
+
+  .content { background: #fafafa; min-height: 60vh; }
+  .tab-panel { display: none; padding: 24px 16px; }
+  .tab-panel.active { display: block; }
+
+  h2 { font-size: 24px; font-weight: 500; letter-spacing: -1px; line-height: 1.2; margin-bottom: 16px; }
+  .card { background: #f6f6f6; border-radius: 12px; padding: 12px; margin-bottom: 16px; }
+  .row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; font-size: 14px; }
+  .row .label { color: #6d6d6d; }
+  .row .value { font-weight: 500; }
+  .green { color: #2dc535; }
+  .red { color: #ff4e64; }
+
+  h3 { font-size: 16px; font-weight: 600; margin: 16px 0 8px; color: #322e27; }
+  p { font-size: 14px; line-height: 1.5; color: #5c5850; margin-bottom: 12px; }
+
+  .badge { display: inline-block; font-size: 12px; padding: 2px 10px; border-radius: 6px; margin: 2px 4px 2px 0; }
+  .badge.weapon { background: rgba(45,197,53,0.12); color: #2dc535; }
+  .badge.liability { background: rgba(255,78,100,0.12); color: #ff4e64; }
+  .badge.dual { background: rgba(245,158,11,0.12); color: #f59e0b; }
+
+  .court-wrap { background: #f6f6f6; border-radius: 12px; padding: 12px; }
+  .court { background: #c1deba; border-radius: 8px; border: 1px solid #e6e3dc; overflow: hidden; position: relative; height: 380px; }
+  .net { position: absolute; left: 0; right: 0; top: 26%; height: 20px; background: rgba(255,255,255,0.8); display: flex; align-items: center; padding: 0 20px; z-index: 2; }
+  .net-line { flex: 1; height: 1px; background: #d1cec6; }
+  .net-text { font-size: 12px; color: #6d6d6d; padding: 0 12px; }
+  .zones { position: absolute; top: calc(26% + 24px); left: 4%; right: 4%; bottom: 4%; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; gap: 3px; }
+  .zone { border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border: 1px dashed; cursor: pointer; -webkit-tap-highlight-color: rgba(0,0,0,0.05); }
+  .zone .zlabel { font-size: 12px; font-weight: 300; }
+  .zone .zval { font-size: 20px; font-weight: 700; letter-spacing: -1px; }
+  .zone .zsub { font-size: 11px; font-weight: 300; }
+  .zone.high { background: rgba(55,216,37,0.3); border-color: #1b9f2a; color: white; }
+  .zone.mid { background: rgba(243,243,243,0.3); border-color: #7a7a7a; }
+  .zone.mid .zlabel { color: #3e3a32; }
+  .zone.mid .zval { color: #252424; }
+  .zone.mid .zsub { color: #252424; }
+  .zone.low { background: rgba(222,73,73,0.45); border-color: #f71b1b; color: white; }
+
+  .insight-card { background: white; border: 1px solid #e6e3dc; border-radius: 8px; padding: 12px; margin-bottom: 8px; }
+  .insight-card h4 { font-size: 12px; font-weight: 600; color: #322e27; margin-bottom: 4px; }
+  .insight-card p { font-size: 12px; margin: 0; }
+
+  .serve-bar { height: 8px; background: #f0f0f0; border-radius: 4px; margin: 4px 0 8px; overflow: hidden; }
+  .serve-fill { height: 100%; border-radius: 4px; }
+
+  .pattern-card { border-radius: 8px; padding: 12px; margin-bottom: 8px; }
+  .pattern-card.win { background: #eef6ea; border: 1px solid rgba(45,197,53,0.2); }
+  .pattern-card.lose { background: #f6ebea; border: 1px solid rgba(255,78,100,0.2); }
+  .pattern-card h4 { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+  .pattern-card.win h4 { color: #28a218; }
+  .pattern-card.lose h4 { color: #a22618; }
+
+  .stat-box { background: white; border: 1px solid #e6e3dc; border-radius: 8px; padding: 12px; text-align: center; }
+  .stat-box .big { font-size: 20px; font-weight: 600; letter-spacing: -1px; }
+  .stat-box .small { font-size: 10px; color: #6d6d6d; margin-top: 2px; }
+
+  .prompt-text { font-size: 14px; color: #908c83; text-align: center; padding: 8px 0; }
+  .opp-zone { display: flex; flex-direction: column; align-items: start; justify-content: flex-end; padding: 4px; gap: 3px; overflow: hidden; border-radius: 6px; }
+  .pill { border-radius: 5px; padding: 3px 6px; font-size: 10px; line-height: 1.3; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .pill.good { background: rgba(255,255,255,0.92); color: #0d6616; border: 1px solid rgba(27,159,42,0.25); }
+  .pill.bad { background: rgba(255,240,240,0.95); color: #b91c1c; border: 1px solid rgba(229,62,62,0.25); }
+  .pill.neutral { background: rgba(255,250,240,0.92); color: #6b5630; border: 1px solid rgba(184,160,112,0.25); }
+  .zone.selected { border-width: 2.5px; box-shadow: inset 0 0 0 1px currentColor; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="back">‹ Back</span>
+  <select id="matchSelect">
+    <option value="Lakshya_3tag">Lakshya_3tag</option>
+    <option value="Varshan_820">Varshan_820</option>
+    <option value="Harshan_793">Harshan_793</option>
+    <option value="Adhithya_799">Adhithya_799</option>
+  </select>
+</div>
+
+<div class="tabs" id="tabBar">
+  <div class="tab active" data-tab="report">Match Report</div>
+  <div class="tab" data-tab="arsenal">Shot Arsenal</div>
+  <div class="tab" data-tab="opening">Opening Phase</div>
+  <div class="tab" data-tab="patterns">Patterns</div>
+  <div class="tab" data-tab="dynamics">Dynamics</div>
+  <div class="tab" data-tab="h2h">Head To Head</div>
+</div>
+
+<div class="content">
+  <!-- Match Report -->
+  <div class="tab-panel active" id="panel-report">
+    <div id="report-content">Loading…</div>
+  </div>
+
+  <!-- Shot Arsenal -->
+  <div class="tab-panel" id="panel-arsenal">
+    <h2>Strong attacking and net game with vulnerable clears.</h2>
+
+    <!-- Zone info header -->
+    <div id="zone-header" style="display:none;padding:0 4px 8px;justify-content:space-between;align-items:flex-start;">
+      <div><span style="font-size:12px;font-style:italic;color:#6d6d6d;">From</span><div id="zone-header-name" style="font-size:16px;font-weight:600;"></div></div>
+      <div style="text-align:right;"><span style="font-size:12px;color:#6d6d6d;">Avg. effectiveness</span><div id="zone-header-eff" style="font-size:16px;font-weight:600;"></div></div>
+    </div>
+
+    <div class="court-wrap">
+      <!-- Scrollable court viewport -->
+      <div id="court-scroll" style="width:100%;height:421px;overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:8px;border:1px solid #e6e3dc;box-shadow:0 9px 9px rgba(139,139,139,0.25);scrollbar-width:none;">
+        <!-- Full court (692px tall, scrolls to show player/opponent halves) -->
+        <div style="background:#c1deba;position:relative;width:100%;height:692px;">
+          <!-- Court lines SVG -->
+          <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;" viewBox="0 0 326 692" preserveAspectRatio="none">
+            <rect x="14" y="14" width="298" height="664" fill="none" stroke="white" stroke-width="2.5" opacity="0.8"/>
+            <line x1="30" y1="14" x2="30" y2="678" stroke="white" stroke-width="2" opacity="0.7"/>
+            <line x1="296" y1="14" x2="296" y2="678" stroke="white" stroke-width="2" opacity="0.7"/>
+            <line x1="163" y1="14" x2="163" y2="678" stroke="white" stroke-width="2" opacity="0.6"/>
+            <line x1="30" y1="248" x2="296" y2="248" stroke="white" stroke-width="2" opacity="0.5"/>
+            <line x1="30" y1="444" x2="296" y2="444" stroke="white" stroke-width="2" opacity="0.5"/>
+            <line x1="14" y1="30" x2="312" y2="30" stroke="white" stroke-width="1.5" opacity="0.4"/>
+            <line x1="14" y1="662" x2="312" y2="662" stroke="white" stroke-width="1.5" opacity="0.4"/>
+          </svg>
+
+          <!-- Net (at y=336) -->
+          <div style="position:absolute;left:0;right:0;top:336px;height:20px;background:white;display:flex;align-items:center;padding:0 20px;z-index:2;">
+            <div style="flex:1;height:1px;background:#d1cec6;"></div>
+            <span style="padding:0 12px;font-size:12px;color:#6d6d6d;">Net</span>
+            <div style="flex:1;height:1px;background:#d1cec6;"></div>
+          </div>
+
+          <!-- Opponent zones (y:30 → y:336) — pills go here -->
+          <div id="opp-zones" style="position:absolute;top:30px;left:8.9%;right:8.9%;height:306px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr 1fr;gap:2px;">
+            <div class="opp-zone" data-zone="Front left"></div>
+            <div class="opp-zone" data-zone="Front right"></div>
+            <div class="opp-zone" data-zone="Mid left"></div>
+            <div class="opp-zone" data-zone="Mid right"></div>
+            <div class="opp-zone" data-zone="Back left"></div>
+            <div class="opp-zone" data-zone="Back right"></div>
+          </div>
+
+          <!-- Player zones (y:355 → y:661) -->
+          <div style="position:absolute;top:355px;left:8.9%;right:8.9%;height:306px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr 1fr;gap:2px;">
+            <div class="zone high" data-zone="Front left"><span class="zlabel">Front left</span><span class="zval">92%</span><span class="zsub">Effectiveness</span></div>
+            <div class="zone high" data-zone="Front right"><span class="zlabel">Front right</span><span class="zval">92%</span><span class="zsub">Effectiveness</span></div>
+            <div class="zone mid" data-zone="Mid left"><span class="zlabel">Mid left</span><span class="zval">51%</span><span class="zsub">Effectiveness</span></div>
+            <div class="zone mid" data-zone="Mid right"><span class="zlabel">Mid right</span><span class="zval">51%</span><span class="zsub">Effectiveness</span></div>
+            <div class="zone low" data-zone="Back left"><span class="zlabel">Back left</span><span class="zval">30%</span><span class="zsub">Effectiveness</span></div>
+            <div class="zone low" data-zone="Back right"><span class="zlabel">Back right</span><span class="zval">30%</span><span class="zsub">Effectiveness</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="prompt-text" id="court-prompt">Select a zone to see shot distribution</div>
+    </div>
+  </div>
+
+  <!-- Opening Phase -->
+  <div class="tab-panel" id="panel-opening">
+    <div id="opening-content">Loading…</div>
+  </div>
+
+  <!-- Patterns -->
+  <div class="tab-panel" id="panel-patterns">
+    <div id="patterns-content">Loading…</div>
+  </div>
+
+  <!-- Dynamics -->
+  <div class="tab-panel" id="panel-dynamics">
+    <div id="dynamics-content">Loading…</div>
+  </div>
+
+  <!-- Head To Head -->
+  <div class="tab-panel" id="panel-h2h">
+    <div id="h2h-content">Loading…</div>
+  </div>
+</div>
+
+<script>
+// Tab switching — pure vanilla JS
+document.getElementById('tabBar').addEventListener('click', function(e) {
+  var tab = e.target.closest('.tab');
+  if (!tab) return;
+  var tabId = tab.dataset.tab;
+
+  // Update active tab
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+  tab.classList.add('active');
+
+  // Show panel
+  document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.getElementById('panel-' + tabId).classList.add('active');
+
+  // Scroll tab into view
+  tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+});
+
+// Load match data
+var currentMatch = 'Lakshya_3tag';
+
+document.getElementById('matchSelect').addEventListener('change', function(e) {
+  currentMatch = e.target.value;
+  loadMatch();
+});
+
+function loadMatch() {
+  Promise.all([
+    fetch('/data/' + currentMatch + '_v4_report.json').then(function(r) { return r.json(); }),
+    fetch('/data/' + currentMatch + '_narrative.json').then(function(r) { return r.json(); })
+  ]).then(function(results) {
+    var report = results[0];
+    var narrative = results[1];
+    renderReport(report, narrative);
+    renderOpening(report, narrative);
+    renderPatterns(report, narrative);
+    renderDynamics(report, narrative);
+    renderH2H(report, narrative);
+  });
+}
+
+function renderReport(report, narrative) {
+  var ctx = report.match_context;
+  var story = narrative.section_narratives.match_story;
+  var html = '<h2>' + story.headline + '</h2>';
+  html += '<div class="card">';
+  html += '<div class="row"><span class="label">Result</span><span class="value ' + (ctx.result === 'won' ? 'green' : '') + '">' + (ctx.result === 'unknown' ? '—' : ctx.result.toUpperCase()) + '</span></div>';
+  if (ctx.score !== 'unknown') html += '<div class="row"><span class="label">Score</span><span class="value">' + ctx.score + '</span></div>';
+  html += '<div class="row"><span class="label">Total Rallies</span><span class="value">' + ctx.total_rallies + '</span></div>';
+  html += '<div class="row"><span class="label">Games Played</span><span class="value">' + ctx.games_played + '</span></div>';
+  html += '<div class="row"><span class="label">Avg Effectiveness</span><span class="value">' + ctx.player_avg_effectiveness.toFixed(1) + '%</span></div>';
+  html += '<div class="row"><span class="label">Total Shots</span><span class="value">' + ctx.player_total_shots + '</span></div>';
+  html += '</div>';
+  html += '<h3>Match Summary</h3><p>' + story.summary + '</p>';
+  if (story.key_differential) html += '<div class="card"><strong style="color:#fa642d;font-size:11px;">KEY DIFFERENTIAL</strong><p style="margin-top:4px;">' + story.key_differential + '</p></div>';
+  document.getElementById('report-content').innerHTML = html;
+}
+
+function renderOpening(report, narrative) {
+  var op = report.deep_match_report.opening_phase;
+  var narr = narrative.section_narratives.opening_phase;
+  var serve = op.serve_analysis;
+  var html = '<h2>' + (narr.opening_headline || 'Opening Phase') + '</h2>';
+  html += '<div class="card"><div class="row"><span class="label" style="font-weight:600;">Serve Distribution</span><span class="value" style="font-size:12px;">' + serve.total_serves + ' serves</span></div>';
+  (serve.by_type || []).forEach(function(s) {
+    var color = s.win_rate >= 0.5 ? '#2dc535' : s.win_rate >= 0.4 ? '#f59e0b' : '#ff4e64';
+    html += '<div class="row"><span class="label" style="font-size:12px;">' + s.serve_type.replace(/_/g, ' ') + '</span><span style="font-size:12px;color:#6d6d6d;">' + s.n + 'x (' + s.pct.toFixed(0) + '%) WR:' + (s.win_rate * 100).toFixed(0) + '%</span></div>';
+    html += '<div class="serve-bar"><div class="serve-fill" style="width:' + s.pct + '%;background:' + color + ';"></div></div>';
+  });
+  html += '</div>';
+  if (narr.when_serving && narr.when_serving.overall_insight) html += '<h3>When Serving</h3><p>' + narr.when_serving.overall_insight + '</p>';
+  if (narr.when_receiving && narr.when_receiving.overall_insight) html += '<h3>When Receiving</h3><p>' + narr.when_receiving.overall_insight + '</p>';
+  document.getElementById('opening-content').innerHTML = html;
+}
+
+function renderPatterns(report, narrative) {
+  var narr = narrative.section_narratives.patterns_sequences;
+  var html = '<h2>' + (narr.patterns_headline || 'Patterns') + '</h2>';
+  if (narr.rally_length_insight) html += '<p>' + narr.rally_length_insight + '</p>';
+  (narr.winning_patterns || []).forEach(function(p) {
+    html += '<div class="pattern-card win"><h4>' + p.pattern + '</h4><p>' + p.insight + '</p></div>';
+  });
+  (narr.losing_patterns || []).forEach(function(p) {
+    html += '<div class="pattern-card lose"><h4>' + p.pattern + '</h4><p>' + p.insight + '</p></div>';
+  });
+  if (narr.predictability && narr.predictability.insight) html += '<h3>Predictability</h3><p>' + narr.predictability.insight + '</p>';
+  document.getElementById('patterns-content').innerHTML = html;
+}
+
+function renderDynamics(report, narrative) {
+  var md = report.deep_match_report.match_dynamics;
+  var narr = narrative.section_narratives.pressure_dynamics;
+  var pp = md.pressure_profile;
+  var html = '<h2>' + (narr.dynamics_headline || 'Dynamics') + '</h2>';
+  html += '<div style="display:flex;gap:8px;margin-bottom:16px;">';
+  html += '<div class="stat-box" style="flex:1;"><div class="big green">' + pp.championship_phase.avg_eff.toFixed(1) + '%</div><div class="small">Under Pressure</div></div>';
+  html += '<div class="stat-box" style="flex:1;"><div class="big">' + pp.championship_phase.overall_avg_eff.toFixed(1) + '%</div><div class="small">Overall</div></div>';
+  html += '<div class="stat-box" style="flex:1;"><div class="big ' + (pp.championship_phase.delta >= 0 ? 'green' : 'red') + '">' + (pp.championship_phase.delta >= 0 ? '+' : '') + pp.championship_phase.delta.toFixed(1) + '</div><div class="small">Delta</div></div>';
+  html += '</div>';
+
+  if (pp.clutch_shots && pp.clutch_shots.length) {
+    html += '<h3 style="color:#2dc535;">Clutch Shots</h3>';
+    pp.clutch_shots.forEach(function(s) {
+      html += '<div class="pattern-card win" style="display:flex;justify-content:space-between;align-items:center;"><div><strong style="font-size:12px;">' + (s.shot || s.stroke || '').replace(/_/g, ' ') + '</strong><br><span style="font-size:10px;color:#6d6d6d;">' + s.n_crucial + ' crucial</span></div><span class="green" style="font-weight:600;">+' + s.delta.toFixed(1) + '</span></div>';
+    });
+  }
+  if (pp.fragile_shots && pp.fragile_shots.length) {
+    html += '<h3 style="color:#ff4e64;">Fragile Shots</h3>';
+    pp.fragile_shots.forEach(function(s) {
+      html += '<div class="pattern-card lose" style="display:flex;justify-content:space-between;align-items:center;"><div><strong style="font-size:12px;">' + (s.shot || s.stroke || '').replace(/_/g, ' ') + '</strong><br><span style="font-size:10px;color:#6d6d6d;">' + s.n_crucial + ' crucial</span></div><span class="red" style="font-weight:600;">' + s.delta.toFixed(1) + '</span></div>';
+    });
+  }
+
+  var ge = md.game_evolution;
+  if (ge && ge.games) {
+    html += '<h3>Game Evolution</h3>';
+    ge.games.forEach(function(g) {
+      html += '<div class="insight-card"><div class="row"><span style="font-weight:600;">Game ' + g.game + '</span><span style="font-size:12px;color:#6d6d6d;">' + g.rallies + ' rallies</span></div>';
+      html += '<div style="display:flex;gap:12px;margin-top:8px;">';
+      html += '<div style="flex:1;text-align:center;"><span style="font-weight:600;' + (g.win_rate >= 0.5 ? 'color:#2dc535;' : 'color:#ff4e64;') + '">' + (g.win_rate * 100).toFixed(0) + '%</span><div style="font-size:10px;color:#6d6d6d;">Win Rate</div></div>';
+      html += '<div style="flex:1;text-align:center;"><span style="font-weight:600;">' + g.player_avg_eff.toFixed(1) + '%</span><div style="font-size:10px;color:#6d6d6d;">Your Eff</div></div>';
+      if (g.opponent_avg_eff != null) html += '<div style="flex:1;text-align:center;"><span style="font-weight:600;">' + g.opponent_avg_eff.toFixed(1) + '%</span><div style="font-size:10px;color:#6d6d6d;">Opp Eff</div></div>';
+      html += '</div></div>';
+    });
+  }
+  document.getElementById('dynamics-content').innerHTML = html;
+}
+
+function renderH2H(report, narrative) {
+  var h2h = report.deep_match_report.match_dynamics.head_to_head;
+  var narr = narrative.section_narratives.head_to_head;
+  var wed = h2h.winner_error_difference;
+  var html = '<h2>' + (narr.h2h_headline || 'Head to Head') + '</h2>';
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">';
+  html += '<div class="stat-box"><div style="font-size:11px;color:#6d6d6d;">You</div><div style="display:flex;justify-content:center;gap:12px;margin-top:4px;"><div><span class="big green">' + wed.player_winners + '</span><div class="small">Winners</div></div><div><span class="big red">' + wed.player_ue + '</span><div class="small">UE</div></div></div></div>';
+  html += '<div class="stat-box"><div style="font-size:11px;color:#6d6d6d;">Opponent</div><div style="display:flex;justify-content:center;gap:12px;margin-top:4px;"><div><span class="big green">' + wed.opponent_winners + '</span><div class="small">Winners</div></div><div><span class="big red">' + wed.opponent_ue + '</span><div class="small">UE</div></div></div></div>';
+  html += '</div>';
+  html += '<div style="text-align:center;margin-bottom:16px;"><span style="font-weight:600;' + (wed.delta >= 0 ? 'color:#2dc535;' : 'color:#ff4e64;') + '">' + (wed.delta >= 0 ? '+' : '') + wed.delta + ' net W/E</span></div>';
+  if (narr.winner_error_insight) html += '<p>' + narr.winner_error_insight + '</p>';
+
+  var rla = h2h.rally_length_advantage;
+  if (rla) {
+    html += '<h3>Rally Length Advantage</h3>';
+    ['short', 'medium', 'long'].forEach(function(len) {
+      if (!rla[len]) return;
+      var wr = rla[len].player_win_rate;
+      var color = wr >= 0.55 ? '#2dc535' : wr >= 0.45 ? '#f59e0b' : '#ff4e64';
+      html += '<div class="row"><span class="label" style="text-transform:capitalize;">' + len + '</span><span style="color:' + color + ';font-weight:500;">' + (wr * 100).toFixed(0) + '% win rate</span></div>';
+      html += '<div class="serve-bar"><div class="serve-fill" style="width:' + (wr * 100) + '%;background:' + color + ';"></div></div>';
+    });
+  }
+  document.getElementById('h2h-content').innerHTML = html;
+}
+
+// Initial load
+loadMatch();
+</script>
+
+<!-- Court scrollable interaction -->
+<script>
+(function(){
+  var LANDINGS={
+    'Front right':{avgEff:32,zones:{'Front left':[{n:'Forehand Lift Cross',c:12,l:'good'}],'Front right':[{n:'Forehand Lift',c:12,l:'bad'}],'Mid left':[],'Mid right':[],'Back left':[{n:'Forehand Netkeep Cross',c:12,l:'good'},{n:'Forehand Netkeep',c:12,l:'neutral'}],'Back right':[{n:'Forehand Dribble',c:12,l:'neutral'}]}},
+    'Front left':{avgEff:75,zones:{'Front left':[{n:'Forehand Dribble',c:5,l:'neutral'}],'Front right':[{n:'Forehand Netkeep Cross',c:3,l:'good'}],'Mid left':[],'Mid right':[{n:'Forehand Push',c:5,l:'neutral'}],'Back left':[],'Back right':[{n:'Forehand Lift',c:5,l:'good'}]}},
+    'Mid left':{avgEff:51,zones:{'Front left':[{n:'Overhead Drop',c:8,l:'neutral'}],'Front right':[{n:'Overhead Drop Cross',c:6,l:'good'}],'Mid left':[],'Mid right':[{n:'Forehand Drive',c:10,l:'good'}],'Back left':[{n:'Forehand Clear',c:7,l:'bad'}],'Back right':[{n:'Forehand Clear Cross',c:5,l:'neutral'}]}},
+    'Mid right':{avgEff:51,zones:{'Front left':[{n:'Backhand Drop Cross',c:4,l:'neutral'}],'Front right':[{n:'Backhand Drop',c:6,l:'neutral'}],'Mid left':[{n:'Backhand Drive',c:8,l:'good'}],'Mid right':[],'Back left':[{n:'Backhand Clear Cross',c:5,l:'bad'}],'Back right':[{n:'Backhand Clear',c:7,l:'bad'}]}},
+    'Back left':{avgEff:30,zones:{'Front left':[{n:'Forehand Drop',c:8,l:'neutral'}],'Front right':[{n:'Forehand Drop Cross',c:4,l:'good'}],'Mid left':[],'Mid right':[{n:'Forehand Smash Cross',c:3,l:'good'}],'Back left':[{n:'Forehand Clear',c:10,l:'bad'}],'Back right':[{n:'Forehand Clear Cross',c:7,l:'bad'}]}},
+    'Back right':{avgEff:30,zones:{'Front left':[{n:'Overhead Drop Cross',c:5,l:'neutral'}],'Front right':[{n:'Overhead Drop',c:7,l:'neutral'}],'Mid left':[{n:'Overhead Smash Cross',c:4,l:'good'}],'Mid right':[],'Back left':[{n:'Overhead Clear Cross',c:8,l:'bad'}],'Back right':[{n:'Overhead Clear',c:12,l:'bad'}]}},
+  };
+
+  var courtScroll = document.getElementById('court-scroll');
+  var oppZones = document.querySelectorAll('.opp-zone');
+  var selectedZone = null;
+
+  // Start scrolled to player half
+  courtScroll.scrollTop = 271;
+
+  // Hide scrollbar
+  courtScroll.style.msOverflowStyle = 'none';
+
+  // Zone tap
+  document.querySelectorAll('#panel-arsenal .zone').forEach(function(el){
+    el.addEventListener('pointerdown', function(){
+      var zoneName = el.dataset.zone;
+
+      // Deselect all
+      document.querySelectorAll('#panel-arsenal .zone').forEach(function(z){ z.classList.remove('selected'); });
+
+      if(selectedZone === zoneName){
+        selectedZone = null;
+        courtScroll.scrollTo({top:271,behavior:'smooth'});
+        document.getElementById('zone-header').style.display = 'none';
+        document.getElementById('court-prompt').textContent = 'Select a zone to see shot distribution';
+        clearOpp();
+      } else {
+        selectedZone = zoneName;
+        el.classList.add('selected');
+        courtScroll.scrollTo({top:0,behavior:'smooth'});
+
+        var landing = LANDINGS[zoneName];
+        if(landing){
+          document.getElementById('zone-header').style.display = 'flex';
+          document.getElementById('zone-header-name').textContent = zoneName;
+          var effEl = document.getElementById('zone-header-eff');
+          effEl.textContent = landing.avgEff + '%';
+          effEl.style.color = landing.avgEff >= 65 ? '#2dc535' : landing.avgEff >= 45 ? '#252424' : '#ff4e64';
+          document.getElementById('court-prompt').textContent = 'Scroll to see your zones · tap a zone to switch';
+          renderOpp(landing);
+        }
+      }
+    });
+  });
+
+  function clearOpp(){
+    oppZones.forEach(function(el){ el.innerHTML = ''; });
+  }
+
+  function renderOpp(landing){
+    clearOpp();
+    oppZones.forEach(function(el){
+      var pills = landing.zones[el.dataset.zone] || [];
+      pills.forEach(function(pill){
+        var d = document.createElement('div');
+        d.className = 'pill ' + pill.l;
+        d.innerHTML = '<b>' + pill.n + '</b> (' + pill.c + 'X)';
+        el.appendChild(d);
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>

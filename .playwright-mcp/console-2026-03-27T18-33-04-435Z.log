@@ -1,0 +1,25 @@
+[     702ms] [WARNING] THREE.THREE.Clock: This module has been deprecated. Please use THREE.Timer instead. @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[    1082ms] [WARNING] THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead. @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[    1215ms] [WARNING] THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead. @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 4872597ms] [ERROR] ./src/components/tabs/ShotArsenalTab.tsx:367:15
+Expected ';', '}' or <eof>
+  365 |
+  366 |   // === FRONT LEFT zone (backhand) ===
+> 367 |   "BH Netkeep": [
+      |               ^
+  368 |     { x: 4.2, y: 0.4, height: "low", accuracy: "good", length: "good", videoTime: 7915/30 },
+  369 |     { x: 4.5, y: 0.6, height: "low", accuracy: "good", length: "good", videoTime: 15988/3...
+  370 |     { x: 3.9, y: 0.3, height: "low", accuracy: "good", length: "good", videoTime: 17390/3...
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Client Component Browser:
+    ./src/components/tabs/ShotArsenalTab.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/tabs/ShotArsenalTab.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:3272

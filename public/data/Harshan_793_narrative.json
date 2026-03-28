@@ -1,0 +1,336 @@
+{
+  "metadata": {
+    "report_path": "e2e_test_outputs/Harshan_793_v4_report.json",
+    "provider": "google",
+    "model": "gemini-2.5-pro",
+    "total_elapsed_seconds": 199.1,
+    "sections_run": [
+      "match_story",
+      "shot_arsenal_player",
+      "shot_arsenal_opponent",
+      "opening_phase",
+      "patterns_sequences",
+      "pressure_dynamics",
+      "head_to_head",
+      "game_evolution"
+    ]
+  },
+  "section_narratives": {
+    "match_story": {
+      "headline": "Predictable serves created openings for your opponent's balanced attack.",
+      "summary": "You found success when you committed to a full attack, constructing points to create finishing opportunities. However, a more balanced approach often led to medium-length rallies where your opponent found a consistent winning formula.",
+      "key_differential": "The key difference was your opponent's control of medium-length rallies, where they consistently turned balanced situations into winning attacks."
+    },
+    "shot_arsenal_player": {
+      "arsenal_headline": "Your smashes are decisive weapons that end rallies, but nearly all of your defensive and reset shots surrender the advantage, making it difficult to win rallies you don't control from the start.",
+      "shot_insights": {
+        "overhead_smash": "Your overhead smash is a primary weapon, consistently ending rallies or forcing weak replies that you can convert.",
+        "forehand_smash": "Similar to your overhead, your forehand smash is a high-impact shot that puts your opponent under immediate, rally-ending pressure.",
+        "forehand_lift": "Your forehand lift is a liability because it often lacks the height needed to push your opponent back, giving them an easy attacking opportunity.",
+        "backhand_lift": "Your backhand lift consistently fails to reset the rally, frequently resulting in a flat exchange that your opponent dominates.",
+        "backhand_clear": "Your backhand clear often falls short or lacks height, inviting smashes and failing to buy you enough time to recover your position.",
+        "forehand_defense": "Your forehand defense struggles to neutralize attacks, often returning the shuttlecock to a position where your opponent can continue their pressure.",
+        "backhand_pulldrop": "This shot is a liability, as it's frequently played too loosely, allowing your opponent to intercept it at the net for a winner.",
+        "overhead_clear": "Your overhead clear is not creating enough depth, which allows your opponent to maintain their attacking position without being pushed to the baseline.",
+        "backhand_defense": "Your backhand defense is not effective at turning defense into a neutral situation, often resulting in you being out of position for the next shot.",
+        "forehand_clear": "Your forehand clear is a liability that gives away the attack; it consistently lacks the length to move your opponent to their rear court.",
+        "forehand_push": "Your forehand push is not creating pressure and is frequently turned into a liability, losing you control of the front court.",
+        "forehand_netkeep": "Your forehand netkeep is effective when played tight to the net to force a lift, but becomes a liability when it's loose and allows your opponent to tap back.",
+        "backhand_netkeep": "Your backhand netkeep quality determines the outcome; tight shots win the exchange, while loose shots give your opponent an easy kill.",
+        "overhead_drop": "Your overhead drop is effective when placed tightly to the net and sidelines, but becomes an easy target for your opponent when it lands in the mid-court.",
+        "forehand_drive": "Your forehand drive is a weapon when you control the pace of the exchange, but it breaks down into errors when you are rushed.",
+        "forehand_dribble": "Your forehand dribble is inconsistent; it either applies significant pressure or sits up too high, giving your opponent a simple put-away.",
+        "backhand_dribble": "Your backhand dribble is a hidden weapon that effectively pressures your opponent at the net, often forcing them into a lift."
+      }
+    },
+    "shot_arsenal_opponent": {
+      "opponent_headline": "Your opponent relies on a powerful smash to finish rallies but is vulnerable when forced to defend or reset. Extending rallies and pressuring their defensive shots is the key to breaking down their game.",
+      "shot_insights": {
+        "forehand_smash": "Your opponent's forehand smash is a primary weapon. Focus on playing high, deep lifts to neutralize this threat and avoid giving them easy attacking chances.",
+        "overhead_smash": "Expect a powerful smash from any short clear. Prepare your defensive stance to block or drive the return, forcing them to play another shot.",
+        "backhand_defense": "Attacking your opponent's backhand side is highly effective. Their defense in that corner is a significant liability and often results in a weak return.",
+        "forehand_defense": "Your straight attacks are effective, as your opponent's forehand defense is unreliable. Continue to pressure this area to draw errors.",
+        "backhand_lift": "Your opponent's backhand lift is a weak point. Pressuring them at the net on their backhand side will often force a poor quality lift that you can intercept.",
+        "forehand_lift": "Similar to their backhand, your opponent's forehand lift is a liability. It frequently sets you up for an attack, so maintain pressure at the front court.",
+        "forehand_clear": "Your opponent's forehand clear often lacks depth. This creates opportunities for you to step in and play a strong counter-attack with your smash.",
+        "overhead_clear": "The overhead clear is another inconsistent shot for your opponent. When they are forced back, anticipate a clear that may fall short, giving you the attack.",
+        "overhead_drop": "Your opponent's overhead drop is inconsistent. It is effective when they are set up properly but becomes an error when you rush them to the rear court.",
+        "forehand_netkeep": "Your opponent's forehand net play is unpredictable. They can produce tight shots but also give away easy points, so be ready to capitalize on loose returns.",
+        "forehand_dribble": "Be aware of your opponent's forehand dribble. They use it selectively but effectively to control the front court in quick exchanges."
+      },
+      "opponent_weapons_to_watch": [
+        {
+          "shot": "Overhead Smash",
+          "tendency": "Your opponent consistently uses their overhead smash to end rallies from any mid-court or short lift.",
+          "counter": "Prioritize depth on your clears and lifts to push them back and neutralize the angle of their attack."
+        },
+        {
+          "shot": "Forehand Smash",
+          "tendency": "This is their go-to attacking shot from the forehand rear court, used to punish any passive play.",
+          "counter": "Anticipate the smash when you play a clear to this corner and prepare for a strong defensive block or drive."
+        },
+        {
+          "shot": "Forehand Dribble",
+          "tendency": "In tight net situations, your opponent uses the forehand dribble to try and win the exchange outright.",
+          "counter": "Avoid getting into a prolonged dribbling battle; look to push or lift early if you are not in a dominant net position."
+        }
+      ],
+      "exploitable_weaknesses": [
+        {
+          "shot": "Backhand Defense",
+          "vulnerability": "This is their weakest defensive shot and breaks down under sustained pressure.",
+          "exploit": "Use your smash to target their backhand corner, as it is likely to produce a weak return or an error."
+        },
+        {
+          "shot": "Forehand Clear",
+          "vulnerability": "Their forehand clear frequently lacks depth, landing in the mid-court.",
+          "exploit": "When you see them preparing for a clear from their forehand side, anticipate a shorter shuttle and be ready to counter-attack."
+        },
+        {
+          "shot": "Backhand Lift",
+          "vulnerability": "Lifts from the backhand side of the net are often poor quality and easy to attack.",
+          "exploit": "Play drops and net shots to their backhand front court to force this weak lift and set up your attack."
+        },
+        {
+          "shot": "Forehand Defense",
+          "vulnerability": "Your opponent struggles to return powerful shots to their forehand side.",
+          "exploit": "Continue to mix in straight smashes and drives down the line to pressure this defensive weakness."
+        }
+      ]
+    },
+    "opening_phase": {
+      "opening_headline": "Both you and your opponent relied heavily on the middle serve, turning the opening into a battle of who could better exploit this predictable start. You found success attacking your opponent's lifts but struggled when they controlled the net.",
+      "when_serving": {
+        "serve_predictability_insight": "You served to the middle 100% of the time, which makes your intention clear to your opponent before you even begin the motion. This predictability allows them to prepare their return without hesitation.",
+        "top_pairs": [
+          {
+            "pair": "serve_middle → opponent backhand_lift_cross",
+            "insight": "When your opponent returned your middle serve with a backhand lift cross-court, you won 80% of those rallies. This became a reliable source of points for you in the second and third games."
+          },
+          {
+            "pair": "serve_middle → opponent forehand_netkeep_cross",
+            "insight": "Your opponent's forehand cross-court net return was a major problem, as you lost every rally that started with this sequence. Your subsequent lift gave them the attack, which you were unable to neutralize."
+          }
+        ],
+        "overall_insight": "Your success after serving depended entirely on your opponent's reply; you capitalized on their lifts but lost control against their net returns."
+      },
+      "when_receiving": {
+        "opponent_serve_predictability_insight": "Your opponent was also highly predictable, serving to the middle over 90% of the time. This consistency gives you a stable platform to plan your return and seize early control.",
+        "top_pairs": [
+          {
+            "pair": "opponent serve_middle → your backhand_dribble",
+            "insight": "Your backhand dribble return was highly effective, winning you the rally 67% of the time. However, your opponent's subsequent cross-court lift often put you back on the defensive."
+          },
+          {
+            "pair": "opponent serve_middle → your backhand_netkeep",
+            "insight": "Your backhand netkeep return was ineffective, leading to a loss in every rally it started. This shot consistently gave your opponent an opportunity to attack the net, which they converted."
+          }
+        ],
+        "overall_insight": "You successfully used lifts and dribbles to counter your opponent's predictable serve, but net exchanges in the opening phase often ended in their favor."
+      },
+      "opening_sequences": {
+        "winning_openings_insight": "You win most rallies when your opponent lifts your serve, allowing you to immediately attack with a smash. This serve-lift-smash sequence is your most reliable pattern for taking control.",
+        "losing_openings_insight": "You consistently lose opening exchanges that develop into a net battle. When you play a net shot on your return, your opponent's follow-up dribble puts you under pressure you can't escape.",
+        "predictability_insight": "Your openings are funneled into two main patterns: either you attack a lift or you defend a net shot, with very little variation in between."
+      },
+      "opening_evolution_insight": "Your serve became more effective as the match progressed, with your win rate improving from 25% in game one to 67% in game three by forcing more lifts from your opponent."
+    },
+    "patterns_sequences": {
+      "patterns_headline": "You controlled quick exchanges, but your opponent won the tactical battle in medium length rallies by exploiting low-quality reset shots to gain the attack.",
+      "rally_length_insight": null,
+      "match_phase_insight": "Your shot effectiveness improved as the match went on, but your win rate fell in the championship phase (13-18). This suggests you played quality shots but your opponent capitalized better under pressure.",
+      "rally_construction_insight": "Your most successful strategies were 'full attack' and 'point construction', where you won over 65% of rallies. A more passive 'balanced' approach was less effective, resulting in more lost points.",
+      "winning_patterns": [
+        {
+          "pattern": "Winning by controlling the net to create an attack",
+          "insight": "You successfully engaged your opponent in a net battle, used a quality net shot (74% effectiveness) to force a weak lift, and then finished the rally with a decisive smash."
+        },
+        {
+          "pattern": "Winning by constructing the point with placement",
+          "insight": "You won every rally with this pattern by neutralizing pressure, playing a high-quality placement shot to draw a poor response, and converting the attack opportunity."
+        }
+      ],
+      "losing_patterns": [
+        {
+          "pattern": "Losing control from a weak reset shot",
+          "insight": "This sequence appeared 8 times and you lost 5 of them. It begins with your low-quality reset shot (32% effectiveness), which allows your opponent to apply pressure you are unable to defend against."
+        }
+      ],
+      "tipping_shots_insight": "Your lifts and clears were the most common shots that decided the outcome of rallies. When you play a weak lift or clear, you have likely already lost the point.",
+      "post_shot_recovery_insight": null,
+      "unforced_error_insight": "You played a clean match with no unforced errors recorded.",
+      "pace_control_insight": "The pace of the match was closely contested. Neither you nor your opponent could consistently dictate the speed of the rallies.",
+      "predictability": {
+        "score": 14.6,
+        "assessment": "low",
+        "insight": "After your opponent's backhand push, your clear is too predictable (67% of the time) and ineffective (35% effectiveness), consistently giving away the advantage.",
+        "top_predictable_responses": [
+          {
+            "trigger": "opponent backhand push",
+            "response": "clear",
+            "frequency_pct": 67,
+            "effectiveness": 35
+          },
+          {
+            "trigger": "opponent middle serve",
+            "response": "lift",
+            "frequency_pct": 48,
+            "effectiveness": 41
+          },
+          {
+            "trigger": "opponent backhand lift",
+            "response": "drive",
+            "frequency_pct": 33,
+            "effectiveness": 69
+          }
+        ]
+      },
+      "opponent_patterns": {
+        "opponent_rally_length_insight": null,
+        "opponent_tactical_insight": "Your opponent's most predictable and vulnerable pattern was lifting after a middle serve. They did this 64% of the time with very low effectiveness (28%).",
+        "opponent_pace_control_insight": "Your opponent played a reactive game and did not establish pace control. The match pace was determined by the rally-by-rally exchange.",
+        "opponent_blueprint_insight": "Your opponent's winning blueprint was a balanced approach in medium rallies. This strategy was highly effective, as you lost every rally where they employed it."
+      }
+    },
+    "pressure_dynamics": {
+      "dynamics_headline": "You perform well when controlling the match, with your effectiveness rising in the championship phase (13-18) and when you have a lead. The main challenge is finding a way to regain control when trailing, as your performance drops significantly from behind.",
+      "turning_points": [],
+      "rally_level_turning_points_insight": null,
+      "clutch_shots": [],
+      "fragile_shots": [],
+      "score_state": {
+        "band_breakdown": {
+          "start": {
+            "effectiveness": null,
+            "win_rate": null,
+            "insight": ""
+          },
+          "pre_interval": {
+            "effectiveness": null,
+            "win_rate": null,
+            "insight": ""
+          },
+          "championship": {
+            "effectiveness": 61,
+            "win_rate": null,
+            "insight": "Your effectiveness rises by 5 points in the championship phase (13-18), showing you can elevate your game when it matters."
+          },
+          "endgame": {
+            "effectiveness": null,
+            "win_rate": null,
+            "insight": ""
+          }
+        },
+        "leading_vs_trailing": "You are a strong front-runner, playing with higher effectiveness (57) when leading. When trailing, your effectiveness drops to 49, indicating a difficulty in disrupting your opponent's rhythm to mount a comeback.",
+        "key_finding": "The nearly 10-point drop in effectiveness when trailing is the most critical factor to address in pressure situations."
+      },
+      "opponent_pressure": {
+        "headline": "Your opponent showed consistent performance without significant fluctuations under pressure.",
+        "clutch_tendencies": "No specific shots stood out as consistently rising to the occasion in pressure situations for your opponent.",
+        "fragile_tendencies": "Your opponent did not display any recurring shot breakdowns when the score was tight.",
+        "championship_performance": "Your opponent maintained their baseline level of play during the championship phase (13-18)."
+      }
+    },
+    "head_to_head": {
+      "h2h_headline": "This was a matchup of similar styles where rally length was the deciding factor. You had the advantage in quick exchanges, while your opponent controlled the medium length rallies.",
+      "category_comparison_insight": "Both you and your opponent rely on smashes to win points, but your opponent was more effective in pressure situations and defensive exchanges. This created the main separation between two otherwise similar attacking profiles.",
+      "winner_error_insight": "",
+      "rally_length_comparison": {
+        "quick_exchanges": "You win most quick exchanges (≤4 shots), successfully using your attack to end points early.",
+        "medium_rallies": "Your opponent controlled the medium length rallies (5-8 shots), where your shot quality dropped and they were able to take control.",
+        "long_rallies": "Long rallies (9+ shots) were evenly contested, with neither player establishing a clear advantage.",
+        "overall_insight": "The match was a tactical battle over rally length; your success came from keeping rallies short, while your opponent thrived by extending them."
+      },
+      "style_comparison_insight": "While both of you play a balanced style, the matchup favored your opponent when they extended rallies past 4 shots. Your attacking game is most effective in quick exchanges, but your opponent's patient construction in medium length rallies successfully neutralized your initial pressure."
+    },
+    "game_evolution": {
+      "evolution_headline": "After a difficult start, you successfully adapted your strategy in game 2 to take control of the match. Your opponent's effectiveness declined steadily while yours rose to meet the challenge.",
+      "trend_insight": "Your opponent's effectiveness dropped from 61 in game 1 to below 50 by game 3. In contrast, you raised your level after the first game, establishing a performance gap they couldn't close.",
+      "fatigue_insight": "Your opponent's performance declined significantly after the long rallies in game 2, which could suggest they struggled to maintain their physical or mental level.",
+      "adaptation_insight": "You shifted from playing over a third of your shots as resets in game 1 to a more aggressive mix in game 2. This tactical change put more pressure on your opponent and was the key to turning the match around."
+    }
+  },
+  "editorial": {
+    "deduplication_actions": [
+      {
+        "insight": "You win most quick exchanges, but your success drops in medium length rallies where your opponent is strongest. Extending rallies beyond 5 shots often shifted the advantage to them.",
+        "found_in": [
+          "patterns_sequences",
+          "head_to_head"
+        ],
+        "keep_in": "head_to_head",
+        "remove_from": [
+          "patterns_sequences"
+        ]
+      },
+      {
+        "insight": "Your opponent's primary strength was in medium length rallies, where they won nearly 60% of the points. They were less effective in quick exchanges and long rallies.",
+        "found_in": [
+          "patterns_sequences",
+          "head_to_head"
+        ],
+        "keep_in": "head_to_head",
+        "remove_from": [
+          "patterns_sequences"
+        ]
+      }
+    ],
+    "contradictions": [
+      {
+        "insight_a": "Your shot effectiveness improved as the match went on, but your win rate fell in the championship phase (13-18). This suggests you played quality shots but your opponent capitalized better under pressure.",
+        "section_a": "patterns_sequences",
+        "insight_b": "Your effectiveness rises by 5 points in the championship phase (13-18), showing you can elevate your game when it matters.",
+        "section_b": "pressure_dynamics",
+        "resolution": "These insights are contradictory. Insight A states win rate fell while effectiveness improved, while Insight B states effectiveness rose. The core issue is the conflict between 'win rate fell' and 'effectiveness rises'. The proposed resolution is to merge them into a single, more nuanced insight in the 'pressure_dynamics' section: 'Your shot effectiveness rises by 5 points in the championship phase (13-18), but your win rate in this phase fell. This indicates you elevated your shot quality, but your opponent was more successful at converting these pressure situations into points.'"
+      }
+    ],
+    "match_story_alignment": {
+      "is_aligned": false,
+      "issues": [
+        "The headline focuses on 'predictable serves' but the core story of the match, as told by the 'head_to_head' and 'patterns_sequences' sections, is the battle over rally length. The serve was a contributing factor, not the central theme.",
+        "The summary mentions your success in 'full attack' and your opponent's success in 'medium-length rallies' but doesn't connect them. The key narrative is that your opponent used medium rallies to neutralize your attack.",
+        "The story misses the critical finding from 'shot_arsenal_player' and 'patterns_sequences' that your low-quality defensive/reset shots (lifts, clears) were the primary reason you lost control in medium rallies."
+      ],
+      "revised_headline": "Your attack was decisive in short rallies, but low-quality resets gave your opponent control in the crucial medium-length exchanges.",
+      "revised_summary": "You found success when you kept rallies short and attacked decisively. However, your opponent consistently extended exchanges into the 5-8 shot range, where your less effective lifts and clears gave them the attacking opportunities they needed to control the match."
+    }
+  },
+  "usage": {
+    "match_story": {
+      "elapsed_seconds": 14.8,
+      "estimated_input_tokens": 3277
+    },
+    "shot_arsenal_player": {
+      "elapsed_seconds": 22.3,
+      "estimated_input_tokens": 3525
+    },
+    "shot_arsenal_opponent": {
+      "elapsed_seconds": 23.1,
+      "estimated_input_tokens": 3081
+    },
+    "opening_phase": {
+      "elapsed_seconds": 18.5,
+      "estimated_input_tokens": 12419
+    },
+    "patterns_sequences": {
+      "elapsed_seconds": 25.7,
+      "estimated_input_tokens": 14090
+    },
+    "pressure_dynamics": {
+      "elapsed_seconds": 15.3,
+      "estimated_input_tokens": 3314
+    },
+    "head_to_head": {
+      "elapsed_seconds": 22.0,
+      "estimated_input_tokens": 4269
+    },
+    "game_evolution": {
+      "elapsed_seconds": 14.4,
+      "estimated_input_tokens": 3658
+    },
+    "editorial": {
+      "elapsed_seconds": 25.2,
+      "estimated_input_tokens": 7402
+    }
+  }
+}

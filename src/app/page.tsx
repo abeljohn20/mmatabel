@@ -1,65 +1,200 @@
-import Image from "next/image";
+"use client";
+
+import { useState, useEffect } from "react";
+import type { TabId } from "@/lib/types";
+
+import { ShotArsenalTab } from "@/components/tabs/ShotArsenalTab";
+import { OpeningPhaseTab } from "@/components/tabs/OpeningPhaseTab";
+import { PatternsTab } from "@/components/tabs/PatternsTab";
+import { DynamicsTab } from "@/components/tabs/DynamicsTab";
+
+import { VideoSheet } from "@/components/VideoSheet";
+import type { VideoSheetData } from "@/components/VideoSheet";
+
+const TABS: { id: TabId; label: string }[] = [
+  { id: "arsenal", label: "Shot Arsenal" },
+  { id: "opening", label: "Opening Phase" },
+  { id: "patterns", label: "Patterns" },
+  { id: "dynamics", label: "Dynamics" },
+];
+
+const MATCH_FILES = [
+  { id: "20251012_151701", label: "Match 12 Oct (54 rallies, 2 games)" },
+  { id: "Lakshya_3tag", label: "Lakshya (108 rallies)" },
+  { id: "Varshan_820", label: "Varshan (54 rallies)" },
+  { id: "Harshan_793", label: "Harshan (46 rallies)" },
+  { id: "Adhithya_799", label: "Adhithya (43 rallies)" },
+];
 
 export default function Home() {
+  const [matchIdx, setMatchIdx] = useState(0);
+  const [activeTab, setActiveTab] = useState<TabId>("arsenal");
+  const [analysisView, setAnalysisView] = useState<"your" | "opponent">("your");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [report, setReport] = useState<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [narrative, setNarrative] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [videoSheet, setVideoSheet] = useState<VideoSheetData | null>(null);
+
+  function openVideoSheet(data: VideoSheetData) {
+    setVideoSheet(data);
+  }
+
+  // Fetch match data from public folder
+  useEffect(() => {
+    const id = MATCH_FILES[matchIdx].id;
+    setLoading(true);
+    Promise.all([
+      fetch(`/data/${id}_v4_report.json`).then((r) => r.json()),
+      fetch(`/data/${id}_narrative.json`).then((r) => r.json()),
+    ]).then(([r, n]) => {
+      setReport(r);
+      setNarrative(n);
+      setLoading(false);
+    });
+  }, [matchIdx]);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div
+      style={{
+        maxWidth: 430,
+        margin: "0 auto",
+        height: "100dvh",
+        background: "white",
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
+      }}
+    >
+      {/* Header */}
+      <div style={{ padding: "8px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+          <span style={{ fontSize: 14 }}>‹</span>
+          <span style={{ fontSize: 12 }}>Back</span>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        <select
+          value={matchIdx}
+          onChange={(e) => setMatchIdx(Number(e.target.value))}
+          style={{ fontSize: 12, border: "none", color: "#6d6d6d" }}
+        >
+          {MATCH_FILES.map((m, i) => (
+            <option key={m.id} value={i}>{m.id}</option>
+          ))}
+        </select>
+      </div>
+
+      {/* Tab Bar */}
+      <div
+        style={{
+          display: "flex",
+          gap: 16,
+          padding: "12px 16px",
+          overflowX: "auto",
+          background: "white",
+          borderBottom: "1px solid #eee",
+          WebkitOverflowScrolling: "touch",
+        }}
+      >
+        {TABS.map((tab) => {
+          const isActive = activeTab === tab.id;
+          return (
+            <div
+              key={tab.id}
+              onPointerDown={() => setActiveTab(tab.id)}
+              style={{
+                whiteSpace: "nowrap",
+                flexShrink: 0,
+                padding: "8px 0",
+                fontSize: isActive ? 17 : 14,
+                fontWeight: isActive ? 600 : 400,
+                color: isActive ? "#322e27" : "#908c83",
+                borderBottom: isActive ? "2px solid #fa642d" : "2px solid transparent",
+                cursor: "pointer",
+                WebkitTapHighlightColor: "rgba(0,0,0,0.05)",
+                userSelect: "none",
+              }}
+            >
+              {tab.label}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Your / Opponent Analysis toggle — fixed below tabs, hidden on Match Report */}
+      {activeTab !== "report" && (
+        <div
+          style={{
+            display: "flex",
+            gap: 0,
+            padding: "6px 16px",
+            background: "#fafafa",
+            borderBottom: "1px solid #f0f0f0",
+            flexShrink: 0,
+          }}
+        >
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              background: "#eeeeee",
+              borderRadius: 20,
+              padding: 3,
+            }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            {(["your", "opponent"] as const).map((view) => (
+              <button
+                key={view}
+                type="button"
+                onClick={() => setAnalysisView(view)}
+                style={{
+                  flex: 1,
+                  padding: "8px 0",
+                  borderRadius: 18,
+                  border: "none",
+                  fontSize: 13,
+                  fontWeight: analysisView === view ? 500 : 400,
+                  color: analysisView === view ? "#322e27" : "#908c83",
+                  background: analysisView === view ? "white" : "transparent",
+                  boxShadow: analysisView === view ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
+                  cursor: "pointer",
+                  transition: "all 0.2s ease",
+                  WebkitTapHighlightColor: "transparent",
+                }}
+              >
+                {view === "your" ? "Your Analysis" : "Opponent Analysis"}
+              </button>
+            ))}
+          </div>
         </div>
-      </main>
+      )}
+
+      {/* Content */}
+      <div style={{ flex: 1, minHeight: 0, background: activeTab === "arsenal" ? "#f8f9fa" : "#fafafa", overflowY: activeTab === "arsenal" ? "hidden" : "auto" }}>
+        {loading ? (
+          <div style={{ padding: 40, textAlign: "center", color: "#999" }}>Loading…</div>
+        ) : (
+          <>
+
+            {activeTab === "arsenal" && <ShotArsenalTab analysisView={analysisView} />}
+            {activeTab === "opening" && <OpeningPhaseTab onOpenVideo={openVideoSheet} />}
+            {activeTab === "patterns" && <PatternsTab onOpenVideo={openVideoSheet} />}
+            {activeTab === "dynamics" && <DynamicsTab report={report} narrative={narrative} analysisView={analysisView} onOpenVideo={openVideoSheet} />}
+          </>
+        )}
+      </div>
+
+      {/* Video bottom sheet */}
+      <VideoSheet
+        isOpen={videoSheet !== null}
+        onClose={() => setVideoSheet(null)}
+        title={videoSheet?.title ?? ""}
+        subtitle={videoSheet?.subtitle}
+        description={videoSheet?.description}
+        videoSrc="/match-video.mp4"
+        timestamps={videoSheet?.timestamps ?? []}
+        sectionLabel={videoSheet?.sectionLabel}
+      />
     </div>
   );
 }

@@ -1,0 +1,5309 @@
+{
+  "shot_arsenal": {
+    "your_analysis": {
+      "headline": "[narrative: arsenal_headline]",
+      "zone_selection": {
+        "prompt": "Select a zone to see shot distribution",
+        "player_zones": [
+          {
+            "zone_name": "Front left",
+            "effectiveness_pct": 49.8,
+            "level": "mid",
+            "total_shots": 112
+          },
+          {
+            "zone_name": "Front right",
+            "effectiveness_pct": 50.1,
+            "level": "mid",
+            "total_shots": 112
+          },
+          {
+            "zone_name": "Mid left",
+            "effectiveness_pct": 54.9,
+            "level": "mid",
+            "total_shots": 38
+          },
+          {
+            "zone_name": "Mid right",
+            "effectiveness_pct": 45.3,
+            "level": "mid",
+            "total_shots": 46
+          },
+          {
+            "zone_name": "Back left",
+            "effectiveness_pct": 67.0,
+            "level": "high",
+            "total_shots": 103
+          },
+          {
+            "zone_name": "Back right",
+            "effectiveness_pct": 65.5,
+            "level": "high",
+            "total_shots": 95
+          }
+        ]
+      },
+      "zone_shot_mapping": {
+        "Front left": {
+          "avg_effectiveness": 49.0,
+          "opponent_landing_zones": {
+            "Front left": [
+              {
+                "shot_name": "FH Netkeep Cross",
+                "count": 21,
+                "level": "neutral",
+                "avg_eff": 57.5
+              },
+              {
+                "shot_name": "BH Netkeep Cross",
+                "count": 11,
+                "level": "neutral",
+                "avg_eff": 63.7
+              },
+              {
+                "shot_name": "FH Dribble Cross",
+                "count": 3,
+                "level": "good",
+                "avg_eff": 97.7
+              },
+              {
+                "shot_name": "BH Dribble Cross",
+                "count": 3,
+                "level": "bad",
+                "avg_eff": 37.7
+              }
+            ],
+            "Front right": [
+              {
+                "shot_name": "BH Netkeep",
+                "count": 7,
+                "level": "neutral",
+                "avg_eff": 48.1
+              },
+              {
+                "shot_name": "FH Netkeep",
+                "count": 6,
+                "level": "bad",
+                "avg_eff": 44.7
+              }
+            ],
+            "Mid left": [],
+            "Mid right": [],
+            "Back left": [
+              {
+                "shot_name": "FH Lift Cross",
+                "count": 11,
+                "level": "neutral",
+                "avg_eff": 49.7
+              },
+              {
+                "shot_name": "BH Lift Cross",
+                "count": 7,
+                "level": "bad",
+                "avg_eff": 26.3
+              },
+              {
+                "shot_name": "FH Push Cross",
+                "count": 3,
+                "level": "neutral",
+                "avg_eff": 55.3
+              }
+            ],
+            "Back right": [
+              {
+                "shot_name": "FH Lift",
+                "count": 15,
+                "level": "bad",
+                "avg_eff": 35.8
+              },
+              {
+                "shot_name": "BH Lift",
+                "count": 11,
+                "level": "bad",
+                "avg_eff": 40.5
+              }
+            ]
+          }
+        },
+        "Front right": {
+          "avg_effectiveness": 48.6,
+          "opponent_landing_zones": {
+            "Front left": [
+              {
+                "shot_name": "BH Netkeep",
+                "count": 9,
+                "level": "neutral",
+                "avg_eff": 58.2
+              }
+            ],
+            "Front right": [
+              {
+                "shot_name": "FH Netkeep Cross",
+                "count": 13,
+                "level": "neutral",
+                "avg_eff": 59.5
+              },
+              {
+                "shot_name": "FH Dribble Cross",
+                "count": 10,
+                "level": "good",
+                "avg_eff": 73.1
+              },
+              {
+                "shot_name": "BH Netkeep Cross",
+                "count": 6,
+                "level": "good",
+                "avg_eff": 65.5
+              },
+              {
+                "shot_name": "BH Dribble Cross",
+                "count": 2,
+                "level": "neutral",
+                "avg_eff": 50.0
+              }
+            ],
+            "Mid left": [
+              {
+                "shot_name": "FH Flatgame",
+                "count": 3,
+                "level": "neutral",
+                "avg_eff": 58.0
+              },
+              {
+                "shot_name": "FH Push",
+                "count": 2,
+                "level": "bad",
+                "avg_eff": 41.0
+              }
+            ],
+            "Mid right": [
+              {
+                "shot_name": "FH Push Cross",
+                "count": 4,
+                "level": "good",
+                "avg_eff": 72.0
+              }
+            ],
+            "Back left": [
+              {
+                "shot_name": "FH Lift",
+                "count": 14,
+                "level": "bad",
+                "avg_eff": 34.4
+              },
+              {
+                "shot_name": "BH Lift",
+                "count": 13,
+                "level": "bad",
+                "avg_eff": 42.4
+              }
+            ],
+            "Back right": [
+              {
+                "shot_name": "FH Lift Cross",
+                "count": 18,
+                "level": "bad",
+                "avg_eff": 29.8
+              },
+              {
+                "shot_name": "BH Lift Cross",
+                "count": 8,
+                "level": "bad",
+                "avg_eff": 40.5
+              }
+            ]
+          }
+        },
+        "Mid left": {
+          "avg_effectiveness": 51.7,
+          "opponent_landing_zones": {
+            "Front left": [
+              {
+                "shot_name": "BH Defense Cross",
+                "count": 7,
+                "level": "bad",
+                "avg_eff": 40.2
+              },
+              {
+                "shot_name": "FH Defense Cross",
+                "count": 2,
+                "level": "bad",
+                "avg_eff": 41.0
+              }
+            ],
+            "Front right": [
+              {
+                "shot_name": "BH Netkeep",
+                "count": 3,
+                "level": "good",
+                "avg_eff": 71.3
+              },
+              {
+                "shot_name": "BH Defense",
+                "count": 2,
+                "level": "neutral",
+                "avg_eff": 46.0
+              }
+            ],
+            "Mid left": [
+              {
+                "shot_name": "FH Defense Cross",
+                "count": 5,
+                "level": "bad",
+                "avg_eff": 42.6
+              },
+              {
+                "shot_name": "FH Push Cross",
+                "count": 2,
+                "level": "good",
+                "avg_eff": 70.5
+              }
+            ],
+            "Mid right": [],
+            "Back left": [
+              {
+                "shot_name": "FH Defense Cross",
+                "count": 2,
+                "level": "neutral",
+                "avg_eff": 46.0
+              }
+            ],
+            "Back right": [
+              {
+                "shot_name": "FH Defense",
+                "count": 2,
+                "level": "bad",
+                "avg_eff": 37.0
+              },
+              {
+                "shot_name": "FH Flatgame",
+                "count": 2,
+                "level": "good",
+                "avg_eff": 100.0
+              },
+              {
+                "shot_name": "BH Lift",
+                "count": 2,
+                "level": "neutral",
+                "avg_eff": 55.0
+              }
+            ]
+          }
+        },
+        "Mid right": {
+          "avg_effectiveness": 43.0,
+          "opponent_landing_zones": {
+            "Front left": [
+              {
+                "shot_name": "BH Defense",
+                "count": 2,
+                "level": "bad",
+                "avg_eff": 42.0
+              }
+            ],
+            "Front right": [
+              {
+                "shot_name": "FH Netkeep Cross",
+                "count": 6,
+                "level": "neutral",
+                "avg_eff": 52.3
+              },
+              {
+                "shot_name": "BH Defense Cross",
+                "count": 5,
+                "level": "bad",
+                "avg_eff": 30.4
+              },
+              {
+                "shot_name": "FH Defense Cross",
+                "count": 3,
+                "level": "bad",
+                "avg_eff": 44.0
+              }
+            ],
+            "Mid left": [
+              {
+                "shot_name": "BH Defense",
+                "count": 6,
+                "level": "bad",
+                "avg_eff": 27.3
+              },
+              {
+                "shot_name": "FH Flatgame",
+                "count": 2,
+                "level": "neutral",
+                "avg_eff": 58.0
+              }
+            ],
+            "Mid right": [
+              {
+                "shot_name": "FH Defense Cross",
+                "count": 3,
+                "level": "good",
+                "avg_eff": 66.0
+              }
+            ],
+            "Back left": [
+              {
+                "shot_name": "FH Lift",
+                "count": 4,
+                "level": "neutral",
+                "avg_eff": 52.2
+              },
+              {
+                "shot_name": "BH Defense",
+                "count": 2,
+                "level": "bad",
+                "avg_eff": 26.0
+              }
+            ],
+            "Back right": []
+          }
+        },
+        "Back left": {
+          "avg_effectiveness": 66.8,
+          "opponent_landing_zones": {
+            "Front left": [
+              {
+                "shot_name": "BH Defense Cross",
+                "count": 6,
+                "level": "bad",
+                "avg_eff": 32.0
+              },
+              {
+                "shot_name": "FH Drop Cross",
+                "count": 2,
+                "level": "neutral",
+                "avg_eff": 46.0
+              },
+              {
+                "shot_name": "BH Drop Cross",
+                "count": 2,
+                "level": "bad",
+                "avg_eff": 30.0
+              }
+            ],
+            "Front right": [
+              {
+                "shot_name": "OH Drop",
+                "count": 6,
+                "level": "neutral",
+                "avg_eff": 54.0
+              },
+              {
+                "shot_name": "BH Defense",
+                "count": 4,
+                "level": "neutral",
+                "avg_eff": 52.0
+              },
+              {
+                "shot_name": "BH Drop",
+                "count": 2,
+                "level": "neutral",
+                "avg_eff": 54.0
+              }
+            ],
+            "Mid left": [
+              {
+                "shot_name": "OH Smash Cross",
+                "count": 15,
+                "level": "good",
+                "avg_eff": 92.7
+              },
+              {
+                "shot_name": "OH Halfsmash Cross",
+                "count": 4,
+                "level": "good",
+                "avg_eff": 82.5
+              },
+              {
+                "shot_name": "FH Smash Cross",
+                "count": 2,
+                "level": "good",
+                "avg_eff": 96.0
+              }
+            ],
+            "Mid right": [
+              {
+                "shot_name": "OH Smash",
+                "count": 10,
+                "level": "good",
+                "avg_eff": 91.6
+              },
+              {
+                "shot_name": "OH Halfsmash",
+                "count": 6,
+                "level": "good",
+                "avg_eff": 79.2
+              },
+              {
+                "shot_name": "FH Smash",
+                "count": 2,
+                "level": "good",
+                "avg_eff": 90.0
+              },
+              {
+                "shot_name": "FH Drop",
+                "count": 2,
+                "level": "neutral",
+                "avg_eff": 51.0
+              },
+              {
+                "shot_name": "FH Pulldrop",
+                "count": 2,
+                "level": "bad",
+                "avg_eff": 44.5
+              },
+              {
+                "shot_name": "BH Defense",
+                "count": 2,
+                "level": "good",
+                "avg_eff": 68.5
+              }
+            ],
+            "Back left": [
+              {
+                "shot_name": "OH Clear Cross",
+                "count": 8,
+                "level": "neutral",
+                "avg_eff": 58.9
+              },
+              {
+                "shot_name": "FH Clear Cross",
+                "count": 6,
+                "level": "bad",
+                "avg_eff": 38.8
+              },
+              {
+                "shot_name": "FH Drive Cross",
+                "count": 4,
+                "level": "good",
+                "avg_eff": 85.0
+              },
+              {
+                "shot_name": "BH Clear Cross",
+                "count": 4,
+                "level": "bad",
+                "avg_eff": 14.5
+              },
+              {
+                "shot_name": "FH Smash Cross",
+                "count": 2,
+                "level": "good",
+                "avg_eff": 92.0
+              }
+            ],
+            "Back right": [
+              {
+                "shot_name": "FH Clear",
+                "count": 3,
+                "level": "good",
+                "avg_eff": 67.7
+              },
+              {
+                "shot_name": "FH Smash",
+                "count": 2,
+                "level": "good",
+                "avg_eff": 87.0
+              },
+              {
+                "shot_name": "OH Clear",
+                "count": 2,
+                "level": "neutral",
+                "avg_eff": 46.0
+              }
+            ]
+          }
+        },
+        "Back right": {
+          "avg_effectiveness": 67.2,
+          "opponent_landing_zones": {
+            "Front left": [
+              {
+                "shot_name": "FH Drop",
+                "count": 5,
+                "level": "neutral",
+                "avg_eff": 57.4
+              },
+              {
+                "shot_name": "OH Drop",
+                "count": 2,
+                "level": "bad",
+                "avg_eff": 17.0
+              }
+            ],
+            "Front right": [
+              {
+                "shot_name": "FH Defense Cross",
+                "count": 7,
+                "level": "bad",
+                "avg_eff": 40.0
+              },
+              {
+                "shot_name": "BH Pulldrop Cross",
+                "count": 2,
+                "level": "bad",
+                "avg_eff": 34.0
+              },
+              {
+                "shot_name": "FH Drop Cross",
+                "count": 2,
+                "level": "bad",
+                "avg_eff": 22.0
+              }
+            ],
+            "Mid left": [
+              {
+                "shot_name": "FH Smash",
+                "count": 5,
+                "level": "good",
+                "avg_eff": 87.2
+              },
+              {
+                "shot_name": "OH Drop",
+                "count": 3,
+                "level": "bad",
+                "avg_eff": 42.0
+              },
+              {
+                "shot_name": "OH Halfsmash",
+                "count": 3,
+                "level": "good",
+                "avg_eff": 87.0
+              }
+            ],
+            "Mid right": [
+              {
+                "shot_name": "FH Smash Cross",
+                "count": 10,
+                "level": "good",
+                "avg_eff": 93.8
+              },
+              {
+                "shot_name": "OH Smash Cross",
+                "count": 7,
+                "level": "good",
+                "avg_eff": 96.0
+              },
+              {
+                "shot_name": "FH Drive Cross",
+                "count": 6,
+                "level": "good",
+                "avg_eff": 80.8
+              }
+            ],
+            "Back left": [
+              {
+                "shot_name": "OH Smash",
+                "count": 3,
+                "level": "good",
+                "avg_eff": 94.0
+              },
+              {
+                "shot_name": "OH Clear",
+                "count": 3,
+                "level": "neutral",
+                "avg_eff": 57.0
+              }
+            ],
+            "Back right": [
+              {
+                "shot_name": "OH Clear Cross",
+                "count": 14,
+                "level": "neutral",
+                "avg_eff": 45.9
+              },
+              {
+                "shot_name": "OH Smash Cross",
+                "count": 10,
+                "level": "good",
+                "avg_eff": 94.7
+              },
+              {
+                "shot_name": "FH Clear Cross",
+                "count": 4,
+                "level": "bad",
+                "avg_eff": 25.5
+              }
+            ]
+          }
+        }
+      },
+      "shot_details": {
+        "FH Smash Cross": {
+          "shot_name": "FH Smash Cross",
+          "shot_count": 16,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 94.5
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 62.0
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              28.5,
+              122.8,
+              321.2,
+              325.9,
+              364.2,
+              557.7,
+              580.8,
+              601.0,
+              609.5,
+              681.3,
+              800.0,
+              969.0,
+              1080.6,
+              1180.2,
+              1227.9,
+              1234.7
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 4.6,
+                "y": 2.7,
+                "accuracy": "good"
+              },
+              {
+                "x": 2.8,
+                "y": 3.9,
+                "accuracy": "bad"
+              },
+              {
+                "x": 5.3,
+                "y": 1.4,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.0,
+                "y": 2.3,
+                "accuracy": "bad"
+              },
+              {
+                "x": 4.6,
+                "y": 2.1,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.6,
+                "y": 1.2,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.6,
+                "y": 10.0,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.3,
+                "y": 10.7,
+                "accuracy": "good"
+              },
+              {
+                "x": -0.1,
+                "y": 10.8,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.7,
+                "y": 10.4,
+                "accuracy": "average"
+              },
+              {
+                "x": 1.0,
+                "y": 10.7,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.6,
+                "y": 10.9,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.7,
+                "y": 10.7,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.4,
+                "y": 10.8,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.6,
+                "y": 10.6,
+                "accuracy": "good"
+              },
+              {
+                "x": 1.2,
+                "y": 10.0,
+                "accuracy": "bad"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "OH Smash Cross": {
+          "shot_name": "OH Smash Cross",
+          "shot_count": 35,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 94.0
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 50.0
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              35.0,
+              60.0,
+              80.7,
+              83.6,
+              84.8,
+              108.1,
+              113.1,
+              147.6,
+              153.5,
+              175.6,
+              218.2,
+              355.2,
+              394.3,
+              400.8,
+              486.2,
+              513.9,
+              520.1,
+              532.5,
+              551.6,
+              592.9,
+              620.1,
+              654.6,
+              664.4,
+              737.9,
+              771.7,
+              784.7,
+              833.9,
+              853.9,
+              887.4,
+              901.2,
+              957.1,
+              1002.8,
+              1029.5,
+              1119.5,
+              1238.8
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 0.2,
+                "y": 1.9,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.2,
+                "y": 2.0,
+                "accuracy": "good"
+              },
+              {
+                "x": 1.3,
+                "y": 2.6,
+                "accuracy": "bad"
+              },
+              {
+                "x": 0.8,
+                "y": 2.4,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.3,
+                "y": 1.7,
+                "accuracy": "good"
+              },
+              {
+                "x": 1.2,
+                "y": 1.9,
+                "accuracy": "bad"
+              },
+              {
+                "x": 0.3,
+                "y": 2.9,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.2,
+                "y": 1.6,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.5,
+                "y": 2.4,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.3,
+                "y": 2.7,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.9,
+                "y": 2.6,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.0,
+                "y": 1.3,
+                "accuracy": "good"
+              },
+              {
+                "x": 1.2,
+                "y": 2.1,
+                "accuracy": "bad"
+              },
+              {
+                "x": 0.3,
+                "y": 2.0,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.6,
+                "y": 1.1,
+                "accuracy": "good"
+              },
+              {
+                "x": 1.0,
+                "y": 2.3,
+                "accuracy": "average"
+              },
+              {
+                "x": 1.2,
+                "y": 2.3,
+                "accuracy": "bad"
+              },
+              {
+                "x": 0.5,
+                "y": 2.0,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.8,
+                "y": 2.1,
+                "accuracy": "average"
+              },
+              {
+                "x": 4.8,
+                "y": 10.6,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.1,
+                "y": 10.5,
+                "accuracy": "bad"
+              },
+              {
+                "x": 5.1,
+                "y": 10.8,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.4,
+                "y": 10.6,
+                "accuracy": "average"
+              },
+              {
+                "x": 4.2,
+                "y": 10.3,
+                "accuracy": "average"
+              },
+              {
+                "x": 5.1,
+                "y": 10.2,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.8,
+                "y": 10.7,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.5,
+                "y": 10.5,
+                "accuracy": "average"
+              },
+              {
+                "x": 2.8,
+                "y": 10.6,
+                "accuracy": "bad"
+              },
+              {
+                "x": 3.3,
+                "y": 10.1,
+                "accuracy": "bad"
+              },
+              {
+                "x": 4.8,
+                "y": 10.7,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.8,
+                "y": 10.1,
+                "accuracy": "good"
+              },
+              {
+                "x": 1.4,
+                "y": 9.8,
+                "accuracy": "bad"
+              },
+              {
+                "x": 4.2,
+                "y": 10.5,
+                "accuracy": "average"
+              },
+              {
+                "x": 4.6,
+                "y": 10.3,
+                "accuracy": "good"
+              },
+              {
+                "x": 5.1,
+                "y": 10.8,
+                "accuracy": "good"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "OH Smash": {
+          "shot_name": "OH Smash",
+          "shot_count": 15,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 92.5
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 50.0
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              277.9,
+              404.4,
+              408.7,
+              438.2,
+              615.8,
+              648.5,
+              696.4,
+              701.9,
+              728.4,
+              865.8,
+              972.9,
+              1048.3,
+              1176.6,
+              1188.6,
+              1219.7
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 4.1,
+                "y": 2.2,
+                "accuracy": "bad"
+              },
+              {
+                "x": 3.8,
+                "y": 2.2,
+                "accuracy": "bad"
+              },
+              {
+                "x": 4.5,
+                "y": 1.9,
+                "accuracy": "average"
+              },
+              {
+                "x": 3.7,
+                "y": 2.4,
+                "accuracy": "bad"
+              },
+              {
+                "x": 1.7,
+                "y": 10.5,
+                "accuracy": "bad"
+              },
+              {
+                "x": 1.4,
+                "y": 10.2,
+                "accuracy": "bad"
+              },
+              {
+                "x": 1.9,
+                "y": 9.2,
+                "accuracy": "bad"
+              },
+              {
+                "x": 1.1,
+                "y": 10.0,
+                "accuracy": "bad"
+              },
+              {
+                "x": 1.8,
+                "y": 10.4,
+                "accuracy": "bad"
+              },
+              {
+                "x": 0.7,
+                "y": 10.2,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.8,
+                "y": 10.6,
+                "accuracy": "average"
+              },
+              {
+                "x": 1.1,
+                "y": 10.2,
+                "accuracy": "bad"
+              },
+              {
+                "x": 1.3,
+                "y": 10.4,
+                "accuracy": "bad"
+              },
+              {
+                "x": 1.3,
+                "y": 10.2,
+                "accuracy": "bad"
+              },
+              {
+                "x": 0.8,
+                "y": 9.8,
+                "accuracy": "average"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "FH Smash": {
+          "shot_name": "FH Smash",
+          "shot_count": 9,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 87.8
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 62.0
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              23.9,
+              69.8,
+              135.6,
+              290.4,
+              791.5,
+              1056.5,
+              1062.4,
+              1094.0,
+              1215.6
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 1.1,
+                "y": 2.4,
+                "accuracy": "bad"
+              },
+              {
+                "x": 0.6,
+                "y": 2.2,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.9,
+                "y": 2.4,
+                "accuracy": "average"
+              },
+              {
+                "x": 1.1,
+                "y": 2.1,
+                "accuracy": "bad"
+              },
+              {
+                "x": 3.0,
+                "y": 10.6,
+                "accuracy": "bad"
+              },
+              {
+                "x": 4.5,
+                "y": 9.6,
+                "accuracy": "average"
+              },
+              {
+                "x": 4.2,
+                "y": 10.4,
+                "accuracy": "average"
+              },
+              {
+                "x": 4.6,
+                "y": 10.3,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.2,
+                "y": 9.6,
+                "accuracy": "average"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "OH Halfsmash Cross": {
+          "shot_name": "OH Halfsmash Cross",
+          "shot_count": 4,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 82.5
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 82.2
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              745.1,
+              893.9,
+              1084.4,
+              1170.5
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 4.2,
+                "y": 10.5,
+                "accuracy": "average"
+              },
+              {
+                "x": 4.6,
+                "y": 10.2,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.4,
+                "y": 9.5,
+                "accuracy": "average"
+              },
+              {
+                "x": 4.8,
+                "y": 9.5,
+                "accuracy": "good"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "OH Halfsmash": {
+          "shot_name": "OH Halfsmash",
+          "shot_count": 10,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 80.5
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 82.2
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              42.4,
+              259.6,
+              571.3,
+              675.5,
+              767.0,
+              822.5,
+              838.1,
+              922.9,
+              940.1,
+              1158.4
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 4.6,
+                "y": 2.4,
+                "accuracy": "good"
+              },
+              {
+                "x": 5.3,
+                "y": 2.9,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.8,
+                "y": 2.5,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.0,
+                "y": 9.7,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.6,
+                "y": 9.1,
+                "accuracy": "good"
+              },
+              {
+                "x": -0.1,
+                "y": 9.7,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.6,
+                "y": 9.5,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.9,
+                "y": 9.8,
+                "accuracy": "average"
+              },
+              {
+                "x": 1.3,
+                "y": 9.3,
+                "accuracy": "bad"
+              },
+              {
+                "x": 0.4,
+                "y": 10.0,
+                "accuracy": "good"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "FH Drop": {
+          "shot_name": "FH Drop",
+          "shot_count": 10,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 52.8
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 42.9
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              286.2,
+              380.9,
+              479.2,
+              556.4,
+              733.5,
+              762.1,
+              984.3,
+              1128.8,
+              1184.3,
+              1233.1
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 0.4,
+                "y": 3.9,
+                "accuracy": "good",
+                "length": "bad"
+              },
+              {
+                "x": 0.6,
+                "y": 5.1,
+                "accuracy": "good",
+                "length": "good"
+              },
+              {
+                "x": 1.1,
+                "y": 3.0,
+                "accuracy": "bad",
+                "length": "bad"
+              },
+              {
+                "x": 1.1,
+                "y": 4.8,
+                "accuracy": "bad",
+                "length": "good"
+              },
+              {
+                "x": 4.1,
+                "y": 8.2,
+                "accuracy": "bad",
+                "length": "good"
+              },
+              {
+                "x": 4.1,
+                "y": 8.5,
+                "accuracy": "bad",
+                "length": "good"
+              },
+              {
+                "x": 4.6,
+                "y": 9.5,
+                "accuracy": "good",
+                "length": "bad"
+              },
+              {
+                "x": 4.3,
+                "y": 9.2,
+                "accuracy": "average",
+                "length": "bad"
+              },
+              {
+                "x": 4.4,
+                "y": 8.4,
+                "accuracy": "average",
+                "length": "good"
+              },
+              {
+                "x": 4.2,
+                "y": 8.8,
+                "accuracy": "average",
+                "length": "average"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "FH Drop Cross": {
+          "shot_name": "FH Drop Cross",
+          "shot_count": 4,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 34.0
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 42.9
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              420.2,
+              422.7,
+              875.0,
+              945.1
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 4.3,
+                "y": 4.7,
+                "accuracy": "average",
+                "length": "average"
+              },
+              {
+                "x": 4.8,
+                "y": 4.5,
+                "accuracy": "good",
+                "length": "average"
+              },
+              {
+                "x": 2.1,
+                "y": 7.6,
+                "accuracy": "bad",
+                "length": "good"
+              },
+              {
+                "x": 1.3,
+                "y": 7.7,
+                "accuracy": "bad",
+                "length": "good"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "OH Drop": {
+          "shot_name": "OH Drop",
+          "shot_count": 12,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 43.8
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 33.3
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              126.2,
+              229.0,
+              252.7,
+              341.6,
+              429.2,
+              468.0,
+              584.7,
+              642.5,
+              712.6,
+              1133.2,
+              1135.0,
+              1165.3
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 4.5,
+                "y": 4.9,
+                "accuracy": "average",
+                "length": "good"
+              },
+              {
+                "x": 4.5,
+                "y": 4.6,
+                "accuracy": "average",
+                "length": "average"
+              },
+              {
+                "x": 4.3,
+                "y": 4.1,
+                "accuracy": "average",
+                "length": "bad"
+              },
+              {
+                "x": 4.0,
+                "y": 3.1,
+                "accuracy": "bad",
+                "length": "bad"
+              },
+              {
+                "x": 0.5,
+                "y": 4.7,
+                "accuracy": "good",
+                "length": "average"
+              },
+              {
+                "x": 4.2,
+                "y": 4.1,
+                "accuracy": "average",
+                "length": "bad"
+              },
+              {
+                "x": 1.3,
+                "y": 9.0,
+                "accuracy": "bad",
+                "length": "average"
+              },
+              {
+                "x": 1.3,
+                "y": 8.7,
+                "accuracy": "bad",
+                "length": "average"
+              },
+              {
+                "x": 1.2,
+                "y": 8.7,
+                "accuracy": "bad",
+                "length": "average"
+              },
+              {
+                "x": 0.8,
+                "y": 8.9,
+                "accuracy": "average",
+                "length": "average"
+              },
+              {
+                "x": 1.2,
+                "y": 8.9,
+                "accuracy": "bad",
+                "length": "average"
+              },
+              {
+                "x": 0.9,
+                "y": 7.9,
+                "accuracy": "average",
+                "length": "good"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "FH Dribble": {
+          "shot_name": "FH Dribble",
+          "shot_count": 15,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 78.3
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 50.0
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              256.3,
+              296.8,
+              323.5,
+              392.0,
+              406.0,
+              430.7,
+              435.4,
+              613.2,
+              631.8,
+              693.6,
+              889.5,
+              890.9,
+              913.3,
+              1000.1,
+              1160.2
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 4.9,
+                "y": 5.7,
+                "accuracy": "good"
+              },
+              {
+                "x": 2.5,
+                "y": 6.3,
+                "accuracy": "bad"
+              },
+              {
+                "x": 1.5,
+                "y": 6.4,
+                "accuracy": "bad"
+              },
+              {
+                "x": 2.9,
+                "y": 6.1,
+                "accuracy": "bad"
+              },
+              {
+                "x": 2.3,
+                "y": 6.2,
+                "accuracy": "bad"
+              },
+              {
+                "x": 2.2,
+                "y": 6.2,
+                "accuracy": "bad"
+              },
+              {
+                "x": 2.6,
+                "y": 5.9,
+                "accuracy": "bad"
+              },
+              {
+                "x": 4.3,
+                "y": 7.0,
+                "accuracy": "average"
+              },
+              {
+                "x": 2.3,
+                "y": 7.2,
+                "accuracy": "bad"
+              },
+              {
+                "x": 0.3,
+                "y": 7.0,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.6,
+                "y": 7.2,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.3,
+                "y": 7.2,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.5,
+                "y": 7.2,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.3,
+                "y": 7.6,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.3,
+                "y": 7.2,
+                "accuracy": "good"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "BH Netkeep Cross": {
+          "shot_name": "BH Netkeep Cross",
+          "shot_count": 19,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 65.1
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 51.2
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              26.2,
+              159.4,
+              164.9,
+              287.7,
+              377.1,
+              382.5,
+              541.4,
+              623.2,
+              748.8,
+              759.8,
+              803.4,
+              898.8,
+              920.4,
+              970.8,
+              982.0,
+              1050.1,
+              1054.2,
+              1060.3,
+              1088.9
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 0.6,
+                "y": 5.8,
+                "accuracy": "good"
+              },
+              {
+                "x": 2.5,
+                "y": 4.9,
+                "accuracy": "bad"
+              },
+              {
+                "x": 0.3,
+                "y": 5.1,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.3,
+                "y": 6.0,
+                "accuracy": "good"
+              },
+              {
+                "x": 2.4,
+                "y": 5.0,
+                "accuracy": "bad"
+              },
+              {
+                "x": 0.4,
+                "y": 5.8,
+                "accuracy": "good"
+              },
+              {
+                "x": 5.0,
+                "y": 4.3,
+                "accuracy": "good"
+              },
+              {
+                "x": 2.7,
+                "y": 7.5,
+                "accuracy": "bad"
+              },
+              {
+                "x": 2.7,
+                "y": 7.2,
+                "accuracy": "bad"
+              },
+              {
+                "x": 4.7,
+                "y": 7.1,
+                "accuracy": "good"
+              },
+              {
+                "x": 2.6,
+                "y": 7.6,
+                "accuracy": "bad"
+              },
+              {
+                "x": 4.2,
+                "y": 7.2,
+                "accuracy": "average"
+              },
+              {
+                "x": 3.1,
+                "y": 7.1,
+                "accuracy": "bad"
+              },
+              {
+                "x": 0.8,
+                "y": 8.0,
+                "accuracy": "average"
+              },
+              {
+                "x": 4.3,
+                "y": 7.2,
+                "accuracy": "average"
+              },
+              {
+                "x": 2.6,
+                "y": 7.5,
+                "accuracy": "bad"
+              },
+              {
+                "x": 4.1,
+                "y": 7.0,
+                "accuracy": "bad"
+              },
+              {
+                "x": 4.5,
+                "y": 7.7,
+                "accuracy": "average"
+              },
+              {
+                "x": 4.4,
+                "y": 7.7,
+                "accuracy": "average"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "BH Netkeep": {
+          "shot_name": "BH Netkeep",
+          "shot_count": 21,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 59.3
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 51.2
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              46.4,
+              67.4,
+              123.9,
+              155.2,
+              211.7,
+              295.2,
+              343.1,
+              402.4,
+              414.6,
+              455.6,
+              594.6,
+              640.5,
+              668.2,
+              816.2,
+              835.7,
+              937.8,
+              995.3,
+              1036.4,
+              1046.5,
+              1082.2,
+              1217.3
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 4.8,
+                "y": 4.5,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.9,
+                "y": 6.1,
+                "accuracy": "average"
+              },
+              {
+                "x": 4.6,
+                "y": 5.3,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.6,
+                "y": 5.1,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.6,
+                "y": 5.6,
+                "accuracy": "good"
+              },
+              {
+                "x": 2.7,
+                "y": 5.8,
+                "accuracy": "bad"
+              },
+              {
+                "x": 4.5,
+                "y": 5.7,
+                "accuracy": "average"
+              },
+              {
+                "x": 4.0,
+                "y": 5.6,
+                "accuracy": "bad"
+              },
+              {
+                "x": 3.9,
+                "y": 5.4,
+                "accuracy": "bad"
+              },
+              {
+                "x": 4.6,
+                "y": 5.4,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.6,
+                "y": 7.6,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.7,
+                "y": 8.8,
+                "accuracy": "average"
+              },
+              {
+                "x": 1.0,
+                "y": 7.5,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.7,
+                "y": 7.5,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.7,
+                "y": 7.7,
+                "accuracy": "average"
+              },
+              {
+                "x": 3.5,
+                "y": 7.6,
+                "accuracy": "bad"
+              },
+              {
+                "x": 1.0,
+                "y": 7.2,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.4,
+                "y": 7.5,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.4,
+                "y": 8.5,
+                "accuracy": "good"
+              },
+              {
+                "x": 2.1,
+                "y": 7.6,
+                "accuracy": "bad"
+              },
+              {
+                "x": 0.7,
+                "y": 7.2,
+                "accuracy": "average"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "FH Netkeep Cross": {
+          "shot_name": "FH Netkeep Cross",
+          "shot_count": 42,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 57.1
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 60.0
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              39.8,
+              97.3,
+              120.0,
+              141.5,
+              145.5,
+              213.5,
+              254.3,
+              279.6,
+              312.9,
+              319.0,
+              346.9,
+              372.7,
+              378.5,
+              395.8,
+              417.6,
+              426.8,
+              442.2,
+              445.9,
+              461.2,
+              534.8,
+              564.4,
+              568.7,
+              582.3,
+              590.7,
+              602.8,
+              617.7,
+              635.5,
+              646.5,
+              691.9,
+              703.5,
+              710.2,
+              764.1,
+              796.3,
+              812.2,
+              842.0,
+              867.5,
+              927.5,
+              1031.1,
+              1121.3,
+              1168.1,
+              1190.3,
+              1211.0
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 4.7,
+                "y": 5.6,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.7,
+                "y": 6.0,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.9,
+                "y": 5.1,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.8,
+                "y": 5.1,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.8,
+                "y": 5.3,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.4,
+                "y": 5.9,
+                "accuracy": "average"
+              },
+              {
+                "x": 4.7,
+                "y": 5.5,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.4,
+                "y": 5.5,
+                "accuracy": "average"
+              },
+              {
+                "x": 3.9,
+                "y": 5.7,
+                "accuracy": "bad"
+              },
+              {
+                "x": 3.6,
+                "y": 4.8,
+                "accuracy": "bad"
+              },
+              {
+                "x": 3.2,
+                "y": 5.3,
+                "accuracy": "bad"
+              },
+              {
+                "x": 4.1,
+                "y": 5.6,
+                "accuracy": "bad"
+              },
+              {
+                "x": 2.9,
+                "y": 5.0,
+                "accuracy": "bad"
+              },
+              {
+                "x": 4.3,
+                "y": 5.6,
+                "accuracy": "average"
+              },
+              {
+                "x": 3.7,
+                "y": 4.0,
+                "accuracy": "bad"
+              },
+              {
+                "x": 4.6,
+                "y": 5.1,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.5,
+                "y": 5.7,
+                "accuracy": "average"
+              },
+              {
+                "x": 4.7,
+                "y": 4.8,
+                "accuracy": "good"
+              },
+              {
+                "x": 3.6,
+                "y": 5.6,
+                "accuracy": "bad"
+              },
+              {
+                "x": 4.3,
+                "y": 6.2,
+                "accuracy": "average"
+              },
+              {
+                "x": 4.5,
+                "y": 5.4,
+                "accuracy": "average"
+              },
+              {
+                "x": 4.7,
+                "y": 6.0,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.8,
+                "y": 7.2,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.4,
+                "y": 7.2,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.2,
+                "y": 7.2,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.5,
+                "y": 7.6,
+                "accuracy": "good"
+              },
+              {
+                "x": 2.8,
+                "y": 7.4,
+                "accuracy": "bad"
+              },
+              {
+                "x": 0.4,
+                "y": 7.1,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.2,
+                "y": 7.3,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.4,
+                "y": 7.2,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.7,
+                "y": 7.4,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.5,
+                "y": 7.2,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.4,
+                "y": 7.1,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.9,
+                "y": 7.5,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.5,
+                "y": 7.4,
+                "accuracy": "good"
+              },
+              {
+                "x": -0.1,
+                "y": 7.7,
+                "accuracy": "good"
+              },
+              {
+                "x": 2.0,
+                "y": 8.3,
+                "accuracy": "bad"
+              },
+              {
+                "x": 1.9,
+                "y": 7.7,
+                "accuracy": "bad"
+              },
+              {
+                "x": 1.4,
+                "y": 7.4,
+                "accuracy": "bad"
+              },
+              {
+                "x": 0.4,
+                "y": 7.9,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.6,
+                "y": 7.6,
+                "accuracy": "good"
+              },
+              {
+                "x": 1.3,
+                "y": 8.0,
+                "accuracy": "bad"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "FH Netkeep": {
+          "shot_name": "FH Netkeep",
+          "shot_count": 8,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 53.9
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 60.0
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              78.8,
+              169.4,
+              266.9,
+              329.7,
+              528.6,
+              586.6,
+              911.4,
+              1126.7
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 4.4,
+                "y": 5.0,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.9,
+                "y": 5.8,
+                "accuracy": "average"
+              },
+              {
+                "x": 1.5,
+                "y": 5.3,
+                "accuracy": "bad"
+              },
+              {
+                "x": 0.9,
+                "y": 6.0,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.7,
+                "y": 5.7,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.9,
+                "y": 7.5,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.5,
+                "y": 7.5,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.8,
+                "y": 7.4,
+                "accuracy": "good"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "FH Drive": {
+          "shot_name": "FH Drive",
+          "shot_count": 10,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 82.5
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 70.0
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              265.1,
+              416.2,
+              539.7,
+              545.5,
+              754.2,
+              782.3,
+              1090.9,
+              1113.3,
+              1130.4,
+              1166.9
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 4.8,
+                "y": 2.0,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.5,
+                "y": 2.0,
+                "accuracy": "average"
+              },
+              {
+                "x": 4.5,
+                "y": 1.6,
+                "accuracy": "average"
+              },
+              {
+                "x": 4.2,
+                "y": 2.0,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.6,
+                "y": 10.0,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.6,
+                "y": 10.2,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.8,
+                "y": 10.3,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.8,
+                "y": 10.1,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.9,
+                "y": 11.0,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.6,
+                "y": 10.4,
+                "accuracy": "good"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "FH Push Cross": {
+          "shot_name": "FH Push Cross",
+          "shot_count": 11,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 65.9
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 60.0
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              515.1,
+              516.4,
+              517.5,
+              621.6,
+              653.0,
+              783.4,
+              870.6,
+              924.4,
+              928.7,
+              958.5,
+              1156.6
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 4.8,
+                "y": 0.5,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.7,
+                "y": 0.4,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.8,
+                "y": 0.8,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.6,
+                "y": 11.4,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.9,
+                "y": 10.3,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.9,
+                "y": 10.2,
+                "accuracy": "average"
+              },
+              {
+                "x": 3.9,
+                "y": 10.6,
+                "accuracy": "bad"
+              },
+              {
+                "x": 0.4,
+                "y": 10.1,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.7,
+                "y": 10.9,
+                "accuracy": "average"
+              },
+              {
+                "x": 0.7,
+                "y": 11.1,
+                "accuracy": "average"
+              },
+              {
+                "x": 4.6,
+                "y": 10.8,
+                "accuracy": "good"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "FH Flatgame": {
+          "shot_name": "FH Flatgame",
+          "shot_count": 11,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 60.3
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 26.7
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              219.6,
+              272.7,
+              510.6,
+              523.0,
+              637.6,
+              638.8,
+              871.5,
+              872.5,
+              873.3,
+              929.6,
+              989.6
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 1.5,
+                "y": 2.3,
+                "accuracy": "bad"
+              },
+              {
+                "x": 2.1,
+                "y": 1.7,
+                "accuracy": "bad"
+              },
+              {
+                "x": 0.1,
+                "y": 0.4,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.4,
+                "y": 1.1,
+                "accuracy": "good"
+              },
+              {
+                "x": 3.5,
+                "y": 9.8,
+                "accuracy": "bad"
+              },
+              {
+                "x": 3.9,
+                "y": 10.4,
+                "accuracy": "bad"
+              },
+              {
+                "x": 1.8,
+                "y": 10.3,
+                "accuracy": "bad"
+              },
+              {
+                "x": 3.8,
+                "y": 10.5,
+                "accuracy": "bad"
+              },
+              {
+                "x": 3.8,
+                "y": 10.5,
+                "accuracy": "bad"
+              },
+              {
+                "x": 3.7,
+                "y": 10.6,
+                "accuracy": "bad"
+              },
+              {
+                "x": 3.9,
+                "y": 10.5,
+                "accuracy": "bad"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "FH Flatgame Cross": {
+          "shot_name": "FH Flatgame Cross",
+          "shot_count": 4,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 60.0
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 26.6
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              521.7,
+              755.4,
+              804.5,
+              1131.3
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 4.8,
+                "y": 2.6,
+                "accuracy": "good"
+              },
+              {
+                "x": 0.8,
+                "y": 9.9,
+                "accuracy": "average"
+              },
+              {
+                "x": 1.4,
+                "y": 9.8,
+                "accuracy": "bad"
+              },
+              {
+                "x": 0.7,
+                "y": 10.5,
+                "accuracy": "average"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "FH Push": {
+          "shot_name": "FH Push",
+          "shot_count": 4,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 55.5
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 60.0
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              509.2,
+              683.4,
+              729.9,
+              843.6
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 4.0,
+                "y": 1.3,
+                "accuracy": "bad"
+              },
+              {
+                "x": 5.1,
+                "y": 13.0,
+                "accuracy": "good"
+              },
+              {
+                "x": 4.0,
+                "y": 11.0,
+                "accuracy": "bad"
+              },
+              {
+                "x": 3.1,
+                "y": 10.3,
+                "accuracy": "bad"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "BH Flatgame Cross": {
+          "shot_name": "BH Flatgame Cross",
+          "shot_count": 2,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 71.0
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 16.7
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              636.7,
+              828.3
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 1.6,
+                "y": 9.6,
+                "accuracy": "bad"
+              },
+              {
+                "x": 3.3,
+                "y": 10.4,
+                "accuracy": "bad"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "BH Flatgame": {
+          "shot_name": "BH Flatgame",
+          "shot_count": 4,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 42.5
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 16.7
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              38.4,
+              805.3,
+              930.6,
+              931.7
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 4.6,
+                "y": 0.8,
+                "accuracy": "good"
+              },
+              {
+                "x": 2.3,
+                "y": 10.2,
+                "accuracy": "bad"
+              },
+              {
+                "x": 2.3,
+                "y": 10.2,
+                "accuracy": "bad"
+              },
+              {
+                "x": 1.4,
+                "y": 10.3,
+                "accuracy": "bad"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "FH Defense Cross": {
+          "shot_name": "FH Defense Cross",
+          "shot_count": 24,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 42.8
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 64.8
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              101.1,
+              163.1,
+              275.8,
+              298.4,
+              333.9,
+              390.4,
+              452.8,
+              459.6,
+              465.6,
+              518.5,
+              607.0,
+              672.8,
+              723.0,
+              820.0,
+              932.9,
+              936.2,
+              955.5,
+              988.5,
+              1066.4,
+              1072.6,
+              1102.7,
+              1174.4,
+              1197.4,
+              1231.2
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 4.4,
+                "y": 0.4,
+                "accuracy": "average",
+                "length": "bad"
+              },
+              {
+                "x": 4.8,
+                "y": 3.7,
+                "accuracy": "good",
+                "length": "bad"
+              },
+              {
+                "x": 4.8,
+                "y": 4.1,
+                "accuracy": "good",
+                "length": "bad"
+              },
+              {
+                "x": 6.0,
+                "y": 2.4,
+                "accuracy": "good",
+                "length": "bad"
+              },
+              {
+                "x": 4.5,
+                "y": 5.0,
+                "accuracy": "average",
+                "length": "good"
+              },
+              {
+                "x": 4.8,
+                "y": 4.1,
+                "accuracy": "good",
+                "length": "bad"
+              },
+              {
+                "x": 4.6,
+                "y": 3.7,
+                "accuracy": "good",
+                "length": "bad"
+              },
+              {
+                "x": 4.3,
+                "y": 0.5,
+                "accuracy": "average",
+                "length": "bad"
+              },
+              {
+                "x": 4.4,
+                "y": 3.3,
+                "accuracy": "average",
+                "length": "bad"
+              },
+              {
+                "x": 5.0,
+                "y": 5.7,
+                "accuracy": "good",
+                "length": "good"
+              },
+              {
+                "x": 1.8,
+                "y": 7.6,
+                "accuracy": "bad",
+                "length": "good"
+              },
+              {
+                "x": 0.4,
+                "y": 7.1,
+                "accuracy": "good",
+                "length": "good"
+              },
+              {
+                "x": 0.3,
+                "y": 7.6,
+                "accuracy": "good",
+                "length": "good"
+              },
+              {
+                "x": 1.2,
+                "y": 7.9,
+                "accuracy": "bad",
+                "length": "good"
+              },
+              {
+                "x": 0.2,
+                "y": 8.6,
+                "accuracy": "good",
+                "length": "good"
+              },
+              {
+                "x": 0.6,
+                "y": 9.7,
+                "accuracy": "good",
+                "length": "bad"
+              },
+              {
+                "x": 0.7,
+                "y": 9.1,
+                "accuracy": "average",
+                "length": "average"
+              },
+              {
+                "x": 1.4,
+                "y": 9.8,
+                "accuracy": "bad",
+                "length": "bad"
+              },
+              {
+                "x": 0.2,
+                "y": 8.0,
+                "accuracy": "good",
+                "length": "good"
+              },
+              {
+                "x": 0.7,
+                "y": 13.0,
+                "accuracy": "average",
+                "length": "bad"
+              },
+              {
+                "x": 0.6,
+                "y": 8.0,
+                "accuracy": "good",
+                "length": "good"
+              },
+              {
+                "x": 0.4,
+                "y": 7.1,
+                "accuracy": "good",
+                "length": "good"
+              },
+              {
+                "x": 0.5,
+                "y": 8.4,
+                "accuracy": "good",
+                "length": "good"
+              },
+              {
+                "x": 0.9,
+                "y": 11.2,
+                "accuracy": "average",
+                "length": "bad"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "BH Defense": {
+          "shot_name": "BH Defense",
+          "shot_count": 19,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 41.8
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 26.3
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              95.4,
+              140.0,
+              220.7,
+              232.8,
+              242.2,
+              250.6,
+              293.7,
+              332.9,
+              376.2,
+              471.7,
+              651.7,
+              726.6,
+              752.8,
+              832.3,
+              897.5,
+              910.3,
+              980.4,
+              1107.0,
+              1242.3
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 4.6,
+                "y": 4.4,
+                "accuracy": "good",
+                "length": "average"
+              },
+              {
+                "x": 3.7,
+                "y": 1.8,
+                "accuracy": "bad",
+                "length": "bad"
+              },
+              {
+                "x": 2.8,
+                "y": 3.5,
+                "accuracy": "bad",
+                "length": "bad"
+              },
+              {
+                "x": 3.7,
+                "y": 3.0,
+                "accuracy": "bad",
+                "length": "bad"
+              },
+              {
+                "x": 2.9,
+                "y": 3.8,
+                "accuracy": "bad",
+                "length": "bad"
+              },
+              {
+                "x": 4.2,
+                "y": 4.5,
+                "accuracy": "average",
+                "length": "average"
+              },
+              {
+                "x": 3.3,
+                "y": 2.7,
+                "accuracy": "bad",
+                "length": "bad"
+              },
+              {
+                "x": 3.5,
+                "y": 1.8,
+                "accuracy": "bad",
+                "length": "bad"
+              },
+              {
+                "x": 2.9,
+                "y": 2.7,
+                "accuracy": "bad",
+                "length": "bad"
+              },
+              {
+                "x": 3.2,
+                "y": 3.5,
+                "accuracy": "bad",
+                "length": "bad"
+              },
+              {
+                "x": 1.4,
+                "y": 10.3,
+                "accuracy": "bad",
+                "length": "bad"
+              },
+              {
+                "x": 1.3,
+                "y": 8.6,
+                "accuracy": "bad",
+                "length": "good"
+              },
+              {
+                "x": 0.9,
+                "y": 8.8,
+                "accuracy": "average",
+                "length": "average"
+              },
+              {
+                "x": 1.8,
+                "y": 7.6,
+                "accuracy": "bad",
+                "length": "good"
+              },
+              {
+                "x": 1.4,
+                "y": 9.9,
+                "accuracy": "bad",
+                "length": "bad"
+              },
+              {
+                "x": 1.6,
+                "y": 10.1,
+                "accuracy": "bad",
+                "length": "bad"
+              },
+              {
+                "x": 1.6,
+                "y": 7.7,
+                "accuracy": "bad",
+                "length": "good"
+              },
+              {
+                "x": 1.1,
+                "y": 8.4,
+                "accuracy": "bad",
+                "length": "good"
+              },
+              {
+                "x": 1.1,
+                "y": 7.5,
+                "accuracy": "bad",
+                "length": "good"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "FH Defense": {
+          "shot_name": "FH Defense",
+          "shot_count": 3,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 41.3
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 64.8
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              22.3,
+              139.0,
+              943.5
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 1.7,
+                "y": 2.2,
+                "accuracy": "bad",
+                "length": "bad"
+              },
+              {
+                "x": 1.2,
+                "y": 0.5,
+                "accuracy": "bad",
+                "length": "bad"
+              },
+              {
+                "x": 3.6,
+                "y": 10.0,
+                "accuracy": "bad",
+                "length": "bad"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "BH Defense Cross": {
+          "shot_name": "BH Defense Cross",
+          "shot_count": 19,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 33.1
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 26.3
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              110.9,
+              307.3,
+              328.1,
+              367.2,
+              449.5,
+              453.9,
+              699.9,
+              718.7,
+              731.1,
+              790.0,
+              851.9,
+              878.8,
+              883.1,
+              967.6,
+              987.6,
+              1008.6,
+              1034.7,
+              1045.0,
+              1099.3
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 2.3,
+                "y": 4.8,
+                "accuracy": "bad",
+                "length": "good"
+              },
+              {
+                "x": 1.7,
+                "y": 3.6,
+                "accuracy": "bad",
+                "length": "bad"
+              },
+              {
+                "x": 2.2,
+                "y": 5.0,
+                "accuracy": "bad",
+                "length": "good"
+              },
+              {
+                "x": 0.7,
+                "y": 5.0,
+                "accuracy": "average",
+                "length": "good"
+              },
+              {
+                "x": 0.8,
+                "y": 4.5,
+                "accuracy": "average",
+                "length": "average"
+              },
+              {
+                "x": 2.0,
+                "y": 4.3,
+                "accuracy": "bad",
+                "length": "average"
+              },
+              {
+                "x": 4.8,
+                "y": 8.8,
+                "accuracy": "good",
+                "length": "average"
+              },
+              {
+                "x": 4.6,
+                "y": 7.4,
+                "accuracy": "good",
+                "length": "good"
+              },
+              {
+                "x": 4.2,
+                "y": 7.9,
+                "accuracy": "average",
+                "length": "good"
+              },
+              {
+                "x": 4.8,
+                "y": 8.0,
+                "accuracy": "good",
+                "length": "good"
+              },
+              {
+                "x": 3.1,
+                "y": 7.7,
+                "accuracy": "bad",
+                "length": "good"
+              },
+              {
+                "x": 5.0,
+                "y": 8.4,
+                "accuracy": "good",
+                "length": "good"
+              },
+              {
+                "x": 4.2,
+                "y": 8.2,
+                "accuracy": "average",
+                "length": "good"
+              },
+              {
+                "x": 4.5,
+                "y": 8.3,
+                "accuracy": "average",
+                "length": "good"
+              },
+              {
+                "x": 2.8,
+                "y": 7.8,
+                "accuracy": "bad",
+                "length": "good"
+              },
+              {
+                "x": 5.3,
+                "y": 8.5,
+                "accuracy": "good",
+                "length": "good"
+              },
+              {
+                "x": 2.7,
+                "y": 8.0,
+                "accuracy": "bad",
+                "length": "good"
+              },
+              {
+                "x": 3.1,
+                "y": 7.6,
+                "accuracy": "bad",
+                "length": "good"
+              },
+              {
+                "x": 4.4,
+                "y": 7.2,
+                "accuracy": "average",
+                "length": "good"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "FH Clear": {
+          "shot_name": "FH Clear",
+          "shot_count": 4,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 53.2
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 73.3
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              118.1,
+              173.8,
+              263.3,
+              1097.7
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 0.7,
+                "y": 0.4,
+                "accuracy": "average",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 0.6,
+                "y": 0.5,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 0.9,
+                "y": 0.4,
+                "accuracy": "average",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 4.7,
+                "y": 12.9,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "OH Clear Cross": {
+          "shot_name": "OH Clear Cross",
+          "shot_count": 22,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 50.6
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 69.6
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              48.6,
+              51.1,
+              99.6,
+              210.0,
+              216.4,
+              222.7,
+              226.3,
+              345.2,
+              374.8,
+              458.0,
+              477.0,
+              484.2,
+              494.3,
+              543.4,
+              758.0,
+              814.3,
+              840.2,
+              993.7,
+              998.4,
+              1137.7,
+              1163.0,
+              1237.1
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 0.4,
+                "y": 0.4,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 0.3,
+                "y": 0.4,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 0.4,
+                "y": 0.6,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 0.6,
+                "y": 0.2,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 0.9,
+                "y": 0.4,
+                "accuracy": "average",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 0.7,
+                "y": 0.6,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 0.5,
+                "y": 0.3,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 0.3,
+                "y": 0.4,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 0.8,
+                "y": 0.3,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 0.4,
+                "y": 0.5,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 2.0,
+                "y": 0.5,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 0.7,
+                "y": 0.9,
+                "accuracy": "average",
+                "height": "high",
+                "length": "average"
+              },
+              {
+                "x": 0.5,
+                "y": 0.6,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 1.1,
+                "y": 0.3,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 4.8,
+                "y": 12.9,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 4.7,
+                "y": 13.1,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 4.2,
+                "y": 13.0,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 4.9,
+                "y": 13.1,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 5.0,
+                "y": 13.2,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 4.7,
+                "y": 12.8,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 4.2,
+                "y": 13.0,
+                "accuracy": "average",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 4.8,
+                "y": 13.1,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "OH Clear": {
+          "shot_name": "OH Clear",
+          "shot_count": 6,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 43.2
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 69.6
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              76.5,
+              306.2,
+              398.8,
+              562.7,
+              671.2,
+              1117.4
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 5.3,
+                "y": 0.5,
+                "accuracy": "good",
+                "height": "unknown",
+                "length": "good"
+              },
+              {
+                "x": 4.8,
+                "y": 0.7,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "average"
+              },
+              {
+                "x": 3.8,
+                "y": 0.6,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 4.3,
+                "y": 0.3,
+                "accuracy": "average",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 1.2,
+                "y": 12.9,
+                "accuracy": "bad",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 1.7,
+                "y": 12.9,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "good"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "BH Lift": {
+          "shot_name": "BH Lift",
+          "shot_count": 26,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 42.7
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 54.7
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              21.1,
+              33.0,
+              52.9,
+              62.6,
+              137.5,
+              207.7,
+              246.2,
+              309.3,
+              317.3,
+              369.6,
+              451.4,
+              473.8,
+              547.6,
+              625.8,
+              698.3,
+              735.7,
+              773.7,
+              807.6,
+              881.6,
+              885.6,
+              903.1,
+              1013.0,
+              1058.6,
+              1087.0,
+              1101.4,
+              1240.8
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 4.7,
+                "y": 0.6,
+                "accuracy": "good",
+                "height": "flat",
+                "length": "good"
+              },
+              {
+                "x": 4.6,
+                "y": 0.2,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 4.4,
+                "y": 0.5,
+                "accuracy": "average",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 4.5,
+                "y": 0.2,
+                "accuracy": "average",
+                "height": "unknown",
+                "length": "good"
+              },
+              {
+                "x": 4.4,
+                "y": 0.4,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 4.8,
+                "y": 0.2,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 4.4,
+                "y": -0.5,
+                "accuracy": "average",
+                "height": "unknown",
+                "length": "good"
+              },
+              {
+                "x": 4.3,
+                "y": 0.5,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 3.4,
+                "y": 0.8,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "average"
+              },
+              {
+                "x": 3.8,
+                "y": 0.4,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 3.6,
+                "y": 0.2,
+                "accuracy": "bad",
+                "height": "flat",
+                "length": "good"
+              },
+              {
+                "x": 4.0,
+                "y": 0.4,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 4.3,
+                "y": 0.5,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 1.5,
+                "y": 12.7,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "average"
+              },
+              {
+                "x": 0.8,
+                "y": 12.9,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 0.8,
+                "y": 13.0,
+                "accuracy": "average",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 0.7,
+                "y": 13.0,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 0.4,
+                "y": 13.6,
+                "accuracy": "good",
+                "height": "unknown",
+                "length": "good"
+              },
+              {
+                "x": 1.5,
+                "y": 13.0,
+                "accuracy": "bad",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 1.0,
+                "y": 12.7,
+                "accuracy": "average",
+                "height": "high",
+                "length": "average"
+              },
+              {
+                "x": 0.8,
+                "y": 12.6,
+                "accuracy": "average",
+                "height": "high",
+                "length": "average"
+              },
+              {
+                "x": 0.5,
+                "y": 12.8,
+                "accuracy": "good",
+                "height": "unknown",
+                "length": "good"
+              },
+              {
+                "x": 0.6,
+                "y": 12.9,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 1.6,
+                "y": 12.8,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 1.7,
+                "y": 12.9,
+                "accuracy": "bad",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 1.3,
+                "y": 12.9,
+                "accuracy": "bad",
+                "height": "flat",
+                "length": "good"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "FH Clear Cross": {
+          "shot_name": "FH Clear Cross",
+          "shot_count": 11,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 36.5
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 73.4
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              161.9,
+              240.6,
+              336.3,
+              385.3,
+              496.7,
+              499.9,
+              708.2,
+              788.1,
+              926.0,
+              1196.0,
+              1209.3
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 4.8,
+                "y": 0.5,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 4.8,
+                "y": 0.7,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "average"
+              },
+              {
+                "x": 4.1,
+                "y": 0.5,
+                "accuracy": "bad",
+                "height": "unknown",
+                "length": "good"
+              },
+              {
+                "x": 4.5,
+                "y": 0.7,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "average"
+              },
+              {
+                "x": 4.8,
+                "y": 0.4,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 4.9,
+                "y": 0.4,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 4.9,
+                "y": 12.9,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 0.2,
+                "y": 13.0,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 1.1,
+                "y": 13.2,
+                "accuracy": "bad",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 0.9,
+                "y": 12.9,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 0.5,
+                "y": 13.1,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "FH Lift": {
+          "shot_name": "FH Lift",
+          "shot_count": 34,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 36.1
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 52.3
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              44.4,
+              82.4,
+              91.8,
+              93.8,
+              106.2,
+              109.7,
+              231.7,
+              327.3,
+              366.0,
+              389.0,
+              444.0,
+              447.7,
+              463.9,
+              470.4,
+              501.9,
+              566.6,
+              588.8,
+              634.1,
+              650.7,
+              666.7,
+              715.2,
+              717.4,
+              725.0,
+              747.2,
+              850.6,
+              877.1,
+              909.0,
+              1033.2,
+              1043.8,
+              1092.7,
+              1145.6,
+              1178.8,
+              1213.7,
+              1230.0
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 0.5,
+                "y": 0.5,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 0.4,
+                "y": 0.4,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 0.7,
+                "y": 0.2,
+                "accuracy": "average",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 1.1,
+                "y": 0.5,
+                "accuracy": "bad",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 1.1,
+                "y": 0.3,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 1.2,
+                "y": 0.5,
+                "accuracy": "bad",
+                "height": "flat",
+                "length": "good"
+              },
+              {
+                "x": 0.6,
+                "y": 0.5,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 0.7,
+                "y": 0.4,
+                "accuracy": "average",
+                "height": "flat",
+                "length": "good"
+              },
+              {
+                "x": 1.0,
+                "y": 0.5,
+                "accuracy": "average",
+                "height": "flat",
+                "length": "good"
+              },
+              {
+                "x": 4.2,
+                "y": 0.3,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 1.5,
+                "y": 0.4,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 0.8,
+                "y": 0.3,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 1.9,
+                "y": 0.5,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 0.7,
+                "y": 0.3,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 1.1,
+                "y": 0.4,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 1.3,
+                "y": 0.7,
+                "accuracy": "bad",
+                "height": "normal",
+                "length": "average"
+              },
+              {
+                "x": 4.0,
+                "y": 12.9,
+                "accuracy": "bad",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 4.0,
+                "y": 12.9,
+                "accuracy": "bad",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 4.4,
+                "y": 13.0,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 4.3,
+                "y": 12.9,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 4.3,
+                "y": 12.7,
+                "accuracy": "average",
+                "height": "high",
+                "length": "average"
+              },
+              {
+                "x": 4.2,
+                "y": 13.1,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 4.0,
+                "y": 12.1,
+                "accuracy": "bad",
+                "height": "normal",
+                "length": "bad"
+              },
+              {
+                "x": 4.6,
+                "y": 12.9,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 4.3,
+                "y": 13.0,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 4.3,
+                "y": 12.6,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "average"
+              },
+              {
+                "x": 4.0,
+                "y": 12.9,
+                "accuracy": "bad",
+                "height": "flat",
+                "length": "good"
+              },
+              {
+                "x": 3.7,
+                "y": 12.3,
+                "accuracy": "bad",
+                "height": "normal",
+                "length": "average"
+              },
+              {
+                "x": 4.5,
+                "y": 13.0,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 4.8,
+                "y": 13.1,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 3.6,
+                "y": 13.2,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 4.1,
+                "y": 13.2,
+                "accuracy": "bad",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 4.1,
+                "y": 12.8,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 3.8,
+                "y": 12.8,
+                "accuracy": "bad",
+                "height": "normal",
+                "length": "good"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "FH Lift Cross": {
+          "shot_name": "FH Lift Cross",
+          "shot_count": 31,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 36.1
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 52.3
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              36.7,
+              128.2,
+              157.8,
+              224.3,
+              249.3,
+              274.1,
+              348.3,
+              424.9,
+              439.7,
+              491.0,
+              549.6,
+              597.6,
+              605.3,
+              644.6,
+              662.9,
+              690.2,
+              769.4,
+              798.3,
+              818.4,
+              827.2,
+              934.9,
+              942.2,
+              965.9,
+              1006.6,
+              1038.2,
+              1052.4,
+              1070.9,
+              1105.1,
+              1173.0,
+              1182.3,
+              1244.9
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 0.8,
+                "y": 0.4,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 4.7,
+                "y": 0.4,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 4.3,
+                "y": 0.9,
+                "accuracy": "average",
+                "height": "high",
+                "length": "average"
+              },
+              {
+                "x": 4.9,
+                "y": 0.5,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 0.9,
+                "y": 0.2,
+                "accuracy": "average",
+                "height": "flat",
+                "length": "good"
+              },
+              {
+                "x": 4.6,
+                "y": 0.7,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "average"
+              },
+              {
+                "x": 4.6,
+                "y": 1.2,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "average"
+              },
+              {
+                "x": 4.9,
+                "y": 0.6,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 1.1,
+                "y": 0.8,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "average"
+              },
+              {
+                "x": 4.8,
+                "y": 0.4,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 4.5,
+                "y": 0.3,
+                "accuracy": "average",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 0.1,
+                "y": 13.0,
+                "accuracy": "good",
+                "height": "unknown",
+                "length": "good"
+              },
+              {
+                "x": 0.5,
+                "y": 12.8,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 4.6,
+                "y": 13.0,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 4.7,
+                "y": 12.8,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 1.5,
+                "y": 12.9,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 0.4,
+                "y": 12.7,
+                "accuracy": "good",
+                "height": "high",
+                "length": "average"
+              },
+              {
+                "x": 0.8,
+                "y": 13.1,
+                "accuracy": "average",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 1.2,
+                "y": 12.9,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 4.4,
+                "y": 13.0,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 0.6,
+                "y": 13.0,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 0.2,
+                "y": 12.6,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "average"
+              },
+              {
+                "x": 0.6,
+                "y": 12.9,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 0.4,
+                "y": 12.3,
+                "accuracy": "good",
+                "height": "flat",
+                "length": "average"
+              },
+              {
+                "x": 0.8,
+                "y": 12.9,
+                "accuracy": "average",
+                "height": "flat",
+                "length": "good"
+              },
+              {
+                "x": 0.3,
+                "y": 12.8,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 0.4,
+                "y": 13.1,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 1.1,
+                "y": 13.0,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 0.6,
+                "y": 12.9,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 0.4,
+                "y": 13.0,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 2.3,
+                "y": 8.7,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "bad"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        },
+        "BH Lift Cross": {
+          "shot_name": "BH Lift Cross",
+          "shot_count": 17,
+          "stats_row": {
+            "avg_effectiveness": {
+              "label": "Avg. Effectiveness",
+              "value_pct": 31.4
+            },
+            "avg_accuracy": {
+              "label": "Avg. Accuracy",
+              "value_pct": 54.6
+            }
+          },
+          "video": {
+            "timestamps_seconds": [
+              57.9,
+              143.3,
+              271.0,
+              292.2,
+              331.5,
+              481.8,
+              488.3,
+              526.6,
+              802.0,
+              831.0,
+              896.3,
+              954.2,
+              986.4,
+              1004.9,
+              1022.1,
+              1064.7,
+              1186.9
+            ]
+          },
+          "scatter_court": {
+            "shot_instances": [
+              {
+                "x": 0.6,
+                "y": 0.2,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 0.4,
+                "y": 0.4,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 0.3,
+                "y": 0.6,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 0.5,
+                "y": 0.4,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 0.6,
+                "y": 0.3,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 0.7,
+                "y": 0.3,
+                "accuracy": "average",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 0.7,
+                "y": 0.7,
+                "accuracy": "average",
+                "height": "high",
+                "length": "average"
+              },
+              {
+                "x": 0.4,
+                "y": 0.4,
+                "accuracy": "good",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 4.1,
+                "y": 13.1,
+                "accuracy": "bad",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 4.8,
+                "y": 11.0,
+                "accuracy": "good",
+                "height": "flat",
+                "length": "bad"
+              },
+              {
+                "x": 4.2,
+                "y": 13.2,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 1.0,
+                "y": 13.0,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 4.6,
+                "y": 12.9,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 4.7,
+                "y": 12.9,
+                "accuracy": "good",
+                "height": "normal",
+                "length": "good"
+              },
+              {
+                "x": 3.6,
+                "y": 13.0,
+                "accuracy": "bad",
+                "height": "high",
+                "length": "good"
+              },
+              {
+                "x": 4.3,
+                "y": 12.5,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "average"
+              },
+              {
+                "x": 4.5,
+                "y": 13.0,
+                "accuracy": "average",
+                "height": "normal",
+                "length": "good"
+              }
+            ]
+          },
+          "filters": {
+            "accuracy": {
+              "options": [
+                "all",
+                "good",
+                "average",
+                "bad"
+              ]
+            },
+            "height": {
+              "options": [
+                "all",
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "opponent_analysis": {
+      "headline": "[narrative: opponent_headline]",
+      "shot_insights": {
+        "overhead_smash": "[narrative: opponent insight for overhead_smash]",
+        "forehand_smash": "[narrative: opponent insight for forehand_smash]",
+        "backhand_drop": "[narrative: opponent insight for backhand_drop]",
+        "overhead_drop": "[narrative: opponent insight for overhead_drop]",
+        "forehand_drop": "[narrative: opponent insight for forehand_drop]",
+        "forehand_dribble": "[narrative: opponent insight for forehand_dribble]",
+        "backhand_dribble": "[narrative: opponent insight for backhand_dribble]",
+        "forehand_netkeep": "[narrative: opponent insight for forehand_netkeep]",
+        "backhand_netkeep": "[narrative: opponent insight for backhand_netkeep]",
+        "forehand_drive": "[narrative: opponent insight for forehand_drive]",
+        "forehand_flatgame": "[narrative: opponent insight for forehand_flatgame]",
+        "forehand_defense": "[narrative: opponent insight for forehand_defense]",
+        "forehand_pulldrop": "[narrative: opponent insight for forehand_pulldrop]",
+        "backhand_defense": "[narrative: opponent insight for backhand_defense]",
+        "backhand_clear": "[narrative: opponent insight for backhand_clear]",
+        "backhand_lift": "[narrative: opponent insight for backhand_lift]",
+        "forehand_clear": "[narrative: opponent insight for forehand_clear]",
+        "overhead_clear": "[narrative: opponent insight for overhead_clear]",
+        "forehand_lift": "[narrative: opponent insight for forehand_lift]"
+      },
+      "weapons_to_watch": [
+        {
+          "shot": "OH Smash",
+          "tendency": "[narrative: tendency for overhead_smash]",
+          "counter": "[narrative: counter for overhead_smash]"
+        },
+        {
+          "shot": "FH Drive",
+          "tendency": "[narrative: tendency for forehand_drive]",
+          "counter": "[narrative: counter for forehand_drive]"
+        },
+        {
+          "shot": "FH Smash",
+          "tendency": "[narrative: tendency for forehand_smash]",
+          "counter": "[narrative: counter for forehand_smash]"
+        },
+        {
+          "shot": "FH Dribble",
+          "tendency": "[narrative: tendency for forehand_dribble]",
+          "counter": "[narrative: counter for forehand_dribble]"
+        },
+        {
+          "shot": "BH Dribble",
+          "tendency": "[narrative: tendency for backhand_dribble]",
+          "counter": "[narrative: counter for backhand_dribble]"
+        }
+      ],
+      "exploitable_weaknesses": [
+        {
+          "shot": "FH Lift",
+          "vulnerability": "[narrative: vulnerability for forehand_lift]",
+          "exploit": "[narrative: exploit for forehand_lift]"
+        },
+        {
+          "shot": "OH Clear",
+          "vulnerability": "[narrative: vulnerability for overhead_clear]",
+          "exploit": "[narrative: exploit for overhead_clear]"
+        },
+        {
+          "shot": "FH Clear",
+          "vulnerability": "[narrative: vulnerability for forehand_clear]",
+          "exploit": "[narrative: exploit for forehand_clear]"
+        }
+      ]
+    }
+  }
+}

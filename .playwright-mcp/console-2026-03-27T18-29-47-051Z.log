@@ -1,0 +1,72 @@
+[    1258ms] [WARNING] THREE.THREE.Clock: This module has been deprecated. Please use THREE.Timer instead. @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[    1656ms] [WARNING] THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead. @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[    1823ms] [WARNING] THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead. @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[   43452ms] [ERROR] ./src/components/tabs/OpeningPhaseTab.tsx:66:10
+the name `ViewButton` is defined multiple times
+  64 |
+  65 | /* ─── Orange CTA Button ─── */
+> 66 | function ViewButton({ label, onClick }: { label: string; onClick?: () => void }) {
+     |          ^^^^^^^^^^
+  67 |   return (
+  68 |     <button
+  69 |       onClick={onClick}
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./src/components/tabs/OpeningPhaseTab.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/tabs/OpeningPhaseTab.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:3272
+[   43583ms] [ERROR] ./src/components/tabs/OpeningPhaseTab.tsx:66:10
+the name `ViewButton` is defined multiple times
+  64 |
+  65 | /* ─── Orange CTA Button ─── */
+> 66 | function ViewButton({ label, onClick }: { label: string; onClick?: () => void }) {
+     |          ^^^^^^^^^^
+  67 |   return (
+  68 |     <button
+  69 |       onClick={onClick}
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./src/components/tabs/OpeningPhaseTab.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/tabs/OpeningPhaseTab.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:3272
+[   52499ms] [WARNING] THREE.THREE.Clock: This module has been deprecated. Please use THREE.Timer instead. @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[   52883ms] [WARNING] THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead. @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[   53042ms] [WARNING] THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead. @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[   66007ms] [ERROR] ./src/components/tabs/PatternsTab.tsx:62:10
+the name `ViewButton` is defined multiple times
+  60 | }
+  61 |
+> 62 | function ViewButton({ label, onClick }: { label: string; onClick?: () => void }) {
+     |          ^^^^^^^^^^
+  63 |   return (
+  64 |     <button
+  65 |       onClick={onClick}
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./src/components/tabs/PatternsTab.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/tabs/PatternsTab.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:3272

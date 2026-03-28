@@ -1,0 +1,632 @@
+{
+  "match_id": "string",
+  "player_id": "string",
+  "opponent_id": "string",
+
+  "tabs": {
+
+    "match_report": {
+      "headline": "string",
+      "context_card": [
+        { "label": "Result", "value": "WON/LOST/UNKNOWN", "color_rule": "won=green, lost=red, unknown=neutral" },
+        { "label": "Score", "value": "21-18, 21-15", "visible_if": "!= unknown" },
+        { "label": "Total Rallies", "value": 54 },
+        { "label": "Games Played", "value": 2 },
+        { "label": "Avg Effectiveness", "value": "69.1%" },
+        { "label": "Total Shots", "value": 170 }
+      ],
+      "summary": {
+        "heading": "Match Summary",
+        "text": "string"
+      },
+      "key_differential": {
+        "heading": "KEY DIFFERENTIAL",
+        "text": "string | null (hide section if null)"
+      }
+    },
+
+
+    "shot_arsenal": {
+      "your_analysis": {
+        "headline": "string",
+
+        "zone_selection": {
+          "_level_1": "ZONE SELECTION — tap a zone on the court",
+          "prompt": "Select a zone to see shot distribution",
+          "player_zones": [
+            {
+              "zone_name": "Front left",
+              "effectiveness_pct": 92,
+              "level": "high",
+              "_level_rule": ">=65 high, >=45 mid, <45 low"
+            },
+            { "zone_name": "Front right", "effectiveness_pct": 92, "level": "high" },
+            { "zone_name": "Mid left",    "effectiveness_pct": 51, "level": "mid" },
+            { "zone_name": "Mid right",   "effectiveness_pct": 51, "level": "mid" },
+            { "zone_name": "Back left",   "effectiveness_pct": 30, "level": "low" },
+            { "zone_name": "Back right",  "effectiveness_pct": 30, "level": "low" }
+          ]
+        },
+
+        "zone_shot_mapping": {
+          "_level_2": "SHOT SELECTION — after tapping a player zone, shows opponent court with shot pills per landing zone",
+          "Front left": {
+            "avg_effectiveness": 55,
+            "opponent_landing_zones": {
+              "Front left":  [
+                { "shot_name": "BH Netkeep Cross", "count": 10, "level": "neutral", "avg_eff": 52 }
+              ],
+              "Front right": [
+                { "shot_name": "BH Netkeep", "count": 15, "level": "good", "avg_eff": 68 }
+              ],
+              "Mid left": [
+                { "shot_name": "BH Push Cross", "count": 6, "level": "neutral", "avg_eff": 49 }
+              ],
+              "Mid right": [
+                { "shot_name": "BH Push", "count": 8, "level": "neutral", "avg_eff": 53 }
+              ],
+              "Back left": [
+                { "shot_name": "BH Lift Cross", "count": 11, "level": "bad", "avg_eff": 38 }
+              ],
+              "Back right": [
+                { "shot_name": "BH Lift", "count": 9, "level": "bad", "avg_eff": 34 }
+              ]
+            }
+          },
+          "Front right": {
+            "avg_effectiveness": 62,
+            "opponent_landing_zones": {
+              "Front left":  [{ "shot_name": "FH Netkeep", "count": 18, "level": "good", "avg_eff": 72 }, { "shot_name": "Dribble", "count": 7, "level": "good", "avg_eff": 78 }],
+              "Front right": [{ "shot_name": "FH Netkeep Cross", "count": 12, "level": "neutral", "avg_eff": 55 }],
+              "Mid left":    [{ "shot_name": "FH Push", "count": 9, "level": "neutral", "avg_eff": 51 }],
+              "Mid right":   [{ "shot_name": "FH Push Cross", "count": 5, "level": "neutral", "avg_eff": 48 }],
+              "Back left":   [{ "shot_name": "FH Lift", "count": 14, "level": "bad", "avg_eff": 35 }],
+              "Back right":  [{ "shot_name": "FH Lift Cross", "count": 8, "level": "bad", "avg_eff": 32 }]
+            }
+          },
+          "Mid left": {
+            "avg_effectiveness": 42,
+            "opponent_landing_zones": {
+              "Front left":  [{ "shot_name": "BH Defense Cross", "count": 7, "level": "neutral", "avg_eff": 42 }],
+              "Front right": [{ "shot_name": "BH Defense", "count": 11, "level": "neutral", "avg_eff": 45 }],
+              "Mid left":    [{ "shot_name": "BH Flatgame Cross", "count": 9, "level": "good", "avg_eff": 59 }],
+              "Mid right":   [{ "shot_name": "BH Flatgame", "count": 13, "level": "good", "avg_eff": 61 }],
+              "Back left":   [],
+              "Back right":  []
+            }
+          },
+          "Mid right": {
+            "avg_effectiveness": 45,
+            "opponent_landing_zones": {
+              "Front left":  [{ "shot_name": "FH Defense", "count": 12, "level": "neutral", "avg_eff": 44 }],
+              "Front right": [{ "shot_name": "FH Defense Cross", "count": 8, "level": "neutral", "avg_eff": 41 }],
+              "Mid left":    [{ "shot_name": "FH Flatgame", "count": 15, "level": "good", "avg_eff": 62 }],
+              "Mid right":   [{ "shot_name": "FH Flatgame Cross", "count": 10, "level": "good", "avg_eff": 58 }],
+              "Back left":   [],
+              "Back right":  []
+            }
+          },
+          "Back left": {
+            "avg_effectiveness": 48,
+            "opponent_landing_zones": {
+              "Front left":  [{ "shot_name": "OH Drop Cross", "count": 6, "level": "neutral", "avg_eff": 54 }, { "shot_name": "BH Drop Cross", "count": 4, "level": "neutral", "avg_eff": 50 }, { "shot_name": "BH Pulldrop Cross", "count": 3, "level": "bad", "avg_eff": 31 }],
+              "Front right": [{ "shot_name": "OH Drop", "count": 8, "level": "good", "avg_eff": 67 }, { "shot_name": "BH Drop", "count": 5, "level": "neutral", "avg_eff": 52 }, { "shot_name": "BH Pulldrop", "count": 3, "level": "bad", "avg_eff": 28 }],
+              "Mid left":    [{ "shot_name": "OH Smash Cross", "count": 4, "level": "good", "avg_eff": 85 }, { "shot_name": "BH Drive Cross", "count": 6, "level": "neutral", "avg_eff": 56 }],
+              "Mid right":   [{ "shot_name": "OH Smash", "count": 7, "level": "good", "avg_eff": 91 }, { "shot_name": "BH Drive", "count": 5, "level": "neutral", "avg_eff": 54 }],
+              "Back left":   [{ "shot_name": "OH Clear Cross", "count": 9, "level": "bad", "avg_eff": 30 }, { "shot_name": "BH Clear Cross", "count": 5, "level": "bad", "avg_eff": 26 }],
+              "Back right":  [{ "shot_name": "OH Clear", "count": 11, "level": "bad", "avg_eff": 35 }, { "shot_name": "BH Clear", "count": 6, "level": "bad", "avg_eff": 28 }]
+            }
+          },
+          "Back right": {
+            "avg_effectiveness": 58,
+            "opponent_landing_zones": {
+              "Front left":  [{ "shot_name": "FH Drop", "count": 10, "level": "good", "avg_eff": 71 }],
+              "Front right": [{ "shot_name": "FH Drop Cross", "count": 6, "level": "good", "avg_eff": 66 }],
+              "Mid left":    [{ "shot_name": "FH Smash", "count": 8, "level": "good", "avg_eff": 88 }],
+              "Mid right":   [{ "shot_name": "FH Smash Cross", "count": 5, "level": "good", "avg_eff": 82 }],
+              "Back left":   [{ "shot_name": "FH Clear", "count": 12, "level": "bad", "avg_eff": 33 }],
+              "Back right":  [{ "shot_name": "FH Clear Cross", "count": 7, "level": "bad", "avg_eff": 29 }]
+            }
+          }
+        },
+
+        "shot_details": {
+          "_level_3": "SHOT DETAILS — full-screen sheet after tapping a shot pill. One entry per unique shot type.",
+          "_keyed_by": "shot_name from level 2 pills",
+          "BH Netkeep": {
+            "shot_name": "BH Netkeep",
+            "shot_count": 16,
+            "stats_row": {
+              "avg_effectiveness": { "label": "Avg. Effectiveness", "value_pct": 71.5 },
+              "avg_accuracy": { "label": "Avg. Accuracy", "value_pct": 67 }
+            },
+            "video": {
+              "src": "/match-video.mp4",
+              "timestamps_seconds": [740.1, 644.2, 1055.1, 163.0, 554.1, 1078.1]
+            },
+            "scatter_court": {
+              "_description": "Each shot instance plotted on opponent half-court with 3D perspective",
+              "shot_instances": [
+                {
+                  "x": 0.22,
+                  "y": 0.15,
+                  "height": "high",
+                  "accuracy": "good",
+                  "length": "good"
+                },
+                {
+                  "x": 0.71,
+                  "y": 0.08,
+                  "height": "normal",
+                  "accuracy": "average",
+                  "length": "good"
+                },
+                {
+                  "x": 0.45,
+                  "y": 0.32,
+                  "height": "low",
+                  "accuracy": "bad",
+                  "length": "average"
+                }
+              ]
+            },
+            "filters": {
+              "accuracy": { "options": ["all", "good", "bad"] },
+              "length": { "options": ["all", "good", "average", "bad"] },
+              "height": { "options": ["all", "high", "normal", "low"] }
+            },
+            "length_bands": {
+              "top_third": "Bad Length",
+              "middle_third": "Avg Length",
+              "bottom_third": "Good Length"
+            }
+          }
+        }
+      },
+
+      "opponent_analysis": {
+        "headline": "string",
+        "shot_insights": {
+          "forehand_netkeep": "string — per-shot narrative insight",
+          "backhand_netkeep": "string",
+          "forehand_defense": "string",
+          "backhand_defense": "string",
+          "forehand_pulldrop": "string",
+          "backhand_lift": "string",
+          "forehand_clear": "string",
+          "backhand_clear": "string",
+          "forehand_lift": "string"
+        },
+        "weapons_to_watch": [
+          {
+            "shot": "Backhand Lift (Good Version)",
+            "tendency": "string — what it does well",
+            "counter": "string — how to counter it"
+          }
+        ],
+        "exploitable_weaknesses": [
+          {
+            "shot": "Backhand Clear",
+            "vulnerability": "string — why it's weak",
+            "exploit": "string — how to exploit it"
+          }
+        ]
+      }
+    },
+
+
+    "opening_phase": {
+      "headline": "string",
+      "timeline_sections": [
+        {
+          "color": "orange",
+          "label": "SERVE PREDICTABILITY",
+          "predictability_warning": {
+            "percentage": "90%",
+            "message": "Your serve is too predictable, your opponent can read this.",
+            "variant": "danger"
+          },
+          "serve_bars": [
+            {
+              "label": "Serve Middle",
+              "count": "30x",
+              "pct": 90.0,
+              "win_rate": 0.59,
+              "win_rate_label": "59% Win rate",
+              "_color_rule": ">=0.5 green, >=0.4 amber, <0.4 red"
+            }
+          ],
+          "insight_text": "string"
+        },
+        {
+          "color": "orange",
+          "label": "SERVE INSIGHT",
+          "insight_text": "string"
+        },
+        {
+          "color": "orange",
+          "label": "RECEIVE GAME",
+          "receive_cards": [
+            {
+              "badge": "Best receive",
+              "badge_style": "success",
+              "shot_name": "Backhand Netkeep Cross",
+              "eff_label": "95% Eff.",
+              "eff_value": 94.7,
+              "description": "string",
+              "button_label": "View Backhand Netkeep Cross",
+              "evidence": [
+                { "frame": 31654, "rally_id": "2_1", "effectiveness": 100.0, "outcome": "lost" }
+              ]
+            },
+            {
+              "badge": "Worst receive",
+              "badge_style": "danger",
+              "shot_name": "Backhand Push",
+              "eff_label": "40% Eff.",
+              "eff_value": 26.7,
+              "description": "string",
+              "button_label": "View Backhand Push",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "color": "orange",
+          "label": "RECEIVE PREDICTABILITY",
+          "predictability_warning": {
+            "percentage": "90%",
+            "message": "Your receive is too predictable, your opponent can read this.",
+            "variant": "danger"
+          },
+          "predictability_rows": [
+            {
+              "label": "Serve Middle → Backhand Netkeep",
+              "eff_label": "38% Eff.",
+              "eff_value": 38,
+              "bar_width_pct": 71,
+              "count": "12x",
+              "button_label": "View Backhand Netkeep"
+            }
+          ]
+        },
+        {
+          "color": "orange",
+          "label": "RECEIVE INSIGHT",
+          "insight_text": "string"
+        },
+        {
+          "color": "green",
+          "label": "WINNING OPENINGS",
+          "sequence_cards": [
+            {
+              "title": "3-shot sequence",
+              "eff_label": "100% Eff.",
+              "count": "3x",
+              "description": "string",
+              "steps": [
+                { "who": "You", "action": "Serve", "eff_label": "100% Eff.", "eff_color": "#2dbd1a" },
+                { "who": "Opp", "action": "Reset", "eff_label": "36% Eff.", "eff_color": "#ff4e64" },
+                { "who": "You", "action": "Attack", "eff_label": "100% Eff.", "eff_color": "#2dbd1a" }
+              ],
+              "button_label": "View 3 Shot Sequence",
+              "evidence_frames": [10933, 25994]
+            }
+          ]
+        },
+        {
+          "color": "red",
+          "label": "LOSING OPENINGS",
+          "is_last": true,
+          "sequence_cards": [
+            {
+              "title": "4-shot sequence",
+              "eff_label": "100% Eff.",
+              "count": "3x",
+              "description": "string",
+              "steps": [
+                { "who": "You", "action": "Serve", "eff_label": "100% Eff.", "eff_color": "#2dbd1a" },
+                { "who": "Opp", "action": "Net", "eff_label": "60% Eff.", "eff_color": "#f59e0b" },
+                { "who": "You", "action": "Net", "eff_label": "45% Eff.", "eff_color": "#ff4e64" },
+                { "who": "Opp", "action": "Push", "eff_label": "70% Eff.", "eff_color": "#2dbd1a" }
+              ],
+              "button_label": "View 4 Shot Sequence",
+              "evidence_frames": []
+            }
+          ]
+        }
+      ]
+    },
+
+
+    "patterns": {
+      "headline": "string",
+      "timeline_sections": [
+        {
+          "color": "orange",
+          "label": "RALLY LENGTH",
+          "rally_cards": [
+            {
+              "label": "Short Rallies",
+              "rally_count": 22,
+              "rally_pct": 40.7,
+              "win_rate": 0.64,
+              "win_rate_label": "64% Win rate",
+              "description": "string"
+            },
+            {
+              "label": "Medium Rallies",
+              "rally_count": 21,
+              "rally_pct": 38.9,
+              "win_rate": 0.48,
+              "win_rate_label": "48% Win rate",
+              "description": "string"
+            },
+            {
+              "label": "Long Rallies",
+              "rally_count": 11,
+              "rally_pct": 20.4,
+              "win_rate": 0.55,
+              "win_rate_label": "55% Win rate",
+              "description": "string"
+            }
+          ],
+          "insight_text": "string"
+        },
+        {
+          "color": "orange",
+          "label": "MATCH PHASES",
+          "chart": {
+            "x_axis": ["Start", "Pre-interval", "Championship", "End-game"],
+            "y_axis": ["80% eff.", "70% eff.", "60% eff.", "50% eff.", "40% eff.", "30% eff."],
+            "series": [
+              { "color": "#4aaf10", "label": "75% eff.", "data_points": [75.1, 63.2, 66.2, 63.6] },
+              { "color": "#23a3e9", "label": "63% eff.", "data_points": [63, 60, 58, 55] },
+              { "color": "#f38b1c", "label": "66% eff.", "data_points": [66, 64, 50, 35] },
+              { "color": "#e92323", "label": "64% eff.", "data_points": [64, 58, 45, 20] }
+            ]
+          },
+          "insight_text": "string"
+        },
+        {
+          "color": "orange",
+          "label": "TEMPO CONTROL",
+          "tempo_groups": [
+            {
+              "title": "Fast & Ineffective Shots",
+              "shots": [
+                { "name": "Backhand Netkeep", "eff_label": "40% Eff.", "eff_value": 40, "count": "3x", "button_label": "View Backhand Netkeep" },
+                { "name": "Flat Game", "eff_label": "40% Eff.", "eff_value": 40, "count": "3x", "button_label": "View Flat Game" }
+              ]
+            },
+            {
+              "title": "Slow & Ineffective Shots",
+              "shots": [
+                { "name": "Forehand Smash", "eff_label": "40% Eff.", "eff_value": 40, "count": "3x", "button_label": "View Forehand Smash" },
+                { "name": "Overhead Clear", "eff_label": "23% Eff.", "eff_value": 23, "count": "1x", "button_label": "View Overhead Clear" },
+                { "name": "Backhand Push", "eff_label": "32% Eff.", "eff_value": 32, "count": "1x", "button_label": "View Backhand Push" }
+              ]
+            }
+          ],
+          "insight_text": "string"
+        },
+        {
+          "color": "orange",
+          "label": "PREDICTABLE PATTERNS",
+          "predictability_warning": {
+            "percentage": "18%",
+            "message": "Moderate risk",
+            "variant": "warning"
+          },
+          "predictable_pattern_cards": [
+            {
+              "trigger_who": "Opp",
+              "trigger_action": "Serve Middle",
+              "response_who": "You",
+              "response_action": "Netkeep",
+              "frequency_pct": 43,
+              "effectiveness": 74,
+              "eff_label": "74% Eff.",
+              "count_label": "12/28",
+              "button_label": "View Netkeep"
+            }
+          ],
+          "insight_text": "string"
+        },
+        {
+          "color": "green",
+          "label": "WINNING PATTERNS",
+          "pattern_sequence_cards": [
+            {
+              "title": "Weathering the storm to force an error",
+              "count": "3x",
+              "description": "string",
+              "steps": [
+                { "who": "Opp", "action": "Serve" },
+                { "who": "You", "action": "Pressure" },
+                { "who": "Opp", "action": "Reset" },
+                { "who": "You", "action": "Reset" },
+                { "who": "Opp", "action": "Attack" }
+              ],
+              "button_label": "View Winning Pattern",
+              "evidence_frames": []
+            }
+          ]
+        },
+        {
+          "color": "red",
+          "label": "LOSING PATTERNS",
+          "is_last": true,
+          "pattern_sequence_cards": [
+            {
+              "title": "string",
+              "count": "3x",
+              "description": "string",
+              "steps": [],
+              "button_label": "View Losing Pattern",
+              "evidence_frames": []
+            }
+          ]
+        }
+      ]
+    },
+
+
+    "dynamics": {
+      "headline": "string",
+
+      "pressure_performance": {
+        "heading": "Pressure Performance",
+        "under_pressure": { "label": "Under Pressure", "value_pct": 66.2 },
+        "overall": { "label": "Overall", "value_pct": 69.1 },
+        "delta": { "label": "Delta", "value": -2.9 }
+      },
+
+      "clutch_shots": {
+        "heading": "Clutch Shots",
+        "items": [
+          {
+            "stroke": "backhand_netkeep",
+            "display_name": "Backhand Netkeep",
+            "n_crucial": 3,
+            "delta": 28.7,
+            "crucial_eff": 90.5,
+            "normal_eff": 61.8,
+            "insight": "string",
+            "crucial_example": { "score": "14-13", "game": 1, "rally_id": "1_28", "effectiveness": 81.0 },
+            "evidence_frames": [22203, 19325, 31654],
+            "button_label": "View Instances"
+          }
+        ]
+      },
+
+      "fragile_shots": {
+        "heading": "Fragile Shots",
+        "items": [
+          {
+            "stroke": "flat_game",
+            "display_name": "Flat Game",
+            "n_crucial": 4,
+            "delta": -55.0,
+            "crucial_eff": 45.0,
+            "normal_eff": 100.0,
+            "insight": "string",
+            "crucial_example": { "score": "18-17", "game": 1, "rally_id": "1_36", "effectiveness": 50.0 },
+            "evidence_frames": [],
+            "button_label": "View Instances"
+          }
+        ]
+      },
+
+      "score_state": {
+        "heading": "Score State",
+        "rows": [
+          { "label": "When Leading", "value_pct": 66.9, "n_shots": 98 },
+          { "label": "When Trailing", "value_pct": 74.5, "n_shots": 37 },
+          { "label": "When Equal", "value_pct": 69.0, "n_shots": 35 }
+        ],
+        "insight": "better when trailing",
+        "narrative": "string"
+      },
+
+      "game_evolution": {
+        "heading": "Game Evolution",
+        "trend": "stable",
+        "games": [
+          {
+            "game_number": 1,
+            "rallies": 40,
+            "win_rate": 0.47,
+            "player_avg_eff": 67.9,
+            "opponent_avg_eff": 47.6
+          },
+          {
+            "game_number": 2,
+            "rallies": 14,
+            "win_rate": 0.79,
+            "player_avg_eff": 71.8,
+            "opponent_avg_eff": 39.3
+          }
+        ],
+        "narrative": {
+          "evolution_headline": "string",
+          "trend_insight": "string",
+          "fatigue_insight": "string",
+          "adaptation_insight": "string"
+        }
+      },
+
+      "turning_points": {
+        "heading": "Turning Points",
+        "items": [
+          {
+            "moment": "Game 2, from 0-2 to 8-2",
+            "insight": "string",
+            "impact_score": 9.0,
+            "evidence_frames": [],
+            "button_label": "View Moment"
+          },
+          {
+            "moment": "Game 1, from 14-10 to 14-15",
+            "insight": "string",
+            "impact_score": 8.5,
+            "evidence_frames": [],
+            "button_label": "View Moment"
+          }
+        ]
+      }
+    },
+
+
+    "head_to_head": {
+      "headline": "string",
+
+      "winners_vs_errors": {
+        "heading": "Winners vs Errors",
+        "you": { "winners": 16, "ue": 14 },
+        "opponent": { "winners": 10, "ue": 14 },
+        "net_delta": 6,
+        "delta_label": "+6 net W/E",
+        "insight": "string"
+      },
+
+      "rally_length_advantage": {
+        "heading": "Rally Length Advantage",
+        "bars": [
+          {
+            "length": "short",
+            "player_win_rate": 0.64,
+            "opponent_win_rate": 0.36,
+            "_color_rule": ">=0.55 green, >=0.45 amber, <0.45 red"
+          },
+          { "length": "medium", "player_win_rate": 0.48, "opponent_win_rate": 0.52 },
+          { "length": "long", "player_win_rate": 0.55, "opponent_win_rate": 0.45 }
+        ],
+        "narratives": {
+          "quick_exchanges": "string",
+          "medium_rallies": "string",
+          "long_rallies": "string",
+          "overall_insight": "string"
+        }
+      },
+
+      "style_comparison": {
+        "player_style": "balanced",
+        "opponent_style": "balanced",
+        "insight": "string"
+      },
+
+      "category_comparison": {
+        "heading": "Category Comparison",
+        "categories": [
+          { "category": "NET_SHOTS", "display_name": "Net Shots", "player_eff": 68.0, "opponent_eff": 44.7, "gap": 23.3, "player_n": 35, "opponent_n": 36 },
+          { "category": "PRESSURE_SHOTS", "display_name": "Pressure Shots", "player_eff": 66.3, "opponent_eff": 44.5, "gap": 21.8, "player_n": 15, "opponent_n": 4 },
+          { "category": "RESET_SHOTS", "display_name": "Reset Shots", "player_eff": 52.3, "opponent_eff": 37.4, "gap": 14.9, "player_n": 29, "opponent_n": 47 },
+          { "category": "DEFENSIVE_SHOTS", "display_name": "Defensive Shots", "player_eff": 50.4, "opponent_eff": 39.8, "gap": 10.6, "player_n": 13, "opponent_n": 23 },
+          { "category": "ATTACKING_SHOTS", "display_name": "Attacking Shots", "player_eff": 94.9, "opponent_eff": 100.0, "gap": -5.1, "player_n": 23, "opponent_n": 4 }
+        ],
+        "insight": "string"
+      }
+    }
+  }
+}
