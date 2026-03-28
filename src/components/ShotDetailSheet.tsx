@@ -130,6 +130,7 @@ interface ShotDetailSheetProps {
   shots: ShotInstance[];
   videoSrc?: string;
   hasLength?: boolean; // whether this shot type has length data (drops/clears/lifts)
+  hasHeight?: boolean; // whether this shot type has height data (lifts/clears only)
 }
 
 /* ─── Filter options ─── */
@@ -256,6 +257,7 @@ export function ShotDetailSheet({
   shots,
   videoSrc,
   hasLength = false,
+  hasHeight = false,
 }: ShotDetailSheetProps) {
   const [accuracyFilter, setAccuracyFilter] = useState<AccuracyFilter>("all");
   const [lengthFilter, setLengthFilter] = useState<LengthFilter>("all");
@@ -569,7 +571,7 @@ export function ShotDetailSheet({
                 style={{
                   fontSize: 28,
                   fontWeight: 700,
-                  color: "#ff4e64",
+                  color: avgEff >= 65 ? "#2dbd1a" : avgEff >= 45 ? "#f59e0b" : "#ff4e64",
                   letterSpacing: "-1px",
                   lineHeight: 1.1,
                 }}
@@ -601,7 +603,7 @@ export function ShotDetailSheet({
                 style={{
                   fontSize: 28,
                   fontWeight: 700,
-                  color: "#ff4e64",
+                  color: avgAccuracy >= 65 ? "#2dbd1a" : avgAccuracy >= 45 ? "#f59e0b" : "#ff4e64",
                   letterSpacing: "-1px",
                   lineHeight: 1.1,
                 }}
@@ -645,15 +647,18 @@ export function ShotDetailSheet({
                 </select>
               </div>
             )}
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 10, fontWeight: 600, color: "#999", letterSpacing: "1px", textTransform: "uppercase" as const, marginBottom: 6, textAlign: "center" }}>HEIGHT</div>
-              <select value={heightFilter} onChange={(e) => setHeightFilter(e.target.value as HeightFilter)} style={{ width: "100%", background: "#f6f6f6", border: "1px solid #e8e8e8", borderRadius: 8, padding: "10px 8px", fontSize: 12, fontWeight: 500, color: "#444", appearance: "none" as const, WebkitAppearance: "none" as const, backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\")", backgroundRepeat: "no-repeat", backgroundPosition: "right 8px center", boxShadow: "0 1px 3px rgba(0,0,0,0.05)", cursor: "pointer" }}>
-                <option value="all">All</option>
-                <option value="high">High</option>
-                <option value="medium">Medium</option>
-                <option value="low">Low</option>
-              </select>
-            </div>
+            {/* HEIGHT — only shown for shots that have height data (lifts/clears) */}
+            {hasHeight && (
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 10, fontWeight: 600, color: "#999", letterSpacing: "1px", textTransform: "uppercase" as const, marginBottom: 6, textAlign: "center" }}>HEIGHT</div>
+                <select value={heightFilter} onChange={(e) => setHeightFilter(e.target.value as HeightFilter)} style={{ width: "100%", background: "#f6f6f6", border: "1px solid #e8e8e8", borderRadius: 8, padding: "10px 8px", fontSize: 12, fontWeight: 500, color: "#444", appearance: "none" as const, WebkitAppearance: "none" as const, backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\")", backgroundRepeat: "no-repeat", backgroundPosition: "right 8px center", boxShadow: "0 1px 3px rgba(0,0,0,0.05)", cursor: "pointer" }}>
+                  <option value="all">All</option>
+                  <option value="high">High</option>
+                  <option value="medium">Medium</option>
+                  <option value="low">Low</option>
+                </select>
+              </div>
+            )}
           </div>
           <div style={{ textAlign: "center", fontSize: 11, color: "#aaa", marginTop: 8, marginBottom: 4 }}>
             {filteredShots.length} of {shots.length} shots shown

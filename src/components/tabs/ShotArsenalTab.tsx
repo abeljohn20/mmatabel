@@ -69,7 +69,7 @@ function StadiumBg() {
 
 /* ─── Main component ─── */
 
-export function ShotArsenalTab({ analysisView: _analysisView = "your" }: { analysisView?: "your" | "opponent" } = {}) {
+export function ShotArsenalTab({ analysisView = "your" }: { analysisView?: "your" | "opponent" } = {}) {
   const [arsenalData, setArsenalData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [selectedZone, setSelectedZone] = useState<string | null>(null);
@@ -92,20 +92,32 @@ export function ShotArsenalTab({ analysisView: _analysisView = "your" }: { analy
       });
   }, []);
 
+  /* Select active side data based on toggle */
+  const activeData = useMemo(() => {
+    if (!arsenalData) return null;
+    return analysisView === "opponent" ? arsenalData.opponent_analysis : arsenalData.your_analysis;
+  }, [arsenalData, analysisView]);
+
+  /* Reset selection when switching views */
+  useEffect(() => {
+    setSelectedZone(null);
+    setSelectedShot(null);
+  }, [analysisView]);
+
   /* Build PLAYER_ZONES from JSON */
   const playerZones: Record<string, ZoneData> = useMemo(() => {
-    if (!arsenalData) return {};
+    if (!activeData) return {};
     const zones: Record<string, ZoneData> = {};
-    arsenalData.your_analysis.zone_selection.player_zones.forEach((z: any) => {
+    activeData.zone_selection.player_zones.forEach((z: any) => {
       zones[z.zone_name] = { eff: z.effectiveness_pct, level: z.level };
     });
     return zones;
-  }, [arsenalData]);
+  }, [activeData]);
 
   /* Build LANDINGS from zone_shot_mapping */
   const landings: Record<string, { avgEff: number; zones: Record<string, ShotPill[]> }> = useMemo(() => {
-    if (!arsenalData) return {};
-    const mapping = arsenalData.your_analysis.zone_shot_mapping;
+    if (!activeData) return {};
+    const mapping = activeData.zone_shot_mapping;
     const result: Record<string, { avgEff: number; zones: Record<string, ShotPill[]> }> = {};
     for (const playerZone of Object.keys(mapping)) {
       const zoneData = mapping[playerZone];
@@ -125,13 +137,13 @@ export function ShotArsenalTab({ analysisView: _analysisView = "your" }: { analy
       };
     }
     return result;
-  }, [arsenalData]);
+  }, [activeData]);
 
   /* Get shot instances from shot_details — with fuzzy name matching */
   const findShotDetail = useCallback(
     (shotName: string) => {
-      if (!arsenalData) return null;
-      const details = arsenalData.your_analysis.shot_details;
+      if (!activeData) return null;
+      const details = activeData.shot_details;
       // Exact match first
       if (details[shotName]) return details[shotName];
       // Try case-insensitive
@@ -145,7 +157,7 @@ export function ShotArsenalTab({ analysisView: _analysisView = "your" }: { analy
       }
       return null;
     },
-    [arsenalData]
+    [activeData]
   );
 
   const getShotInstances = useCallback(
@@ -192,17 +204,30 @@ export function ShotArsenalTab({ analysisView: _analysisView = "your" }: { analy
     [findShotDetail]
   );
 
+  /* Check if shot has height data */
+  const shotHasHeight = useCallback(
+    (shotName: string): boolean => {
+      const detail = findShotDetail(shotName);
+      if (!detail) return false;
+      const instances = detail.scatter_court?.shot_instances || [];
+      return instances.some((inst: any) => inst.height != null);
+    },
+    [findShotDetail]
+  );
+
   const landing = selectedZone ? landings[selectedZone] : null;
 
   /* Headline from JSON, with fallback */
   const headline = useMemo(() => {
-    if (!arsenalData) return "";
-    const raw = arsenalData.your_analysis.headline;
+    if (!activeData) return "";
+    const raw = activeData.headline;
     if (!raw || raw.startsWith("[narrative")) {
-      return "Strong attacking and net game with vulnerable clears.";
+      return analysisView === "opponent"
+        ? "Opponent shot analysis and zone distribution."
+        : "Strong attacking and net game with vulnerable clears.";
     }
     return raw;
-  }, [arsenalData]);
+  }, [activeData, analysisView]);
 
   function handleZoneClick(zone: string) {
     setSelectedZone(selectedZone === zone ? null : zone);
@@ -242,6 +267,7 @@ export function ShotArsenalTab({ analysisView: _analysisView = "your" }: { analy
   const shotStats = selectedShot ? getShotStats(selectedShot.name) : null;
   const shotInstances = selectedShot ? getShotInstances(selectedShot.name) : [];
   const hasLength = selectedShot ? shotHasLength(selectedShot.name) : false;
+  const hasHeight = selectedShot ? shotHasHeight(selectedShot.name) : false;
 
   return (
     <div
@@ -365,6 +391,7 @@ export function ShotArsenalTab({ analysisView: _analysisView = "your" }: { analy
         shots={shotInstances}
         videoSrc={VIDEO_SRC}
         hasLength={hasLength}
+        hasHeight={hasHeight}
       />
     </div>
   );
