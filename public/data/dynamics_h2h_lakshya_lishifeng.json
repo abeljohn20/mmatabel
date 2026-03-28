@@ -1,0 +1,375 @@
+{
+  "dynamics": {
+    "headline": "[narrative: dynamics_headline]",
+    "streaks": {
+      "games": [
+        {
+          "game": 1,
+          "runs": [
+            {
+              "type": "player",
+              "score": "14 → 1",
+              "score_before": "14-12",
+              "score_after": "1-0",
+              "length": 7,
+              "start_rally": 27,
+              "end_rally": 1,
+              "start_frame": 15277,
+              "end_frame": 604,
+              "start_ts": 509.2,
+              "end_ts": 20.1
+            },
+            {
+              "type": "player",
+              "score": "0 → 3",
+              "score_before": "0-0",
+              "score_after": "3-0",
+              "length": 3,
+              "start_rally": 1,
+              "end_rally": 3,
+              "start_frame": 604,
+              "end_frame": 1995,
+              "start_ts": 20.1,
+              "end_ts": 66.5
+            },
+            {
+              "type": "player",
+              "score": "10 → 13",
+              "score_before": "10-8",
+              "score_after": "13-8",
+              "length": 3,
+              "start_rally": 19,
+              "end_rally": 21,
+              "start_frame": 9704,
+              "end_frame": 10631,
+              "start_ts": 323.5,
+              "end_ts": 354.4
+            }
+          ],
+          "total_rallies": 32
+        },
+        {
+          "game": 2,
+          "runs": [
+            {
+              "type": "player",
+              "score": "1 → 6",
+              "score_before": "1-3",
+              "score_after": "6-3",
+              "length": 5,
+              "start_rally": 5,
+              "end_rally": 9,
+              "start_frame": 19888,
+              "end_frame": 23451,
+              "start_ts": 662.9,
+              "end_ts": 781.7
+            },
+            {
+              "type": "player",
+              "score": "9 → 14",
+              "score_before": "9-11",
+              "score_after": "14-11",
+              "length": 5,
+              "start_rally": 21,
+              "end_rally": 25,
+              "start_frame": 30391,
+              "end_frame": 32417,
+              "start_ts": 1013.0,
+              "end_ts": 1080.6
+            },
+            {
+              "type": "opponent",
+              "score": "6 → 10",
+              "score_before": "7-6",
+              "score_after": "7-10",
+              "length": 4,
+              "start_rally": 14,
+              "end_rally": 17,
+              "start_frame": 25953,
+              "end_frame": 27613,
+              "start_ts": 865.1,
+              "end_ts": 920.4
+            },
+            {
+              "type": "opponent",
+              "score": "0 → 3",
+              "score_before": "1-0",
+              "score_after": "1-3",
+              "length": 3,
+              "start_rally": 2,
+              "end_rally": 4,
+              "start_frame": 18006,
+              "end_frame": 18954,
+              "start_ts": 600.2,
+              "end_ts": 631.8
+            },
+            {
+              "type": "opponent",
+              "score": "3 → 6",
+              "score_before": "6-3",
+              "score_after": "6-6",
+              "length": 3,
+              "start_rally": 10,
+              "end_rally": 12,
+              "start_frame": 23858,
+              "end_frame": 24817,
+              "start_ts": 795.3,
+              "end_ts": 827.2
+            }
+          ],
+          "total_rallies": 32
+        }
+      ],
+      "streak_analysis": {
+        "player_longest_streak": 19,
+        "player_avg_streak_length": 11.3,
+        "eff_during_streaks": 58.9,
+        "eff_outside_streaks": 55.7,
+        "opponent_longest_streak": 10,
+        "opponent_eff_during_streaks": 51.4
+      }
+    },
+    "trigger_shots": {
+      "positive": [],
+      "negative": [
+        {
+          "shot_name": "BH Lift Cross",
+          "stroke": "backhand_lift_cross",
+          "normal_eff": 37.2,
+          "crucial_eff": 12.5,
+          "delta": -24.7,
+          "n_crucial": 4,
+          "crucial_instances": [
+            {
+              "frame": 29592,
+              "rally_id": "2_20",
+              "game": 2,
+              "score": "9-10",
+              "effectiveness": 2.0
+            },
+            {
+              "frame": 30148,
+              "rally_id": "2_20",
+              "game": 2,
+              "score": "9-10",
+              "effectiveness": 26.0
+            },
+            {
+              "frame": 30664,
+              "rally_id": "2_22",
+              "game": 2,
+              "score": "10-11",
+              "effectiveness": 20.0
+            },
+            {
+              "frame": 31941,
+              "rally_id": "2_24",
+              "game": 2,
+              "score": "12-11",
+              "effectiveness": 2.0
+            }
+          ],
+          "description": "[narrative: fragile shot backhand_lift_cross]",
+          "evidence_frames": [
+            29592,
+            30148,
+            30664,
+            31941
+          ],
+          "timestamps_seconds": [
+            986.4,
+            1004.9,
+            1022.1,
+            1064.7
+          ]
+        },
+        {
+          "shot_name": "FH Lift Cross",
+          "stroke": "forehand_lift_cross",
+          "normal_eff": 38.7,
+          "crucial_eff": 18.0,
+          "delta": -20.7,
+          "n_crucial": 4,
+          "crucial_instances": [
+            {
+              "frame": 30199,
+              "rally_id": "2_20",
+              "game": 2,
+              "score": "9-10",
+              "effectiveness": 0.0
+            },
+            {
+              "frame": 31147,
+              "rally_id": "2_23",
+              "game": 2,
+              "score": "11-11",
+              "effectiveness": 20.0
+            },
+            {
+              "frame": 31573,
+              "rally_id": "2_24",
+              "game": 2,
+              "score": "12-11",
+              "effectiveness": 50.0
+            },
+            {
+              "frame": 32127,
+              "rally_id": "2_24",
+              "game": 2,
+              "score": "12-11",
+              "effectiveness": 2.0
+            }
+          ],
+          "description": "[narrative: fragile shot forehand_lift_cross]",
+          "evidence_frames": [
+            30199,
+            31147,
+            31573,
+            32127
+          ],
+          "timestamps_seconds": [
+            1006.6,
+            1038.2,
+            1052.4,
+            1070.9
+          ]
+        },
+        {
+          "shot_name": "BH Defense Cross",
+          "stroke": "backhand_defense_cross",
+          "normal_eff": 35.0,
+          "crucial_eff": 23.3,
+          "delta": -11.7,
+          "n_crucial": 4,
+          "crucial_instances": [
+            {
+              "frame": 29629,
+              "rally_id": "2_20",
+              "game": 2,
+              "score": "9-10",
+              "effectiveness": 2.0
+            },
+            {
+              "frame": 30257,
+              "rally_id": "2_20",
+              "game": 2,
+              "score": "9-10",
+              "effectiveness": null
+            },
+            {
+              "frame": 31041,
+              "rally_id": "2_23",
+              "game": 2,
+              "score": "11-11",
+              "effectiveness": 26.0
+            },
+            {
+              "frame": 31351,
+              "rally_id": "2_24",
+              "game": 2,
+              "score": "12-11",
+              "effectiveness": 42.0
+            }
+          ],
+          "description": "[narrative: fragile shot backhand_defense_cross]",
+          "evidence_frames": [
+            29629,
+            30257,
+            31041,
+            31351
+          ],
+          "timestamps_seconds": [
+            987.6,
+            1008.6,
+            1034.7,
+            1045.0
+          ]
+        }
+      ]
+    },
+    "leading_trailing": {
+      "leading": {
+        "avg_eff": 56.3,
+        "n": 385
+      },
+      "trailing": {
+        "avg_eff": 55.7,
+        "n": 80
+      },
+      "equal": {
+        "avg_eff": 56.0,
+        "n": 79
+      },
+      "insight": "consistent_across_states",
+      "narrative": "[narrative: leading_vs_trailing]"
+    },
+    "opponent_pressure": {
+      "narrative": "[narrative: opponent_pressure]"
+    }
+  },
+  "head_to_head": {
+    "headline": "[narrative: h2h_headline]",
+    "stats": {
+      "categories": [
+        {
+          "category": "RESET_SHOTS",
+          "display_name": "RESET",
+          "player_eff": 39.1,
+          "opponent_eff": 31.7,
+          "gap": 7.4
+        },
+        {
+          "category": "PRESSURE_SHOTS",
+          "display_name": "PRESSURE",
+          "player_eff": 64.1,
+          "opponent_eff": 58.9,
+          "gap": 5.2
+        },
+        {
+          "category": "DEFENSIVE_SHOTS",
+          "display_name": "DEFENSIVE",
+          "player_eff": 39.7,
+          "opponent_eff": 36.6,
+          "gap": 3.1
+        },
+        {
+          "category": "ATTACKING_SHOTS",
+          "display_name": "ATTACKING",
+          "player_eff": 91.3,
+          "opponent_eff": 88.9,
+          "gap": 2.4
+        },
+        {
+          "category": "PLACEMENT_SHOTS",
+          "display_name": "PLACEMENT",
+          "player_eff": 45.3,
+          "opponent_eff": 47.7,
+          "gap": -2.4
+        },
+        {
+          "category": "NET_SHOTS",
+          "display_name": "NET",
+          "player_eff": 60.9,
+          "opponent_eff": 63.7,
+          "gap": -2.8
+        }
+      ],
+      "insight": "[narrative: category_comparison_insight]"
+    },
+    "winners_errors": {
+      "player_winners": 27,
+      "player_ue": 10,
+      "opponent_winners": 16,
+      "opponent_ue": 11,
+      "delta": 12,
+      "label": "Player leads by 12 net winner-error",
+      "insight": "[narrative: winner_error_insight]"
+    },
+    "style": {
+      "player_style": "balanced",
+      "opponent_style": "balanced",
+      "player_description": "[narrative: player_style_description]",
+      "opponent_description": "[narrative: opponent_style_description]"
+    }
+  }
+}

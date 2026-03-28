@@ -181,8 +181,8 @@ export default function Home() {
             {activeTab === "arsenal" && <ShotArsenalTab analysisView={analysisView} />}
             {activeTab === "opening" && <OpeningPhaseTab analysisView={analysisView} onOpenVideo={openVideoSheet} />}
             {activeTab === "patterns" && <PatternsTab analysisView={analysisView} onOpenVideo={openVideoSheet} />}
-            {activeTab === "dynamics" && <DynamicsTab report={report} narrative={narrative} analysisView={analysisView} onOpenVideo={openVideoSheet} />}
-            {activeTab === "h2h" && <HeadToHeadTab report={report} narrative={narrative} analysisView={analysisView} />}
+            {activeTab === "dynamics" && <DynamicsTab report={report} narrative={narrative} onOpenVideo={openVideoSheet} />}
+            {activeTab === "h2h" && <HeadToHeadTab report={report} narrative={narrative} />}
           </>
         )}
       </div>
