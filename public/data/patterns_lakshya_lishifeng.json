@@ -1,0 +1,883 @@
+{
+  "patterns": {
+    "your_analysis": {
+      "headline": "[narrative: patterns_headline]",
+      "rally_length": {
+        "cards": [
+          {
+            "label": "Short Rallies",
+            "rally_count": 6,
+            "rally_pct": 9.4,
+            "win_rate": 0.67,
+            "win_rate_label": "67% Win rate",
+            "avg_eff": 82.1,
+            "description": "[narrative: short_rally_description]"
+          },
+          {
+            "label": "Medium Rallies",
+            "rally_count": 10,
+            "rally_pct": 15.6,
+            "win_rate": 0.7,
+            "win_rate_label": "70% Win rate",
+            "avg_eff": 58.4,
+            "description": "[narrative: medium_rally_description]"
+          },
+          {
+            "label": "Long Rallies",
+            "rally_count": 48,
+            "rally_pct": 75.0,
+            "win_rate": 0.56,
+            "win_rate_label": "56% Win rate",
+            "avg_eff": 55.7,
+            "description": "[narrative: long_rally_description]"
+          }
+        ],
+        "insight_text": "[narrative: rally_length_insight]"
+      },
+      "match_phases": {
+        "chart_points": [
+          {
+            "label": "Start",
+            "avg_eff": 59.7,
+            "win_rate": 0.53,
+            "n_rallies": 30,
+            "color": "#4aaf10"
+          },
+          {
+            "label": "Pre-interval",
+            "avg_eff": 46.9,
+            "win_rate": 0.67,
+            "n_rallies": 15,
+            "color": "#23a3e9"
+          },
+          {
+            "label": "Championship",
+            "avg_eff": 57.3,
+            "win_rate": 0.61,
+            "n_rallies": 18,
+            "color": "#f38b1c"
+          },
+          {
+            "label": "End-game",
+            "avg_eff": 63.2,
+            "win_rate": 1.0,
+            "n_rallies": 1,
+            "color": "#e92323"
+          }
+        ],
+        "trend": [],
+        "insight_text": "[narrative: match_phase_insight]"
+      },
+      "tempo_control": {
+        "who_controls": "player",
+        "groups": [
+          {
+            "title": "Fast & Ineffective Shots",
+            "shots": [
+              {
+                "name": "BH Defense Cross",
+                "eff_value": null,
+                "eff_label": "",
+                "count": "5x",
+                "button_label": "View BH Defense Cross",
+                "evidence_frames": [
+                  9218,
+                  9843,
+                  11015,
+                  13616,
+                  31351
+                ],
+                "timestamps_seconds": [
+                  307.3,
+                  328.1,
+                  367.2,
+                  453.9,
+                  1045.0
+                ]
+              },
+              {
+                "name": "BH Defense",
+                "eff_value": null,
+                "eff_label": "",
+                "count": "4x",
+                "button_label": "View BH Defense",
+                "evidence_frames": [
+                  2862,
+                  6985,
+                  9988,
+                  29412
+                ],
+                "timestamps_seconds": [
+                  95.4,
+                  232.8,
+                  332.9,
+                  980.4
+                ]
+              },
+              {
+                "name": "FH Defense Cross",
+                "eff_value": null,
+                "eff_label": "",
+                "count": "2x",
+                "button_label": "View FH Defense Cross",
+                "evidence_frames": [
+                  10016,
+                  21690
+                ],
+                "timestamps_seconds": [
+                  333.9,
+                  723.0
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Slow & Ineffective Shots",
+            "shots": [
+              {
+                "name": "FH Lift Cross",
+                "eff_value": null,
+                "eff_label": "",
+                "count": "5x",
+                "button_label": "View FH Lift Cross",
+                "evidence_frames": [
+                  4735,
+                  20705,
+                  32127,
+                  33154,
+                  37348
+                ],
+                "timestamps_seconds": [
+                  157.8,
+                  690.2,
+                  1070.9,
+                  1105.1,
+                  1244.9
+                ]
+              },
+              {
+                "name": "FH Lift",
+                "eff_value": null,
+                "eff_label": "",
+                "count": "3x",
+                "button_label": "View FH Lift",
+                "evidence_frames": [
+                  13916,
+                  25517,
+                  34369
+                ],
+                "timestamps_seconds": [
+                  463.9,
+                  850.6,
+                  1145.6
+                ]
+              },
+              {
+                "name": "FH Clear Cross",
+                "eff_value": null,
+                "eff_label": "",
+                "count": "2x",
+                "button_label": "View FH Clear Cross",
+                "evidence_frames": [
+                  14998,
+                  35881
+                ],
+                "timestamps_seconds": [
+                  499.9,
+                  1196.0
+                ]
+              }
+            ]
+          }
+        ],
+        "insight_text": "Player controls tempo (10% dominant). Key weapons: overhead smash cross, backhand defense, forehand smash cross."
+      },
+      "predictability": {
+        "percentage": "12%",
+        "message": "Your response variety is adequate.",
+        "variant": "warning",
+        "cards": [
+          {
+            "opp_action": "FH Pulldrop",
+            "your_action": "Netkeep",
+            "frequency_pct": 67,
+            "effectiveness": 61.9,
+            "eff_label": "62% Eff.",
+            "count_label": "8/12",
+            "button_label": "View Netkeep",
+            "evidence_frames": [
+              3601,
+              4364,
+              10407,
+              15858,
+              17722,
+              19394,
+              21307,
+              25260
+            ],
+            "timestamps_seconds": [
+              120.0,
+              145.5,
+              346.9,
+              528.6,
+              590.7,
+              646.5,
+              710.2,
+              842.0
+            ]
+          },
+          {
+            "opp_action": "FH Netkeep",
+            "your_action": "Netkeep",
+            "frequency_pct": 45,
+            "effectiveness": 52.2,
+            "eff_label": "52% Eff.",
+            "count_label": "5/11",
+            "button_label": "View Netkeep",
+            "evidence_frames": [
+              2021,
+              9890,
+              11355,
+              22923,
+              23889
+            ],
+            "timestamps_seconds": [
+              67.4,
+              329.7,
+              378.5,
+              764.1,
+              796.3
+            ]
+          },
+          {
+            "opp_action": "BH Lift Cross",
+            "your_action": "Drive",
+            "frequency_pct": 44,
+            "effectiveness": 84.5,
+            "eff_label": "84% Eff.",
+            "count_label": "4/9",
+            "button_label": "View Drive",
+            "evidence_frames": [
+              12487,
+              22627,
+              23469,
+              35007
+            ],
+            "timestamps_seconds": [
+              416.2,
+              754.2,
+              782.3,
+              1166.9
+            ]
+          },
+          {
+            "opp_action": "Serve Middle",
+            "your_action": "Lift",
+            "frequency_pct": 38,
+            "effectiveness": 41.1,
+            "eff_label": "41% Eff.",
+            "count_label": "9/24",
+            "button_label": "View Lift",
+            "evidence_frames": [
+              3187,
+              7479,
+              11670,
+              19888,
+              24817,
+              25517,
+              27270,
+              28626,
+              30391
+            ],
+            "timestamps_seconds": [
+              106.2,
+              249.3,
+              389.0,
+              662.9,
+              827.2,
+              850.6,
+              909.0,
+              954.2,
+              1013.0
+            ]
+          },
+          {
+            "opp_action": "BH Netkeep",
+            "your_action": "Netkeep",
+            "frequency_pct": 33,
+            "effectiveness": 54.0,
+            "eff_label": "54% Eff.",
+            "count_label": "6/18",
+            "button_label": "View Netkeep",
+            "evidence_frames": [
+              4948,
+              8857,
+              10292,
+              12438,
+              17597,
+              29460
+            ],
+            "timestamps_seconds": [
+              164.9,
+              295.2,
+              343.1,
+              414.6,
+              586.6,
+              982.0
+            ]
+          },
+          {
+            "opp_action": "Serve Middle",
+            "your_action": "Netkeep",
+            "frequency_pct": 33,
+            "effectiveness": 70.8,
+            "eff_label": "71% Eff.",
+            "count_label": "8/24",
+            "button_label": "View Netkeep",
+            "evidence_frames": [
+              2364,
+              3716,
+              5082,
+              9386,
+              11180,
+              24367,
+              27613,
+              33801
+            ],
+            "timestamps_seconds": [
+              78.8,
+              123.9,
+              169.4,
+              312.9,
+              372.7,
+              812.2,
+              920.4,
+              1126.7
+            ]
+          },
+          {
+            "opp_action": "BH Netkeep Cross",
+            "your_action": "Dribble",
+            "frequency_pct": 18,
+            "effectiveness": 73.0,
+            "eff_label": "73% Eff.",
+            "count_label": "5/28",
+            "button_label": "View Dribble",
+            "evidence_frames": [
+              4000,
+              7688,
+              11760,
+              27398,
+              30579
+            ],
+            "timestamps_seconds": [
+              133.3,
+              256.3,
+              392.0,
+              913.3,
+              1019.3
+            ]
+          },
+          {
+            "opp_action": "BH Netkeep",
+            "your_action": "Dribble",
+            "frequency_pct": 17,
+            "effectiveness": 37.7,
+            "eff_label": "38% Eff.",
+            "count_label": "3/18",
+            "button_label": "View Dribble",
+            "evidence_frames": [
+              9434,
+              21159,
+              28406
+            ],
+            "timestamps_seconds": [
+              314.5,
+              705.3,
+              946.9
+            ]
+          }
+        ],
+        "insight_text": "[narrative: predictability_insight]"
+      },
+      "winning_patterns": [],
+      "losing_patterns": []
+    },
+    "opponent_analysis": {
+      "headline": "[narrative: patterns_headline]",
+      "rally_length": {
+        "cards": [
+          {
+            "label": "Short Rallies",
+            "rally_count": 6,
+            "rally_pct": 9.4,
+            "win_rate": 0.33,
+            "win_rate_label": "33% Win rate",
+            "avg_eff": 66.2,
+            "description": "[narrative: short_rally_description]"
+          },
+          {
+            "label": "Medium Rallies",
+            "rally_count": 10,
+            "rally_pct": 15.6,
+            "win_rate": 0.3,
+            "win_rate_label": "30% Win rate",
+            "avg_eff": 47.9,
+            "description": "[narrative: medium_rally_description]"
+          },
+          {
+            "label": "Long Rallies",
+            "rally_count": 48,
+            "rally_pct": 75.0,
+            "win_rate": 0.44,
+            "win_rate_label": "44% Win rate",
+            "avg_eff": 48.4,
+            "description": "[narrative: long_rally_description]"
+          }
+        ],
+        "insight_text": "[narrative: rally_length_insight]"
+      },
+      "match_phases": {
+        "chart_points": [
+          {
+            "label": "Start",
+            "avg_eff": 46.4,
+            "win_rate": 0.48,
+            "n_rallies": 33,
+            "color": "#4aaf10"
+          },
+          {
+            "label": "Pre-interval",
+            "avg_eff": 52.2,
+            "win_rate": 0.32,
+            "n_rallies": 28,
+            "color": "#23a3e9"
+          },
+          {
+            "label": "Championship",
+            "avg_eff": 42.5,
+            "win_rate": 0.33,
+            "n_rallies": 3,
+            "color": "#f38b1c"
+          }
+        ],
+        "trend": [],
+        "insight_text": "[narrative: match_phase_insight]"
+      },
+      "tempo_control": {
+        "who_controls": "contested",
+        "groups": [
+          {
+            "title": "Fast & Ineffective Shots",
+            "shots": [
+              {
+                "name": "BH Defense Cross",
+                "eff_value": null,
+                "eff_label": "",
+                "count": "9x",
+                "button_label": "View BH Defense Cross",
+                "evidence_frames": [
+                  12503,
+                  16208,
+                  17443,
+                  23487,
+                  24864,
+                  26158,
+                  28102,
+                  33929,
+                  35016
+                ],
+                "timestamps_seconds": [
+                  416.8,
+                  540.3,
+                  581.4,
+                  782.9,
+                  828.8,
+                  871.9,
+                  936.7,
+                  1131.0,
+                  1167.2
+                ]
+              },
+              {
+                "name": "FH Defense Cross",
+                "eff_value": null,
+                "eff_label": "",
+                "count": "4x",
+                "button_label": "View FH Defense Cross",
+                "evidence_frames": [
+                  1067,
+                  2525,
+                  29669,
+                  32839
+                ],
+                "timestamps_seconds": [
+                  35.6,
+                  84.2,
+                  989.0,
+                  1094.6
+                ]
+              },
+              {
+                "name": "FH Defense",
+                "eff_value": null,
+                "eff_label": "",
+                "count": "2x",
+                "button_label": "View FH Defense",
+                "evidence_frames": [
+                  11846,
+                  19143
+                ],
+                "timestamps_seconds": [
+                  394.9,
+                  638.1
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Slow & Ineffective Shots",
+            "shots": [
+              {
+                "name": "BH Lift",
+                "eff_value": null,
+                "eff_label": "",
+                "count": "10x",
+                "button_label": "View BH Lift",
+                "evidence_frames": [
+                  6465,
+                  7752,
+                  18589,
+                  20233,
+                  20874,
+                  22982,
+                  25953,
+                  26789,
+                  29909,
+                  35280
+                ],
+                "timestamps_seconds": [
+                  215.5,
+                  258.4,
+                  619.6,
+                  674.4,
+                  695.8,
+                  766.1,
+                  865.1,
+                  893.0,
+                  997.0,
+                  1176.0
+                ]
+              },
+              {
+                "name": "FH Lift",
+                "eff_value": null,
+                "eff_label": "",
+                "count": "5x",
+                "button_label": "View FH Lift",
+                "evidence_frames": [
+                  8696,
+                  9761,
+                  11811,
+                  13127,
+                  30866
+                ],
+                "timestamps_seconds": [
+                  289.9,
+                  325.4,
+                  393.7,
+                  437.6,
+                  1028.9
+                ]
+              },
+              {
+                "name": "FH Lift Cross",
+                "eff_value": null,
+                "eff_label": "",
+                "count": "5x",
+                "button_label": "View FH Lift Cross",
+                "evidence_frames": [
+                  10219,
+                  12241,
+                  18449,
+                  21210,
+                  27016
+                ],
+                "timestamps_seconds": [
+                  340.6,
+                  408.0,
+                  615.0,
+                  707.0,
+                  900.5
+                ]
+              }
+            ]
+          }
+        ],
+        "insight_text": "Tempo is closely contested (8% vs 6%). Player dominates with forehand smash cross; loses tempo on backhand lift, forehand lift, forehand lift cross."
+      },
+      "predictability": {
+        "percentage": "19%",
+        "message": "Moderate predictability risk.",
+        "variant": "warning",
+        "cards": [
+          {
+            "opp_action": "Serve Middle",
+            "your_action": "Lift",
+            "frequency_pct": 57,
+            "effectiveness": 27.0,
+            "eff_label": "27% Eff.",
+            "count_label": "21/37",
+            "button_label": "View Lift",
+            "evidence_frames": [
+              2234,
+              2664,
+              3512,
+              7194,
+              8555,
+              10219,
+              10631,
+              10906,
+              15396,
+              16174,
+              16663,
+              16839,
+              17398,
+              18006,
+              20422,
+              22328,
+              23451,
+              25953,
+              30866,
+              34525,
+              36817
+            ],
+            "timestamps_seconds": [
+              74.5,
+              88.8,
+              117.1,
+              239.8,
+              285.2,
+              340.6,
+              354.4,
+              363.5,
+              513.2,
+              539.1,
+              555.4,
+              561.3,
+              579.9,
+              600.2,
+              680.7,
+              744.3,
+              781.7,
+              865.1,
+              1028.9,
+              1150.8,
+              1227.2
+            ]
+          },
+          {
+            "opp_action": "OH Clear Cross",
+            "your_action": "Clear",
+            "frequency_pct": 41,
+            "effectiveness": 30.2,
+            "eff_label": "30% Eff.",
+            "count_label": "9/22",
+            "button_label": "View Clear",
+            "evidence_frames": [
+              1503,
+              6529,
+              14348,
+              16349,
+              34930,
+              37145
+            ],
+            "timestamps_seconds": [
+              50.1,
+              217.6,
+              478.3,
+              545.0,
+              1164.3,
+              1238.2
+            ]
+          },
+          {
+            "opp_action": "FH Push Cross",
+            "your_action": "Clear",
+            "frequency_pct": 36,
+            "effectiveness": 1.3,
+            "eff_label": "1% Eff.",
+            "count_label": "4/11",
+            "button_label": "View Clear",
+            "evidence_frames": [
+              19619,
+              23527,
+              28810,
+              34717
+            ],
+            "timestamps_seconds": [
+              654.0,
+              784.2,
+              960.3,
+              1157.2
+            ]
+          },
+          {
+            "opp_action": "Serve Middle",
+            "your_action": "Netkeep",
+            "frequency_pct": 35,
+            "effectiveness": 59.5,
+            "eff_label": "60% Eff.",
+            "count_label": "13/37",
+            "button_label": "View Netkeep",
+            "evidence_frames": [
+              604,
+              960,
+              1995,
+              3977,
+              6199,
+              12413,
+              15768,
+              23858,
+              28931,
+              29351,
+              30553,
+              31272,
+              34320
+            ],
+            "timestamps_seconds": [
+              20.1,
+              32.0,
+              66.5,
+              132.6,
+              206.6,
+              413.8,
+              525.6,
+              795.3,
+              964.4,
+              978.4,
+              1018.4,
+              1042.4,
+              1144.0
+            ]
+          },
+          {
+            "opp_action": "FH Netkeep Cross",
+            "your_action": "Netkeep",
+            "frequency_pct": 32,
+            "effectiveness": 51.4,
+            "eff_label": "51% Eff.",
+            "count_label": "13/40",
+            "button_label": "View Netkeep",
+            "evidence_frames": [
+              4274,
+              7663,
+              9412,
+              10425,
+              13409,
+              16966,
+              18114,
+              19089,
+              21134,
+              23914,
+              25290,
+              27842,
+              36357
+            ],
+            "timestamps_seconds": [
+              142.5,
+              255.4,
+              313.7,
+              347.5,
+              447.0,
+              565.5,
+              603.8,
+              636.3,
+              704.5,
+              797.1,
+              843.0,
+              928.1,
+              1211.9
+            ]
+          },
+          {
+            "opp_action": "FH Lift",
+            "your_action": "Drive",
+            "frequency_pct": 24,
+            "effectiveness": 73.5,
+            "eff_label": "74% Eff.",
+            "count_label": "8/34",
+            "button_label": "View Drive",
+            "evidence_frames": [
+              2843,
+              6969,
+              13463,
+              19539,
+              21538,
+              25540,
+              27288,
+              31334
+            ],
+            "timestamps_seconds": [
+              94.8,
+              232.3,
+              448.8,
+              651.3,
+              717.9,
+              851.3,
+              909.6,
+              1044.5
+            ]
+          },
+          {
+            "opp_action": "BH Lift Cross",
+            "your_action": "Pulldrop",
+            "frequency_pct": 18,
+            "effectiveness": 42.7,
+            "eff_label": "43% Eff.",
+            "count_label": "3/17",
+            "button_label": "View Pulldrop",
+            "evidence_frames": [
+              4340,
+              14692,
+              15831
+            ],
+            "timestamps_seconds": [
+              144.7,
+              489.7,
+              527.7
+            ]
+          },
+          {
+            "opp_action": "FH Lift",
+            "your_action": "Pulldrop",
+            "frequency_pct": 18,
+            "effectiveness": 39.3,
+            "eff_label": "39% Eff.",
+            "count_label": "6/34",
+            "button_label": "View Pulldrop",
+            "evidence_frames": [
+              1365,
+              2791,
+              17689,
+              20016,
+              21482,
+              22438
+            ],
+            "timestamps_seconds": [
+              45.5,
+              93.0,
+              589.6,
+              667.2,
+              716.1,
+              747.9
+            ]
+          }
+        ],
+        "insight_text": "[narrative: predictability_insight]"
+      },
+      "winning_patterns": [],
+      "losing_patterns": []
+    }
+  }
+}
