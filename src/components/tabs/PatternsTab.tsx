@@ -407,53 +407,6 @@ export function PatternsTab({ analysisView = "your", onOpenVideo, narrative }: P
             </TimelineSection>
           )}
 
-          {/* 7. OPPONENT PRESSURE — only in opponent view */}
-          {analysisView === "opponent" && oppPressure && (
-            <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="OPPONENT PRESSURE" isLast>
-              <div className="flex flex-col gap-3 w-full">
-                {oppPressure.headline && (
-                  <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full" style={{ fontFamily: "var(--font-dm-sans)" }}>
-                    {oppPressure.headline}
-                  </p>
-                )}
-
-                {oppPressure.clutch_tendencies && (
-                  <OpponentPressureCard
-                    badge="Clutch tendencies" badgeBg="rgba(117, 235, 62, 0.19)" badgeBorder="#bdf6c0" badgeColor="#359707"
-                    title="Rally Extension" description={oppPressure.clutch_tendencies}
-                    buttonLabel="View Evidence"
-                    onClickView={() => open({ title: "Opponent Clutch Tendencies", description: oppPressure.clutch_tendencies, timestamps: [], sectionLabel: "OPPONENT PRESSURE" })}
-                  />
-                )}
-
-                {oppPressure.clutch_tendencies && oppPressure.fragile_tendencies && (
-                  <div className="h-px w-full bg-[var(--grey-900,#efece6)]" />
-                )}
-
-                {oppPressure.fragile_tendencies && (
-                  <OpponentPressureCard
-                    badge="Fragile tendencies" badgeBg="rgba(255, 78, 100, 0.17)" badgeBorder="#ff4e64" badgeColor="#ff4e64"
-                    title="Unforced Errors" description={oppPressure.fragile_tendencies}
-                    buttonLabel="View Evidence"
-                    onClickView={() => open({ title: "Opponent Fragile Tendencies", description: oppPressure.fragile_tendencies, timestamps: [], sectionLabel: "OPPONENT PRESSURE" })}
-                  />
-                )}
-
-                {oppPressure.fragile_tendencies && oppPressure.championship_performance && (
-                  <div className="h-px w-full bg-[var(--grey-900,#efece6)]" />
-                )}
-
-                {oppPressure.championship_performance && (
-                  <OpponentPressureCard
-                    badge="Championship performance" badgeBg="rgba(211, 160, 255, 0.17)" badgeBorder="#ac4eff" badgeColor="#ac4eff"
-                    title="Steady Performance" description={oppPressure.championship_performance}
-                    buttonLabel="View Evidence"
-                    onClickView={() => open({ title: "Opponent Championship Performance", description: oppPressure.championship_performance, timestamps: [], sectionLabel: "OPPONENT PRESSURE" })}
-                  />
-                )}
-              </div>
-            </TimelineSection>
-          )}
         </div>
       </div>
     </div>

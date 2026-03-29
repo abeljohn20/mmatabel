@@ -183,7 +183,7 @@ export default function Home() {
             {activeTab === "arsenal" && <ShotArsenalTab analysisView={analysisView} />}
             {activeTab === "opening" && <OpeningPhaseTab analysisView={analysisView} onOpenVideo={openVideoSheet} />}
             {activeTab === "patterns" && <PatternsTab analysisView={analysisView} onOpenVideo={openVideoSheet} narrative={narrative} />}
-            {activeTab === "decisions" && <DecisionAnalysisTab onOpenVideo={openVideoSheet} />}
+            {activeTab === "decisions" && <DecisionAnalysisTab analysisView={analysisView} narrative={narrative} onOpenVideo={openVideoSheet} />}
             {activeTab === "dynamics" && <DynamicsTab report={report} narrative={narrative} onOpenVideo={openVideoSheet} />}
             {activeTab === "h2h" && <HeadToHeadTab report={report} narrative={narrative} />}
           </>

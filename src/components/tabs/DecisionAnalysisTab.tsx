@@ -145,12 +145,130 @@ function TippingPointCard({ badge, shotName, count, description, buttonLabel, on
    MAIN COMPONENT
    ═════════════════════════════ */
 
+/* ─── Opponent Tendencies Card (reused from PatternsTab) ─── */
+function OpponentTendencyCard({ badge, badgeBg, badgeBorder, badgeColor, title, description, buttonLabel, onView }: {
+  badge: string; badgeBg: string; badgeBorder: string; badgeColor: string;
+  title: string; description: string; buttonLabel: string; onView?: () => void;
+}) {
+  return (
+    <div className="bg-[var(--bg-elv-1,#fafafa)] border border-[#f5f5f5] flex flex-col gap-3 p-2 rounded-lg w-full">
+      <div className="flex flex-col gap-2 w-full">
+        <Badge text={badge} bg={badgeBg} border={badgeBorder} color={badgeColor} />
+        <div className="flex flex-col gap-1 w-full">
+          <span className="text-sm font-semibold text-[var(--text-heading,#161616)] tracking-[-0.5px]" style={{ fontFamily: "var(--font-dm-sans)" }}>{title}</span>
+          <p className="text-xs font-normal text-[var(--text-subtext,#6d6d6d)] leading-[1.6] w-full" style={{ fontFamily: "var(--font-dm-sans)" }}>{description}</p>
+        </div>
+      </div>
+      <ViewButton label={buttonLabel} onClick={onView} />
+    </div>
+  );
+}
+
 interface Props {
+  analysisView?: "your" | "opponent";
+  narrative?: any;
   onOpenVideo?: (data: VideoSheetData) => void;
 }
 
-export function DecisionAnalysisTab({ onOpenVideo }: Props) {
+export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVideo }: Props) {
   const open = (data: VideoSheetData) => onOpenVideo?.(data);
+  const isOpponent = analysisView === "opponent";
+  const oppPressure = narrative?.section_narratives?.pressure_dynamics?.opponent_pressure;
+
+  if (isOpponent) {
+    return (
+      <div className="bg-white w-full overflow-auto">
+        <div className="flex flex-col gap-8 px-4 pt-[18px] pb-[141px]">
+          <p className="text-[20px] font-medium leading-[1.32] text-[var(--text-heading,#161616)] tracking-[-0.5px]" style={{ fontFamily: "var(--font-dm-sans)" }}>
+            Opponent Decision Analysis
+          </p>
+          <div className="flex flex-col items-start w-full">
+            {/* RALLY BLUEPRINT */}
+            <TimelineSection label="RALLY BLUEPRINT" isLast={!oppPressure}>
+              <div className="flex flex-col gap-3 w-full">
+                <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)]" style={{ fontFamily: "var(--font-dm-sans)" }}>
+                  Rally blueprint insight
+                </p>
+                <BlueprintCard
+                  badges={[
+                    { text: "Short Rallies", bg: "#fff6fe", border: "#d7b6d4", color: "#97078b" },
+                    { text: "Balanced", bg: "rgba(117,235,62,0.19)", border: "#bdf6c0", color: "#359707" },
+                  ]}
+                  title="Opponent balanced approach in long rallies"
+                  description="Your opponent was prone to unforced errors early in the game and after the mid-game interval, which created your scoring streaks."
+                  buttonLabel="View Evidence"
+                  onView={() => open({ title: "Short Rally Blueprint", subtitle: "Balanced", timestamps: TS.slice(0,3), sectionLabel: "RALLY BLUEPRINT" })}
+                />
+                <BlueprintCard
+                  badges={[
+                    { text: "Medium Rallies", bg: "#f6fcff", border: "#9dcbe3", color: "#3998c8" },
+                    { text: "Attack", bg: "rgba(235,62,68,0.19)", border: "#f6bdd8", color: "#97071f" },
+                  ]}
+                  title="Opponent balanced approach in long rallies"
+                  description="Your opponent was prone to unforced errors early in the game and after the mid-game interval, which created your scoring streaks."
+                  buttonLabel="View Evidence"
+                  onView={() => open({ title: "Medium Rally Blueprint", subtitle: "Attack", timestamps: TS.slice(0,3), sectionLabel: "RALLY BLUEPRINT" })}
+                />
+                <BlueprintCard
+                  badges={[
+                    { text: "Long Rallies", bg: "#f0ecff", border: "#cec8eb", color: "#5539c8" },
+                    { text: "Defensive", bg: "rgba(166,221,239,0.19)", border: "#dbecfe", color: "#2597cc" },
+                  ]}
+                  title="Opponent balanced approach in long rallies"
+                  description="Your opponent was prone to unforced errors early in the game and after the mid-game interval, which created your scoring streaks."
+                  buttonLabel="View Evidence"
+                  onView={() => open({ title: "Long Rally Blueprint", subtitle: "Defensive", timestamps: TS.slice(0,3), sectionLabel: "RALLY BLUEPRINT" })}
+                />
+              </div>
+            </TimelineSection>
+
+            {/* OPPONENT TENDENCIES (moved from Patterns > Opponent Pressure) */}
+            {oppPressure && (
+              <TimelineSection label="OPPONENT TENDENCIES" isLast>
+                <div className="flex flex-col gap-3 w-full">
+                  {oppPressure.headline && (
+                    <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full" style={{ fontFamily: "var(--font-dm-sans)" }}>
+                      {oppPressure.headline}
+                    </p>
+                  )}
+                  {oppPressure.clutch_tendencies && (
+                    <OpponentTendencyCard
+                      badge="Clutch tendencies" badgeBg="rgba(117,235,62,0.19)" badgeBorder="#bdf6c0" badgeColor="#359707"
+                      title="Rally Extension" description={oppPressure.clutch_tendencies}
+                      buttonLabel="View Evidence"
+                      onView={() => open({ title: "Opponent Clutch Tendencies", description: oppPressure.clutch_tendencies, timestamps: [], sectionLabel: "OPPONENT TENDENCIES" })}
+                    />
+                  )}
+                  {oppPressure.clutch_tendencies && oppPressure.fragile_tendencies && (
+                    <div className="h-px w-full bg-[var(--grey-900,#efece6)]" />
+                  )}
+                  {oppPressure.fragile_tendencies && (
+                    <OpponentTendencyCard
+                      badge="Fragile tendencies" badgeBg="rgba(255,78,100,0.17)" badgeBorder="#ff4e64" badgeColor="#ff4e64"
+                      title="Unforced Errors" description={oppPressure.fragile_tendencies}
+                      buttonLabel="View Evidence"
+                      onView={() => open({ title: "Opponent Fragile Tendencies", description: oppPressure.fragile_tendencies, timestamps: [], sectionLabel: "OPPONENT TENDENCIES" })}
+                    />
+                  )}
+                  {oppPressure.fragile_tendencies && oppPressure.championship_performance && (
+                    <div className="h-px w-full bg-[var(--grey-900,#efece6)]" />
+                  )}
+                  {oppPressure.championship_performance && (
+                    <OpponentTendencyCard
+                      badge="Championship performance" badgeBg="rgba(211,160,255,0.17)" badgeBorder="#ac4eff" badgeColor="#ac4eff"
+                      title="Steady Performance" description={oppPressure.championship_performance}
+                      buttonLabel="View Evidence"
+                      onView={() => open({ title: "Opponent Championship Performance", description: oppPressure.championship_performance, timestamps: [], sectionLabel: "OPPONENT TENDENCIES" })}
+                    />
+                  )}
+                </div>
+              </TimelineSection>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white w-full overflow-auto">
