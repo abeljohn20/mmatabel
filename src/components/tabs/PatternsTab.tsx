@@ -203,6 +203,31 @@ function PatternSequenceCard({ title, count, description, steps, buttonLabel, on
   );
 }
 
+/* ─── Opponent Pressure Card ─── */
+function OpponentPressureCard({
+  badge, badgeBg, badgeBorder, badgeColor,
+  title, description, buttonLabel, onClickView,
+}: {
+  badge: string; badgeBg: string; badgeBorder: string; badgeColor: string;
+  title: string; description: string; buttonLabel: string; onClickView?: () => void;
+}) {
+  return (
+    <div className="bg-[var(--bg-elv-1,#fafafa)] border border-[var(--stroke-st-elv1,#f5f5f5)] flex flex-col gap-3 p-2 rounded-lg w-full">
+      <div className="flex flex-col gap-2 w-full">
+        <div className="flex items-center justify-center px-2 py-0.5 rounded w-fit border"
+          style={{ backgroundColor: badgeBg, borderColor: badgeBorder }}>
+          <span className="text-xs font-medium" style={{ color: badgeColor }}>{badge}</span>
+        </div>
+        <div className="flex flex-col gap-1 w-full">
+          <span className="text-sm font-semibold text-[var(--text-heading,#161616)] tracking-[-0.5px]">{title}</span>
+          <p className="text-xs font-normal text-[var(--text-subtext,#6d6d6d)] leading-[1.6] w-full">{description}</p>
+        </div>
+      </div>
+      <ViewButton label={buttonLabel} onClick={onClickView} />
+    </div>
+  );
+}
+
 /* ═══════════════════════════════════════════
    MAIN COMPONENT
    ═══════════════════════════════════════════ */
@@ -210,9 +235,11 @@ function PatternSequenceCard({ title, count, description, steps, buttonLabel, on
 interface Props {
   analysisView?: "your" | "opponent";
   onOpenVideo?: (data: VideoSheetData) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  narrative?: any;
 }
 
-export function PatternsTab({ analysisView = "your", onOpenVideo }: Props) {
+export function PatternsTab({ analysisView = "your", onOpenVideo, narrative }: Props) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -242,6 +269,7 @@ export function PatternsTab({ analysisView = "your", onOpenVideo }: Props) {
   const winPat = activeData.winning_patterns || [];
   const losePat = activeData.losing_patterns || [];
   const hasPatterns = winPat.length > 0 || losePat.length > 0;
+  const oppPressure = narrative?.section_narratives?.pressure_dynamics?.opponent_pressure;
 
   const headline = activeData.headline?.startsWith("[narrative")
     ? (analysisView === "opponent"
@@ -366,7 +394,8 @@ export function PatternsTab({ analysisView = "your", onOpenVideo }: Props) {
 
           {/* 6. LOSING PATTERNS */}
           {losePat.length > 0 && (
-            <TimelineSection color="red" icon="/icons/timeline-red.svg" label="LOSING PATTERNS" isLast>
+            <TimelineSection color="red" icon="/icons/timeline-red.svg" label="LOSING PATTERNS"
+              isLast={analysisView !== "opponent" || !oppPressure}>
               {losePat.map((seq: any, i: number) => (
                 <PatternSequenceCard key={i}
                   title={seq.title?.startsWith("[narrative") ? `Losing sequence (${seq.count})` : seq.title}
@@ -375,6 +404,54 @@ export function PatternsTab({ analysisView = "your", onOpenVideo }: Props) {
                   steps={seq.steps} buttonLabel={seq.button_label}
                   onView={() => open({ title: "Losing Pattern", subtitle: seq.count, timestamps: seq.timestamps_seconds || [], sectionLabel: "LOSING PATTERNS" })} />
               ))}
+            </TimelineSection>
+          )}
+
+          {/* 7. OPPONENT PRESSURE — only in opponent view */}
+          {analysisView === "opponent" && oppPressure && (
+            <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="OPPONENT PRESSURE" isLast>
+              <div className="flex flex-col gap-3 w-full">
+                {oppPressure.headline && (
+                  <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full" style={{ fontFamily: "var(--font-dm-sans)" }}>
+                    {oppPressure.headline}
+                  </p>
+                )}
+
+                {oppPressure.clutch_tendencies && (
+                  <OpponentPressureCard
+                    badge="Clutch tendencies" badgeBg="rgba(117, 235, 62, 0.19)" badgeBorder="#bdf6c0" badgeColor="#359707"
+                    title="Rally Extension" description={oppPressure.clutch_tendencies}
+                    buttonLabel="View Evidence"
+                    onClickView={() => open({ title: "Opponent Clutch Tendencies", description: oppPressure.clutch_tendencies, timestamps: [], sectionLabel: "OPPONENT PRESSURE" })}
+                  />
+                )}
+
+                {oppPressure.clutch_tendencies && oppPressure.fragile_tendencies && (
+                  <div className="h-px w-full bg-[var(--grey-900,#efece6)]" />
+                )}
+
+                {oppPressure.fragile_tendencies && (
+                  <OpponentPressureCard
+                    badge="Fragile tendencies" badgeBg="rgba(255, 78, 100, 0.17)" badgeBorder="#ff4e64" badgeColor="#ff4e64"
+                    title="Unforced Errors" description={oppPressure.fragile_tendencies}
+                    buttonLabel="View Evidence"
+                    onClickView={() => open({ title: "Opponent Fragile Tendencies", description: oppPressure.fragile_tendencies, timestamps: [], sectionLabel: "OPPONENT PRESSURE" })}
+                  />
+                )}
+
+                {oppPressure.fragile_tendencies && oppPressure.championship_performance && (
+                  <div className="h-px w-full bg-[var(--grey-900,#efece6)]" />
+                )}
+
+                {oppPressure.championship_performance && (
+                  <OpponentPressureCard
+                    badge="Championship performance" badgeBg="rgba(211, 160, 255, 0.17)" badgeBorder="#ac4eff" badgeColor="#ac4eff"
+                    title="Steady Performance" description={oppPressure.championship_performance}
+                    buttonLabel="View Evidence"
+                    onClickView={() => open({ title: "Opponent Championship Performance", description: oppPressure.championship_performance, timestamps: [], sectionLabel: "OPPONENT PRESSURE" })}
+                  />
+                )}
+              </div>
             </TimelineSection>
           )}
         </div>

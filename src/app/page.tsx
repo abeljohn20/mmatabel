@@ -6,6 +6,7 @@ import type { TabId } from "@/lib/types";
 import { ShotArsenalTab } from "@/components/tabs/ShotArsenalTab";
 import { OpeningPhaseTab } from "@/components/tabs/OpeningPhaseTab";
 import { PatternsTab } from "@/components/tabs/PatternsTab";
+import { DecisionAnalysisTab } from "@/components/tabs/DecisionAnalysisTab";
 import { DynamicsTab } from "@/components/tabs/DynamicsTab";
 import { HeadToHeadTab } from "@/components/tabs/HeadToHeadTab";
 
@@ -16,6 +17,7 @@ const TABS: { id: TabId; label: string }[] = [
   { id: "arsenal", label: "Shot Arsenal" },
   { id: "opening", label: "Opening Phase" },
   { id: "patterns", label: "Patterns" },
+  { id: "decisions", label: "Decision Analysis" },
   { id: "dynamics", label: "Dynamics" },
   { id: "h2h", label: "Head To Head" },
 ];
@@ -180,7 +182,8 @@ export default function Home() {
 
             {activeTab === "arsenal" && <ShotArsenalTab analysisView={analysisView} />}
             {activeTab === "opening" && <OpeningPhaseTab analysisView={analysisView} onOpenVideo={openVideoSheet} />}
-            {activeTab === "patterns" && <PatternsTab analysisView={analysisView} onOpenVideo={openVideoSheet} />}
+            {activeTab === "patterns" && <PatternsTab analysisView={analysisView} onOpenVideo={openVideoSheet} narrative={narrative} />}
+            {activeTab === "decisions" && <DecisionAnalysisTab onOpenVideo={openVideoSheet} />}
             {activeTab === "dynamics" && <DynamicsTab report={report} narrative={narrative} onOpenVideo={openVideoSheet} />}
             {activeTab === "h2h" && <HeadToHeadTab report={report} narrative={narrative} />}
           </>

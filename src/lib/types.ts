@@ -241,4 +241,4 @@ export interface Narrative {
   editorial?: any;
 }
 
-export type TabId = "report" | "arsenal" | "opening" | "patterns" | "dynamics" | "h2h";
+export type TabId = "report" | "arsenal" | "opening" | "patterns" | "decisions" | "dynamics" | "h2h";

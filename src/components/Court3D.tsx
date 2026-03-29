@@ -55,9 +55,9 @@ function opponentZonePos(row: number, col: number): [number, number, number] {
 const CAM_PLAYER: [number, number, number] = [0, 11, 10];
 const CAM_PLAYER_LOOK: [number, number, number] = [0, 0, 0.5];
 
-/* Opponent view: closer to see shot details on opponent half */
-const CAM_OPPONENT: [number, number, number] = [0, 9, 3];
-const CAM_OPPONENT_LOOK: [number, number, number] = [0, 0, -3.5];
+/* Opponent view: steeper top-down angle so back zones are easier to read */
+const CAM_OPPONENT: [number, number, number] = [0, 13, 1.5];
+const CAM_OPPONENT_LOOK: [number, number, number] = [0, 0, -3];
 
 /* ─── Fixed camera controller — no zoom, no scroll ─── */
 /* Smoothly animates between player and opponent view on zone tap only */
@@ -384,7 +384,7 @@ function OpponentZonePanel({
           position={[0, 0.1, 0]}
           center
           distanceFactor={8}
-          style={{ pointerEvents: onShotClick ? "auto" : "none", userSelect: "none", width: 180 }}
+          style={{ pointerEvents: onShotClick ? "auto" : "none", userSelect: "none", width: "auto" }}
         >
           <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
             {pills.map((pill, pi) => {
@@ -404,9 +404,10 @@ function OpponentZonePanel({
                     WebkitBackdropFilter: "blur(12px) saturate(180%)",
                     border: "1px solid rgba(255,255,255,0.35)",
                     borderRadius: 10,
-                    padding: "6px 10px",
+                    padding: "5px 10px",
                     boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
                     cursor: onShotClick ? "pointer" : "default",
+                    width: "fit-content",
                   }}
                 >
                   <div style={{ fontSize: 13, fontWeight: 700, color: "white", lineHeight: 1.3, textShadow: "0 1px 3px rgba(0,0,0,0.4)" }}>{pill.name}</div>
