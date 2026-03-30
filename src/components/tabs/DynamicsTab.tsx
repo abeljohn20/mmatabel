@@ -241,43 +241,13 @@ export function DynamicsTab({ report, narrative, onOpenVideo }: Props) {
             </div>
           </TimelineSection>
 
-          {/* 2. TRIGGER SHOTS */}
-          <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="TRIGGER SHOTS">
-            <div className="flex flex-col gap-3 w-full">
-              {trigger.positive.map((s: any, i: number) => (
-                <TriggerShotCard key={`p-${i}`}
-                  badge="Positive trigger shot" badgeBg="rgba(117, 235, 62, 0.19)" badgeBorder="#bdf6c0" badgeColor="#359707"
-                  shotName={s.shot_name} normalEff={s.normal_eff} crucialEff={s.crucial_eff} delta={s.delta}
-                  description={s.description} buttonLabel={`View ${s.shot_name}`}
-                  onClickView={() => open({ title: s.shot_name, subtitle: `+${s.delta.toFixed(1)} delta`, timestamps: s.timestamps_seconds || [], sectionLabel: "TRIGGER SHOTS" })} />
-              ))}
-              {trigger.positive.length > 0 && trigger.negative.length > 0 && <div className="h-px w-full bg-[var(--grey-900,#efece6)]" />}
-              {trigger.negative.map((s: any, i: number) => (
-                <TriggerShotCard key={`n-${i}`}
-                  badge="Negative trigger shot" badgeBg="rgba(255, 78, 100, 0.17)" badgeBorder="#ff4e64" badgeColor="#ff4e64"
-                  shotName={s.shot_name} normalEff={s.normal_eff} crucialEff={s.crucial_eff} delta={s.delta}
-                  description={s.description} buttonLabel={`View ${s.shot_name}`}
-                  onClickView={() => open({ title: s.shot_name, subtitle: `${s.delta.toFixed(1)} delta`, timestamps: s.timestamps_seconds || [], sectionLabel: "TRIGGER SHOTS" })} />
-              ))}
-              {trigger.positive.length === 0 && trigger.negative.length === 0 && <p className="text-xs text-[var(--text-subtext,#6d6d6d)]">No significant trigger shots identified.</p>}
-            </div>
-          </TimelineSection>
-
-          {/* 3. LEADING VS TRAILING */}
-          <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="LEADING V/S TRAILING">
+          {/* 2. LEADING VS TRAILING */}
+          <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="LEADING V/S TRAILING" isLast>
             <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full">
               {lt.narrative?.startsWith("[narrative")
                 ? (narr.score_state?.leading_vs_trailing ?? `Effectiveness when leading: ${lt.leading?.avg_eff?.toFixed(0) ?? "—"}%, trailing: ${lt.trailing?.avg_eff?.toFixed(0) ?? "—"}%, equal: ${lt.equal?.avg_eff?.toFixed(0) ?? "—"}%.`)
                 : lt.narrative}
             </p>
-          </TimelineSection>
-
-          {/* 4. OPPONENT PRESSURE */}
-          <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="OPPONENT PRESSURE" isLast>
-            <div className="flex flex-col gap-3 w-full">
-              {narr.opponent_pressure?.headline && <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full">{narr.opponent_pressure.headline}</p>}
-              {!narr.opponent_pressure?.headline && <p className="text-sm text-[var(--text-subtext,#6d6d6d)]">Opponent pressure analysis will be available with narrative.</p>}
-            </div>
           </TimelineSection>
         </div>
       </div>

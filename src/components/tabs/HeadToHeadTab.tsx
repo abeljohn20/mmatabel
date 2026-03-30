@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import type { MatchReport, Narrative } from "@/lib/types";
+import type { VideoSheetData } from "@/components/VideoSheet";
+import { ViewButton } from "@/components/ViewButton";
 
 /* ─── Timeline Section Wrapper ─── */
 function TimelineSection({ color, icon, label, children, isLast = false }: {
@@ -30,6 +32,81 @@ function TimelineSection({ color, icon, label, children, isLast = false }: {
           <div className="w-px h-full" style={{ backgroundColor: lineColor }} />
         </div>
       )}
+    </div>
+  );
+}
+
+/* ─── Play Icon SVG ─── */
+function PlayIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+      <path d="M5.33 3.33L12 8L5.33 12.67V3.33Z" stroke="white" strokeWidth="1.5" strokeLinejoin="round" fill="none" />
+    </svg>
+  );
+}
+
+/* ─── Streak Run Block ─── */
+interface StreakRun {
+  score: string;
+  type: "player" | "opponent";
+  length: number;
+  start_rally: number;
+  start_ts?: number | null;
+  end_ts?: number | null;
+}
+
+function StreakBar({ runs, totalRallies, onClickRun }: {
+  runs: StreakRun[]; totalRallies: number; onClickRun?: (run: StreakRun) => void;
+}) {
+  const sorted = [...runs].sort((a, b) => a.start_rally - b.start_rally);
+  const segments: { type: "gap" | "player" | "opponent"; flexBasis: number; run?: StreakRun }[] = [];
+  let cursor = 0;
+  for (const run of sorted) {
+    const gap = run.start_rally - cursor;
+    if (gap > 0) segments.push({ type: "gap", flexBasis: gap });
+    segments.push({ type: run.type, flexBasis: Math.max(run.length, 3), run });
+    cursor = run.start_rally + run.length;
+  }
+  const trailing = totalRallies - cursor;
+  if (trailing > 0) segments.push({ type: "gap", flexBasis: trailing });
+
+  return (
+    <div className="flex flex-col gap-2 w-full">
+      <div className="flex items-center justify-center px-2 py-0.5 rounded bg-[#dfefff] self-start">
+        <span className="text-xs font-normal text-[#2990fd] leading-[1.6]" style={{ fontFamily: "var(--font-dm-sans)" }}>You</span>
+      </div>
+      <div className="relative w-full">
+        <div className="flex w-full mb-1" style={{ minHeight: 18 }}>
+          {segments.map((seg, i) => (
+            <div key={i} style={{ flex: seg.flexBasis, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              {seg.type === "player" && seg.run && <span className="text-xs font-medium text-[#3e95f3] text-center whitespace-nowrap" style={{ fontFamily: "var(--font-dm-sans)" }}>{seg.run.score} pts</span>}
+            </div>
+          ))}
+        </div>
+        <div className="flex w-full rounded-[6px] overflow-hidden bg-[#e8e8e8]" style={{ height: 48 }}>
+          {segments.map((seg, i) => {
+            if (seg.type === "gap") return <div key={i} className="bg-[#e8e8e8]" style={{ flex: seg.flexBasis }} />;
+            const isPlayer = seg.type === "player";
+            return (
+              <button key={i} type="button" onClick={() => onClickRun?.(seg.run!)}
+                className={`${isPlayer ? "bg-[#3e95f3]" : "bg-[#f5364d]"} flex items-center justify-center cursor-pointer active:opacity-80`}
+                style={{ flex: seg.flexBasis, border: "none", borderRadius: 6, height: 48 }}>
+                <PlayIcon />
+              </button>
+            );
+          })}
+        </div>
+        <div className="flex w-full mt-1" style={{ minHeight: 18 }}>
+          {segments.map((seg, i) => (
+            <div key={i} style={{ flex: seg.flexBasis, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              {seg.type === "opponent" && seg.run && <span className="text-xs font-medium text-[#f5364d] text-center whitespace-nowrap" style={{ fontFamily: "var(--font-dm-sans)" }}>{seg.run.score} pts</span>}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="flex items-center justify-center px-2 py-0.5 rounded bg-[#fcd4d9] self-start">
+        <span className="text-xs font-normal text-[#a22618] leading-[1.6]" style={{ fontFamily: "var(--font-dm-sans)" }}>Opp</span>
+      </div>
     </div>
   );
 }
@@ -93,9 +170,10 @@ function StyleCard({ label, styleName, styleKey, description }: {
 interface Props {
   report: MatchReport;
   narrative: Narrative;
+  onOpenVideo?: (data: VideoSheetData) => void;
 }
 
-export function HeadToHeadTab({ report, narrative }: Props) {
+export function HeadToHeadTab({ report, narrative, onOpenVideo }: Props) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -103,23 +181,29 @@ export function HeadToHeadTab({ report, narrative }: Props) {
   useEffect(() => {
     fetch("/data/dynamics_h2h_lakshya_lishifeng.json")
       .then((r) => r.json())
-      .then((d) => { setData(d.head_to_head); setLoading(false); })
+      .then((d) => { setData(d); setLoading(false); })
       .catch(() => setLoading(false));
   }, []);
 
-  const narr = narrative?.section_narratives?.head_to_head ?? {};
+  const h2hNarr = narrative?.section_narratives?.head_to_head ?? {};
+  const dynNarr = narrative?.section_narratives?.pressure_dynamics ?? {};
+  const open = (vd: VideoSheetData) => onOpenVideo?.(vd);
 
   if (loading || !data) {
     return <div style={{ padding: 40, textAlign: "center", color: "#999" }}>Loading…</div>;
   }
 
-  const stats = data.stats;
-  const we = data.winners_errors;
-  const style = data.style;
+  const h2h = data.head_to_head;
+  const dyn = data.dynamics;
+  const stats = h2h.stats;
+  const we = h2h.winners_errors;
+  const style = h2h.style;
+  const streaks = dyn?.streaks;
+  const lt = dyn?.leading_trailing;
 
-  const headline = data.headline?.startsWith("[narrative")
-    ? (narr.h2h_headline || "Head to Head")
-    : data.headline;
+  const headline = h2h.headline?.startsWith("[narrative")
+    ? (h2hNarr.h2h_headline || "Head to Head")
+    : h2h.headline;
 
   return (
     <div className="bg-white w-full overflow-auto">
@@ -127,7 +211,120 @@ export function HeadToHeadTab({ report, narrative }: Props) {
         <p className="text-[20px] font-medium leading-[1.32] text-[var(--text-heading,#161616)] tracking-[-0.5px]">{headline}</p>
 
         <div className="flex flex-col items-start w-full">
-          {/* 1. STATS */}
+          {/* 1. STREAKS (from Dynamics) */}
+          {streaks && streaks.games.length > 0 && (
+            <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="STREAKS">
+              <div className="flex flex-col gap-3 w-full">
+                {streaks.games.map((g: any) => {
+                  const narrativeByGame: any = {};
+                  (dynNarr.turning_points ?? []).forEach((n: any) => {
+                    const m = n.moment?.match(/Game\s+(\d+)/i);
+                    if (m) narrativeByGame[parseInt(m[1])] = n;
+                  });
+                  const ntp = narrativeByGame[g.game];
+                  return (
+                    <div key={g.game} className="bg-[var(--bg-elv-2,#f6f6f6)] border border-[var(--stroke-st-elv2,#eee)] flex flex-col gap-4 p-2 rounded-lg shadow-[0px_4px_7.8px_0px_rgba(186,186,186,0.25)] w-full">
+                      <div className="flex flex-col gap-1 w-full">
+                        <span className="text-lg font-semibold text-[var(--text-heading,#161616)] tracking-[-1px] leading-[1.2]">Game {g.game}</span>
+                        {ntp && <p className="text-sm font-normal text-[var(--text-subtext,#6d6d6d)] leading-[1.4] w-full">{ntp.insight}</p>}
+                      </div>
+                      <StreakBar
+                        runs={g.runs}
+                        totalRallies={g.total_rallies || 40}
+                        onClickRun={(run) => {
+                          const ts = [run.start_ts, run.end_ts].filter(Boolean) as number[];
+                          open({ title: `Game ${g.game} — ${run.type === "player" ? "Your" : "Opponent"} Streak`, subtitle: `${run.score} pts`, description: ntp?.insight ?? `${run.length}-point run.`, timestamps: ts, sectionLabel: "STREAKS", gameRuns: g.runs, gameTotalRallies: g.total_rallies || 40 });
+                        }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </TimelineSection>
+          )}
+
+          {/* 2. LEADING VS TRAILING (from Dynamics) */}
+          {lt && (
+            <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="LEADING V/S TRAILING">
+              <div className="flex flex-col gap-4 w-full">
+                <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full" style={{ fontFamily: "var(--font-dm-sans)" }}>
+                  {lt.narrative?.startsWith("[narrative")
+                    ? (dynNarr.score_state?.leading_vs_trailing ?? `You are significantly more effective when trailing (${lt.trailing?.avg_eff?.toFixed(0) ?? "—"}%) than when leading (${lt.leading?.avg_eff?.toFixed(0) ?? "—"}%). This suggests you play with more focus when chasing the score but may relax or become predictable when you have a lead.`)
+                    : lt.narrative}
+                </p>
+
+                {/* Card container */}
+                <div className="bg-[var(--bg-elv-1,#fafafa)] border border-[#f5f5f5] rounded-lg p-3 flex flex-col gap-3 w-full">
+                  {/* You banner */}
+                  <div className="flex items-center justify-center px-2 py-1 rounded bg-[#dfefff] w-full">
+                    <span className="text-sm font-medium text-[#2990fd] leading-[1.4]" style={{ fontFamily: "var(--font-dm-sans)" }}>You</span>
+                  </div>
+
+                  {/* Player stats row */}
+                  <div className="flex gap-2 w-full">
+                    {(() => {
+                      const pLead = lt.leading?.avg_eff;
+                      const pNeutral = lt.equal?.avg_eff;
+                      const pTrail = lt.trailing?.avg_eff;
+                      const avg = pNeutral ?? ((pLead ?? 0) + (pTrail ?? 0)) / 2;
+                      return [
+                        { label: "LEADING", value: pLead, arrow: pLead != null && avg > 0 ? (pLead < avg ? "↓" : pLead > avg ? "↑" : null) : null, arrowColor: pLead != null && pLead < avg ? "#ff4e64" : "#2dbd1a" },
+                        { label: "NEUTRAL", value: pNeutral, arrow: null, arrowColor: "" },
+                        { label: "TRAILING", value: pTrail, arrow: pTrail != null && avg > 0 ? (pTrail > avg ? "↑" : pTrail < avg ? "↓" : null) : null, arrowColor: pTrail != null && pTrail > avg ? "#2dbd1a" : "#ff4e64" },
+                      ].map((item) => (
+                        <div key={item.label} className="flex-1 bg-[#eef2f7] border border-[#e4e8ed] rounded-lg p-2 flex flex-col gap-1 items-start">
+                          <span className="text-[10px] font-medium text-[var(--text-subtext,#6d6d6d)] uppercase tracking-wider" style={{ fontFamily: "var(--font-dm-sans)" }}>{item.label}</span>
+                          <div className="flex items-center gap-1">
+                            <span className="text-lg font-semibold text-[var(--text-heading,#161616)] tracking-[-0.5px]" style={{ fontFamily: "var(--font-dm-sans)" }}>{item.value?.toFixed(0) ?? "—"}%</span>
+                            {item.arrow && <span className="text-sm font-semibold" style={{ color: item.arrowColor }}>{item.arrow}</span>}
+                          </div>
+                          <span className="text-[10px] font-light text-[var(--text-subtext,#6d6d6d)]" style={{ fontFamily: "var(--font-dm-sans)" }}>Effectiveness</span>
+                        </div>
+                      ));
+                    })()}
+                  </div>
+
+                  {/* V/S divider */}
+                  <div className="flex gap-2 items-center w-full">
+                    <div className="flex-1 h-px bg-[#dfdfdf]" />
+                    <span className="text-sm font-medium text-[#969696] leading-[1.4]" style={{ fontFamily: "var(--font-dm-sans)" }}>V/S</span>
+                    <div className="flex-1 h-px bg-[#dfdfdf]" />
+                  </div>
+
+                  {/* Opp banner */}
+                  <div className="flex items-center justify-center px-2 py-1 rounded bg-[#fcd4d9] w-full">
+                    <span className="text-sm font-medium text-[#a22618] leading-[1.4]" style={{ fontFamily: "var(--font-dm-sans)" }}>Opp</span>
+                  </div>
+
+                  {/* Opponent stats row */}
+                  <div className="flex gap-2 w-full">
+                    {(() => {
+                      const oLead = lt.opponent_leading?.avg_eff ?? lt.leading?.opp_eff;
+                      const oNeutral = lt.opponent_equal?.avg_eff ?? lt.equal?.opp_eff;
+                      const oTrail = lt.opponent_trailing?.avg_eff ?? lt.trailing?.opp_eff;
+                      const avg = oNeutral ?? ((oLead ?? 0) + (oTrail ?? 0)) / 2;
+                      return [
+                        { label: "LEADING", value: oLead, arrow: oLead != null && avg > 0 ? (oLead > avg ? "↑" : oLead < avg ? "↓" : null) : null, arrowColor: oLead != null && oLead > avg ? "#2dbd1a" : "#ff4e64" },
+                        { label: "NEUTRAL", value: oNeutral, arrow: null, arrowColor: "" },
+                        { label: "TRAILING", value: oTrail, arrow: oTrail != null && avg > 0 ? (oTrail < avg ? "↓" : oTrail > avg ? "↑" : null) : null, arrowColor: oTrail != null && oTrail < avg ? "#ff4e64" : "#2dbd1a" },
+                      ].map((item) => (
+                        <div key={item.label} className="flex-1 bg-[#f9f9f9] border border-[#f0f0f0] rounded-lg p-2 flex flex-col gap-1 items-start">
+                          <span className="text-[10px] font-medium text-[var(--text-subtext,#6d6d6d)] uppercase tracking-wider" style={{ fontFamily: "var(--font-dm-sans)" }}>{item.label}</span>
+                          <div className="flex items-center gap-1">
+                            <span className="text-lg font-semibold text-[#868686] tracking-[-0.5px]" style={{ fontFamily: "var(--font-dm-sans)" }}>{item.value?.toFixed(0) ?? "—"}%</span>
+                            {item.arrow && <span className="text-sm font-semibold" style={{ color: item.arrowColor }}>{item.arrow}</span>}
+                          </div>
+                          <span className="text-[10px] font-light text-[var(--text-subtext,#6d6d6d)]" style={{ fontFamily: "var(--font-dm-sans)" }}>Effectiveness</span>
+                        </div>
+                      ));
+                    })()}
+                  </div>
+                </div>
+              </div>
+            </TimelineSection>
+          )}
+
+          {/* 3. STATS */}
           <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="STATS">
             <div className="flex flex-col gap-3 w-full">
               <div className="bg-[var(--bg-elv-1,#fafafa)] border border-[var(--stroke-st-elv1,#f5f5f5)] flex flex-col gap-[18px] p-3 rounded-lg w-full">
@@ -146,13 +343,13 @@ export function HeadToHeadTab({ report, narrative }: Props) {
                   ))}
                 </div>
               </div>
-              {narr.category_comparison_insight && (
-                <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full">{narr.category_comparison_insight}</p>
+              {h2hNarr.category_comparison_insight && (
+                <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full">{h2hNarr.category_comparison_insight}</p>
               )}
             </div>
           </TimelineSection>
 
-          {/* 2. WINNERS AND ERRORS */}
+          {/* 4. WINNERS AND ERRORS */}
           <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="WINNERS AND ERRORS">
             <div className="flex flex-col gap-3 w-full">
               <div className="bg-[var(--bg-elv-1,#fafafa)] border border-[var(--stroke-st-elv1,#f5f5f5)] flex flex-col gap-3 p-3 rounded-lg w-full">
@@ -192,24 +389,24 @@ export function HeadToHeadTab({ report, narrative }: Props) {
                   </div>
                 </div>
               </div>
-              {narr.winner_error_insight && (
-                <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full">{narr.winner_error_insight}</p>
+              {h2hNarr.winner_error_insight && (
+                <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full">{h2hNarr.winner_error_insight}</p>
               )}
             </div>
           </TimelineSection>
 
-          {/* 3. STYLE */}
+          {/* 5. STYLE */}
           <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="STYLE" isLast>
             <div className="flex flex-col gap-3 w-full" style={{ overflow: "visible" }}>
               <StyleCard label="You are a" styleName={`${style.player_style.toUpperCase()} PLAYER`} styleKey={style.player_style}
-                description={style.player_description?.startsWith("[narrative") ? (narr.style_comparison_insight ?? "Your play style creates consistent pressure.") : style.player_description} />
+                description={style.player_description?.startsWith("[narrative") ? (h2hNarr.style_comparison_insight ?? "Your play style creates consistent pressure.") : style.player_description} />
               <div className="flex gap-2 items-center w-full">
                 <div className="flex-1 h-px bg-[#dfdfdf]" />
                 <span className="text-sm font-medium text-[#969696] leading-[1.4]">V/S</span>
                 <div className="flex-1 h-px bg-[#dfdfdf]" />
               </div>
               <StyleCard label="Your opponent was a" styleName={`${style.opponent_style.toUpperCase()} PLAYER`} styleKey={style.opponent_style}
-                description={style.opponent_description?.startsWith("[narrative") ? (narr.rally_length_comparison?.overall_insight ?? "Your opponent played a reactive game.") : style.opponent_description} />
+                description={style.opponent_description?.startsWith("[narrative") ? (h2hNarr.rally_length_comparison?.overall_insight ?? "Your opponent played a reactive game.") : style.opponent_description} />
             </div>
           </TimelineSection>
         </div>
