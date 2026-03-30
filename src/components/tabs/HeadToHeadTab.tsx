@@ -5,6 +5,7 @@ import Image from "next/image";
 import type { MatchReport, Narrative } from "@/lib/types";
 import type { VideoSheetData } from "@/components/VideoSheet";
 import { ViewButton } from "@/components/ViewButton";
+import { NarrativeText, Headline } from "@/components/Narrative";
 
 /* ─── Timeline Section Wrapper ─── */
 function TimelineSection({ color, icon, label, children, isLast = false }: {
@@ -153,7 +154,7 @@ function StyleCard({ label, styleName, styleKey, description }: {
           {styleName}
         </span>
       </div>
-      <p className="text-xs font-normal text-[var(--text-subtext,#6d6d6d)] leading-[1.6] w-[80%]">{description}</p>
+      <NarrativeText>{description}</NarrativeText>
       {illustration && (
         <div className="absolute" style={{ right: 4, top: -20, width: 64, height: 67 }}>
           <Image src={illustration} alt={styleKey} width={64} height={67} style={{ objectFit: "contain", width: 64, height: 67 }} />
@@ -208,7 +209,7 @@ export function HeadToHeadTab({ report, narrative, onOpenVideo }: Props) {
   return (
     <div className="bg-white w-full overflow-auto">
       <div className="flex flex-col gap-8 px-4 pt-[18px] pb-[141px]">
-        <p className="text-[20px] font-medium leading-[1.32] text-[var(--text-heading,#161616)] tracking-[-0.5px]">{headline}</p>
+        <Headline>{headline}</Headline>
 
         <div className="flex flex-col items-start w-full">
           {/* 1. STREAKS (from Dynamics) */}
@@ -226,7 +227,7 @@ export function HeadToHeadTab({ report, narrative, onOpenVideo }: Props) {
                     <div key={g.game} className="bg-[var(--bg-elv-2,#f6f6f6)] border border-[var(--stroke-st-elv2,#eee)] flex flex-col gap-4 p-2 rounded-lg shadow-[0px_4px_7.8px_0px_rgba(186,186,186,0.25)] w-full">
                       <div className="flex flex-col gap-1 w-full">
                         <span className="text-lg font-semibold text-[var(--text-heading,#161616)] tracking-[-1px] leading-[1.2]">Game {g.game}</span>
-                        {ntp && <p className="text-sm font-normal text-[var(--text-subtext,#6d6d6d)] leading-[1.4] w-full">{ntp.insight}</p>}
+                        {ntp && <NarrativeText>{ntp.insight}</NarrativeText>}
                       </div>
                       <StreakBar
                         runs={g.runs}
@@ -247,11 +248,11 @@ export function HeadToHeadTab({ report, narrative, onOpenVideo }: Props) {
           {lt && (
             <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="LEADING V/S TRAILING">
               <div className="flex flex-col gap-4 w-full">
-                <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full" style={{ fontFamily: "var(--font-dm-sans)" }}>
+                <NarrativeText>
                   {lt.narrative?.startsWith("[narrative")
                     ? (dynNarr.score_state?.leading_vs_trailing ?? `You are significantly more effective when trailing (${lt.trailing?.avg_eff?.toFixed(0) ?? "—"}%) than when leading (${lt.leading?.avg_eff?.toFixed(0) ?? "—"}%). This suggests you play with more focus when chasing the score but may relax or become predictable when you have a lead.`)
                     : lt.narrative}
-                </p>
+                </NarrativeText>
 
                 {/* Card container */}
                 <div className="bg-[var(--bg-elv-1,#fafafa)] border border-[#f5f5f5] rounded-lg p-3 flex flex-col gap-3 w-full">
@@ -344,7 +345,7 @@ export function HeadToHeadTab({ report, narrative, onOpenVideo }: Props) {
                 </div>
               </div>
               {h2hNarr.category_comparison_insight && (
-                <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full">{h2hNarr.category_comparison_insight}</p>
+                <NarrativeText>{h2hNarr.category_comparison_insight}</NarrativeText>
               )}
             </div>
           </TimelineSection>
@@ -390,7 +391,7 @@ export function HeadToHeadTab({ report, narrative, onOpenVideo }: Props) {
                 </div>
               </div>
               {h2hNarr.winner_error_insight && (
-                <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full">{h2hNarr.winner_error_insight}</p>
+                <NarrativeText>{h2hNarr.winner_error_insight}</NarrativeText>
               )}
             </div>
           </TimelineSection>

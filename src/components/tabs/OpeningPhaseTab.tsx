@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { ViewButton } from "@/components/ViewButton";
+import { NarrativeText, Headline } from "@/components/Narrative";
 import type { VideoSheetData } from "@/components/VideoSheet";
 
 /* ─── Timeline Section Wrapper ─── */
@@ -254,9 +255,7 @@ export function OpeningPhaseTab({ analysisView = "your", onOpenVideo }: Props) {
     <div className="bg-white w-full overflow-auto">
       <div className="flex flex-col gap-8 px-4 pt-[18px] pb-[141px]">
         {/* ─── Headline ─── */}
-        <p className="text-[20px] font-medium leading-[1.32] text-[var(--text-heading,#161616)] tracking-[-0.5px]" style={{ fontFamily: "var(--font-dm-sans)" }}>
-          {headline}
-        </p>
+        <Headline>{headline}</Headline>
 
         {/* ─── Timeline ─── */}
         <div className="flex flex-col items-start w-full">
@@ -268,16 +267,16 @@ export function OpeningPhaseTab({ analysisView = "your", onOpenVideo }: Props) {
                 <ServeBar key={i} label={bar.label} winRateLabel={bar.win_rate_label} winRate={bar.win_rate} pct={bar.pct} count={bar.count} />
               ))}
             </div>
-            <p className="text-[13px] font-medium leading-normal text-[var(--text-subtext,#6d6d6d)]" style={{ fontFamily: "Geist, sans-serif" }}>
+            <NarrativeText>
               {sp.insight_text?.startsWith("[narrative") ? `Serve predictability is at ${sp.percentage}.` : sp.insight_text}
-            </p>
+            </NarrativeText>
           </TimelineSection>
 
           {/* 2. SERVE INSIGHT */}
           <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="SERVE INSIGHT">
-            <p className="text-base font-medium leading-[1.32] text-[var(--text-heading,#161616)] tracking-[-0.4px]" style={{ fontFamily: "var(--font-dm-sans)" }}>
+            <NarrativeText>
               {activeData.serve_insight?.startsWith("[narrative") ? "Serve insight will be available with narrative analysis." : activeData.serve_insight}
-            </p>
+            </NarrativeText>
           </TimelineSection>
 
           {/* 3. RECEIVE GAME */}
@@ -328,14 +327,19 @@ export function OpeningPhaseTab({ analysisView = "your", onOpenVideo }: Props) {
 
           {/* 5. RECEIVE INSIGHT */}
           <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="RECEIVE INSIGHT">
-            <p className="text-base font-medium leading-[1.32] text-[var(--text-heading,#161616)] tracking-[-0.4px]" style={{ fontFamily: "var(--font-dm-sans)" }}>
+            <NarrativeText>
               {activeData.receive_insight?.startsWith("[narrative") ? "Receive insight will be available with narrative analysis." : activeData.receive_insight}
-            </p>
+            </NarrativeText>
           </TimelineSection>
 
           {/* 6. WINNING OPENINGS */}
           {activeData.winning_openings.length > 0 && (
             <TimelineSection color="green" icon="/icons/timeline-green.svg" label="WINNING OPENINGS" isLast={activeData.losing_openings.length === 0}>
+              <NarrativeText>
+                {activeData.winning_openings_insight?.startsWith("[narrative") || !activeData.winning_openings_insight
+                  ? "Winning sequence pattern."
+                  : activeData.winning_openings_insight}
+              </NarrativeText>
               {activeData.winning_openings.map((seq: any, i: number) => (
                 <SequenceCard
                   key={i}
@@ -355,6 +359,11 @@ export function OpeningPhaseTab({ analysisView = "your", onOpenVideo }: Props) {
           {/* 7. LOSING OPENINGS */}
           {activeData.losing_openings.length > 0 && (
             <TimelineSection color="red" icon="/icons/timeline-red.svg" label="LOSING OPENINGS" isLast>
+              <NarrativeText>
+                {activeData.losing_openings_insight?.startsWith("[narrative") || !activeData.losing_openings_insight
+                  ? "Losing sequence pattern."
+                  : activeData.losing_openings_insight}
+              </NarrativeText>
               {activeData.losing_openings.map((seq: any, i: number) => (
                 <SequenceCard
                   key={i}

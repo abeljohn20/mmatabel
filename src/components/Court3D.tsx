@@ -17,6 +17,8 @@ interface Court3DCanvasProps {
   landing: { avgEff: number; zones: Record<string, ShotPill[]> } | null;
   onZoneClick: (zone: string) => void;
   onShotClick?: (shotName: string, count: number, eff: number) => void;
+  camYOffset?: number;
+  camZOffset?: number;
 }
 
 /* ─── Court dimensions (scaled: 1 unit = 1 meter) ─── */
@@ -55,9 +57,9 @@ function opponentZonePos(row: number, col: number): [number, number, number] {
 const CAM_PLAYER: [number, number, number] = [0, 11, 10];
 const CAM_PLAYER_LOOK: [number, number, number] = [0, 0, 0.5];
 
-/* Opponent view: close top-down, focused on opponent half */
-const CAM_OPPONENT: [number, number, number] = [0, 10, 0.5];
-const CAM_OPPONENT_LOOK: [number, number, number] = [0, 0, -3.5];
+/* Opponent view */
+const CAM_OPPONENT: [number, number, number] = [0, 11, 4];
+const CAM_OPPONENT_LOOK: [number, number, number] = [0, 0, -8];
 
 /* ─── Fixed camera controller — no zoom, no scroll ─── */
 /* Smoothly animates between player and opponent view on zone tap only */
@@ -163,7 +165,7 @@ function CourtFloor() {
       {/* Surround floor — brown/tan like a real court surround */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]} receiveShadow>
         <planeGeometry args={[COURT_W + 1.5, COURT_L + 1.5]} />
-        <meshStandardMaterial color="#8B7355" />
+        <meshStandardMaterial color="#FA642D" />
       </mesh>
 
       {/* Court surface with vertex color gradient */}
@@ -177,6 +179,75 @@ function CourtFloor() {
 
       {/* Net */}
       <Net />
+
+      {/* Sponsor logos on the surround — like real badminton courts */}
+      <CourtLogos />
+    </group>
+  );
+}
+
+function CourtLogos() {
+  const hw = COURT_W / 2;
+  const hl = COURT_L / 2;
+  const surround = 0.55;
+  const [texture, setTexture] = useState<THREE.Texture | null>(null);
+
+  useEffect(() => {
+    const loader = new THREE.TextureLoader();
+    // Convert SVG to a data URL via canvas for texture loading
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = 256;
+      canvas.height = 64;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.drawImage(img, 0, 0, 256, 64);
+        const tex = new THREE.CanvasTexture(canvas);
+        tex.needsUpdate = true;
+        setTexture(tex);
+      }
+    };
+    img.src = "/Paradigm Logo Svg.svg";
+  }, []);
+
+  if (!texture) return null;
+
+  // Logo planes laid flat on the surround (rotated -90deg on X to lie on ground)
+  const logoW = 1.8;  // width in metres
+  const logoH = 0.45; // height in metres
+  const y = 0.005;    // just above surround
+
+  const placements: { pos: [number, number, number]; rotZ: number }[] = [
+    // Left side (3 logos, rotated 90deg so text reads along the sideline)
+    { pos: [-(hw + surround), y, -hl * 0.45], rotZ: Math.PI / 2 },
+    { pos: [-(hw + surround), y, 0], rotZ: Math.PI / 2 },
+    { pos: [-(hw + surround), y, hl * 0.45], rotZ: Math.PI / 2 },
+    // Right side (3 logos)
+    { pos: [(hw + surround), y, -hl * 0.45], rotZ: -Math.PI / 2 },
+    { pos: [(hw + surround), y, 0], rotZ: -Math.PI / 2 },
+    { pos: [(hw + surround), y, hl * 0.45], rotZ: -Math.PI / 2 },
+    // Back baseline (2 logos)
+    { pos: [-hw * 0.3, y, -(hl + surround)], rotZ: 0 },
+    { pos: [hw * 0.3, y, -(hl + surround)], rotZ: 0 },
+    // Front baseline (2 logos)
+    { pos: [-hw * 0.3, y, hl + surround], rotZ: Math.PI },
+    { pos: [hw * 0.3, y, hl + surround], rotZ: Math.PI },
+  ];
+
+  return (
+    <group>
+      {placements.map((p, i) => (
+        <mesh
+          key={i}
+          position={p.pos}
+          rotation={[-Math.PI / 2, 0, p.rotZ]}
+        >
+          <planeGeometry args={[logoW, logoH]} />
+          <meshBasicMaterial map={texture} transparent opacity={1} side={THREE.DoubleSide} />
+        </mesh>
+      ))}
     </group>
   );
 }

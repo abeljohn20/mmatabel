@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { ViewButton } from "@/components/ViewButton";
+import { NarrativeText, Headline } from "@/components/Narrative";
 import type { VideoSheetData } from "@/components/VideoSheet";
 
 /* ─── Timeline Section Wrapper ─── */
@@ -281,9 +282,9 @@ export function PatternsTab({ analysisView = "your", onOpenVideo, narrative }: P
     <div className="bg-white w-full overflow-auto">
       <div className="flex flex-col gap-8 px-4 pt-[18px] pb-[141px]">
         {/* Headline */}
-        <p className="text-[20px] font-medium leading-[1.32] text-[var(--text-heading,#161616)] tracking-[-0.5px]" style={{ fontFamily: "var(--font-dm-sans)" }}>
+        <Headline>
           {headline}
-        </p>
+        </Headline>
 
         <div className="flex flex-col items-start w-full">
           {/* 1. RALLY LENGTH */}
@@ -296,9 +297,9 @@ export function PatternsTab({ analysisView = "your", onOpenVideo, narrative }: P
                     description={c.description?.startsWith("[narrative") ? `${c.label}: ${c.rally_count} rallies at ${c.win_rate_label}.` : c.description} />
                 ))}
               </div>
-              <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full" style={{ fontFamily: "var(--font-dm-sans)" }}>
+              <NarrativeText>
                 {rl.insight_text?.startsWith("[narrative") ? "Rally length insight will be available with narrative analysis." : rl.insight_text}
-              </p>
+              </NarrativeText>
             </div>
           </TimelineSection>
 
@@ -306,9 +307,9 @@ export function PatternsTab({ analysisView = "your", onOpenVideo, narrative }: P
           <TimelineSection color="orange" icon="/icons/timeline-orange.svg" label="MATCH PHASES">
             <div className="flex flex-col gap-3 w-full">
               <MatchPhasesChart points={mp.chart_points} />
-              <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full" style={{ fontFamily: "var(--font-dm-sans)" }}>
+              <NarrativeText>
                 {mp.insight_text?.startsWith("[narrative") ? "Match phase insight will be available with narrative analysis." : mp.insight_text}
-              </p>
+              </NarrativeText>
             </div>
           </TimelineSection>
 
@@ -330,9 +331,9 @@ export function PatternsTab({ analysisView = "your", onOpenVideo, narrative }: P
                     </div>
                   </div>
                 ))}
-                <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full" style={{ fontFamily: "var(--font-dm-sans)" }}>
+                <NarrativeText>
                   {tc.insight_text?.startsWith("[narrative") ? `Tempo: ${tc.who_controls} controls the pace.` : tc.insight_text}
-                </p>
+                </NarrativeText>
               </div>
             </TimelineSection>
           )}
@@ -377,15 +378,20 @@ export function PatternsTab({ analysisView = "your", onOpenVideo, narrative }: P
                 );
               })}
 
-              <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full" style={{ fontFamily: "var(--font-dm-sans)" }}>
+              <NarrativeText>
                 {pred.insight_text?.startsWith("[narrative") ? "Predictability insight will be available with narrative analysis." : pred.insight_text}
-              </p>
+              </NarrativeText>
             </div>
           </TimelineSection>
 
           {/* 5. WINNING PATTERNS */}
           {winPat.length > 0 ? (
             <TimelineSection color="green" icon="/icons/timeline-green.svg" label="WINNING PATTERNS" isLast={losePat.length === 0}>
+              <NarrativeText>
+                {activeData.winning_patterns_insight?.startsWith("[narrative") || !activeData.winning_patterns_insight
+                  ? "Winning sequence pattern."
+                  : activeData.winning_patterns_insight}
+              </NarrativeText>
               {winPat.map((seq: any, i: number) => (
                 <PatternSequenceCard key={i}
                   title={seq.title?.startsWith("[narrative") ? `Winning sequence (${seq.count})` : seq.title}
@@ -407,6 +413,11 @@ export function PatternsTab({ analysisView = "your", onOpenVideo, narrative }: P
           {losePat.length > 0 && (
             <TimelineSection color="red" icon="/icons/timeline-red.svg" label="LOSING PATTERNS"
               isLast={analysisView !== "opponent" || !oppPressure}>
+              <NarrativeText>
+                {activeData.losing_patterns_insight?.startsWith("[narrative") || !activeData.losing_patterns_insight
+                  ? "Losing sequence pattern."
+                  : activeData.losing_patterns_insight}
+              </NarrativeText>
               {losePat.map((seq: any, i: number) => (
                 <PatternSequenceCard key={i}
                   title={seq.title?.startsWith("[narrative") ? `Losing sequence (${seq.count})` : seq.title}

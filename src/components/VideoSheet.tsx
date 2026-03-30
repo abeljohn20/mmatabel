@@ -254,29 +254,29 @@ export function VideoSheet({
             background: "var(--bg-elv-1, #fafafa)",
             borderRadius: "20px 20px 0 0",
             width: "100%",
-            minHeight: "60dvh",
-            maxHeight: "85dvh",
+            height: "90dvh",
             display: "flex",
             flexDirection: "column",
             overflow: "hidden",
             pointerEvents: "auto",
           }}
         >
-          {/* Section label header */}
-          <div
-            style={{
-              padding: "16px 16px 0",
-              display: "flex",
-              alignItems: "center",
-              gap: 12,
-              flexShrink: 0,
-            }}
-          >
-            {sectionLabel && (
-              <>
-                <Image src="/icons/timeline-orange.svg" alt="" width={24} height={24} />
-                <span
-                  style={{
+          {/* ─── FIXED TOP: Section label + Video ─── */}
+          <div style={{ flexShrink: 0 }}>
+            {/* Section label header */}
+            <div
+              style={{
+                padding: "16px 12px 0",
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+              }}
+            >
+              {sectionLabel && (
+                <>
+                  <Image src="/icons/timeline-orange.svg" alt="" width={24} height={24} />
+                  <span
+                    style={{
                     fontSize: 14,
                     fontWeight: 400,
                     color: "var(--grey-450, #6b6760)",
@@ -290,16 +290,7 @@ export function VideoSheet({
             <div style={{ flex: 1, height: 1, background: "var(--brand-orange, #fa642d)" }} />
           </div>
 
-          {/* Scrollable content */}
-          <div
-            style={{
-              flex: 1,
-              overflowY: "auto",
-              overflowX: "hidden",
-              WebkitOverflowScrolling: "touch",
-            }}
-          >
-            {/* Video player */}
+            {/* Video player (fixed) */}
             <div
               style={{
                 background: "#363636",
@@ -477,7 +468,18 @@ export function VideoSheet({
                 {currentIndex + 1}/{timestamps.length}
               </div>
             </div>
+          </div>{/* end fixed top */}
 
+          {/* ─── SCROLLABLE CONTENT ─── */}
+          <div
+            style={{
+              flex: 1,
+              overflowY: "auto",
+              overflowX: "hidden",
+              WebkitOverflowScrolling: "touch",
+              paddingBottom: 32,
+            }}
+          >
             {/* Title + subtitle row */}
             <div style={{ padding: "20px 16px 0" }}>
               <div

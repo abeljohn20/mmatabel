@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { ShotDetailSheet } from "@/components/ShotDetailSheet";
+import { Headline } from "@/components/Narrative";
 
 /* ─── Types ─── */
 
@@ -78,6 +79,8 @@ export function ShotArsenalTab({ analysisView = "your" }: { analysisView?: "your
     count: number;
     eff: number;
   } | null>(null);
+  const [camY, setCamY] = useState(0);   // up/down offset
+  const [camZ, setCamZ] = useState(0);   // front/back offset
 
   /* Fetch JSON on mount */
   useEffect(() => {
@@ -284,21 +287,9 @@ export function ShotArsenalTab({ analysisView = "your" }: { analysisView?: "your
       <StadiumBg />
 
       {/* Headline */}
-      <h2
-        style={{
-          position: "relative",
-          zIndex: 2,
-          padding: "16px 16px 0",
-          fontSize: 24,
-          fontWeight: 500,
-          letterSpacing: "-1px",
-          lineHeight: 1.2,
-          width: 308,
-          color: "#161616",
-        }}
-      >
-        {headline}
-      </h2>
+      <div style={{ position: "relative", zIndex: 2, padding: "16px 12px 0", maxWidth: "85%" }}>
+        <Headline>{headline}</Headline>
+      </div>
 
       {/* 3D Court — fills remaining space to bottom */}
       <div
@@ -312,13 +303,13 @@ export function ShotArsenalTab({ analysisView = "your" }: { analysisView?: "your
       >
         {/* Overlay controls — card + back button, just above the court */}
         {selectedZone && (
-          <div style={{ position: "absolute", top: 40, left: 0, right: 0, zIndex: 10, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, padding: "0 16px" }}>
+          <div style={{ position: "absolute", top: 8, left: 0, right: 0, zIndex: 10, display: "flex", flexDirection: "column", alignItems: "center", gap: 6, padding: "0 12px" }}>
             {/* From / Avg effectiveness card */}
             {landing && (
               <div
                 style={{
                   width: "100%",
-                  maxWidth: 335,
+                  maxWidth: "90%",
                   padding: "8px 16px",
                   borderRadius: 12,
                   background: "rgba(255,255,255,0.7)",
@@ -392,6 +383,7 @@ export function ShotArsenalTab({ analysisView = "your" }: { analysisView?: "your
         videoSrc={VIDEO_SRC}
         hasLength={hasLength}
         hasHeight={hasHeight}
+        narrative={headline}
       />
     </div>
   );

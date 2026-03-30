@@ -131,6 +131,7 @@ interface ShotDetailSheetProps {
   videoSrc?: string;
   hasLength?: boolean; // whether this shot type has length data (drops/clears/lifts)
   hasHeight?: boolean; // whether this shot type has height data (lifts/clears only)
+  narrative?: string;
 }
 
 /* ─── Filter options ─── */
@@ -258,6 +259,7 @@ export function ShotDetailSheet({
   videoSrc,
   hasLength = false,
   hasHeight = false,
+  narrative,
 }: ShotDetailSheetProps) {
   const [accuracyFilter, setAccuracyFilter] = useState<AccuracyFilter>("all");
   const [lengthFilter, setLengthFilter] = useState<LengthFilter>("all");
@@ -441,7 +443,7 @@ export function ShotDetailSheet({
             overflowY: "auto",
             overflowX: "hidden",
             WebkitOverflowScrolling: "touch",
-            padding: "0 16px 32px",
+            padding: "0 12px 32px",
           }}
         >
           {/* ─── Video player — full width, no radius, sticky ─── */}
@@ -549,6 +551,24 @@ export function ShotDetailSheet({
               {currentShotIndex + 1}/{filteredShots.length}
             </div>
           </div>
+
+          {/* ─── Narrative ─── */}
+          {narrative && (
+            <p
+              style={{
+                fontSize: 18,
+                fontWeight: 600,
+                lineHeight: 1.2,
+                letterSpacing: "-1px",
+                color: "var(--text-heading, #161616)",
+                marginTop: 16,
+                fontFamily: "var(--font-dm-sans)",
+              }}
+              data-narrative
+            >
+              {"<narrative> "}{narrative}
+            </p>
+          )}
 
           {/* ─── Stats row ─── */}
           <div
@@ -667,18 +687,15 @@ export function ShotDetailSheet({
           {/* ─── 3D Shot scatter court ─── */}
           <div style={{ marginTop: 8 }}>
             {/* 3D Court — opponent half only */}
-            <div style={{ perspective: 600, perspectiveOrigin: "50% 20%", margin: "0 auto", maxWidth: 380, padding: "0 28px", transform: "scale(1.1)", transformOrigin: "center top" }}>
+            <div style={{ margin: "0 auto", maxWidth: 300, padding: "0 20px", width: "100%" }}>
               <div style={{
                 position: "relative",
-                transformOrigin: "50% 100%",
-                transform: "rotateX(30deg)",
-                transformStyle: "preserve-3d" as const,
               }}>
                 {/* ACCURACY label + bar — inside 3D transform so it matches court width */}
                 <div style={{ textAlign: "center", fontSize: 11, fontWeight: 600, color: "#bbb", letterSpacing: "1.5px", textTransform: "uppercase" as const, marginBottom: 4 }}>
                   ACCURACY
                 </div>
-                <div style={{ margin: "0 10%", height: 7, borderRadius: 4, background: "linear-gradient(90deg, #58ed13 0%, #f2ef2c 25%, #f21e1e 50%, #f2ef2c 75%, #58ed13 100%)", marginBottom: 4 }} />
+                <div style={{ margin: "0 10%", height: 4, borderRadius: 2, background: "linear-gradient(90deg, #58ed13 0%, #f2ef2c 25%, #f21e1e 50%, #f2ef2c 75%, #58ed13 100%)", marginBottom: 4 }} />
                 {/* Court surface — half court */}
                 <div style={{
                   position: "relative",

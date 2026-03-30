@@ -61,7 +61,8 @@ export default function Home() {
   return (
     <div
       style={{
-        maxWidth: 430,
+        width: "100%",
+        maxWidth: 480,
         margin: "0 auto",
         height: "100dvh",
         background: "white",
@@ -91,12 +92,14 @@ export default function Home() {
       <div
         style={{
           display: "flex",
-          gap: 16,
-          padding: "12px 16px",
+          gap: 12,
+          padding: "10px 12px",
           overflowX: "auto",
           background: "white",
           borderBottom: "1px solid #eee",
           WebkitOverflowScrolling: "touch",
+          scrollbarWidth: "none" as any,
+          msOverflowStyle: "none" as any,
         }}
       >
         {TABS.map((tab) => {

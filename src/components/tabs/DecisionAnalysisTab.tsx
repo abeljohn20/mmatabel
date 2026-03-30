@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { ViewButton } from "@/components/ViewButton";
+import { NarrativeText, Headline } from "@/components/Narrative";
 import type { VideoSheetData } from "@/components/VideoSheet";
 
 const TS = [2779/30, 5354/30, 8901/30, 15988/30, 19694/30, 22742/30];
@@ -179,16 +180,16 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
     return (
       <div className="bg-white w-full overflow-auto">
         <div className="flex flex-col gap-8 px-4 pt-[18px] pb-[141px]">
-          <p className="text-[20px] font-medium leading-[1.32] text-[var(--text-heading,#161616)] tracking-[-0.5px]" style={{ fontFamily: "var(--font-dm-sans)" }}>
+          <Headline>
             Opponent Decision Analysis
-          </p>
+          </Headline>
           <div className="flex flex-col items-start w-full">
             {/* RALLY BLUEPRINT */}
             <TimelineSection label="RALLY BLUEPRINT" isLast={!oppPressure}>
               <div className="flex flex-col gap-3 w-full">
-                <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)]" style={{ fontFamily: "var(--font-dm-sans)" }}>
+                <NarrativeText>
                   Rally blueprint insight
-                </p>
+                </NarrativeText>
                 <BlueprintCard
                   badges={[
                     { text: "Short Rallies", bg: "#fff6fe", border: "#d7b6d4", color: "#97078b" },
@@ -227,9 +228,9 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
               <TimelineSection label="OPPONENT TENDENCIES" isLast>
                 <div className="flex flex-col gap-3 w-full">
                   {oppPressure.headline && (
-                    <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)] w-full" style={{ fontFamily: "var(--font-dm-sans)" }}>
+                    <NarrativeText>
                       {oppPressure.headline}
-                    </p>
+                    </NarrativeText>
                   )}
                   {oppPressure.clutch_tendencies && (
                     <OpponentTendencyCard
@@ -274,18 +275,18 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
     <div className="bg-white w-full overflow-auto">
       <div className="flex flex-col gap-8 px-4 pt-[18px] pb-[141px]">
         {/* Headline */}
-        <p className="text-[20px] font-medium leading-[1.32] text-[var(--text-heading,#161616)] tracking-[-0.5px]" style={{ fontFamily: "var(--font-dm-sans)" }}>
+        <Headline>
           You performed better when trailing but struggled to maintain pressure when leading, which allowed your opponent back into the match during key phases.
-        </p>
+        </Headline>
 
         {/* Timeline */}
         <div className="flex flex-col items-start w-full">
           {/* 1. SHOT CHOICE ISSUES */}
           <TimelineSection label="SHOT CHOICE ISSUES">
             <div className="flex flex-col gap-3 w-full">
-              <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)]" style={{ fontFamily: "var(--font-dm-sans)" }}>
+              <NarrativeText>
                 shot choice coaching insight
-              </p>
+              </NarrativeText>
               <ShotComparisonCard
                 zoneBadge={{ text: "Rear backhand corner", bg: "#f8f8f8", border: "#929edd", color: "#071f97" }}
                 title="Backhand clear when overhead clear available"
@@ -311,9 +312,9 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
           {/* 2. RALLY BLUEPRINT */}
           <TimelineSection label="RALLY BLUEPRINT">
             <div className="flex flex-col gap-3 w-full">
-              <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)]" style={{ fontFamily: "var(--font-dm-sans)" }}>
+              <NarrativeText>
                 Rally blueprint insight
-              </p>
+              </NarrativeText>
               <BlueprintCard
                 badges={[
                   { text: "Short Rallies", bg: "#fff6fe", border: "#d7b6d4", color: "#97078b" },
@@ -350,9 +351,9 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
           {/* 3. OUTCOME PROXIMITY */}
           <TimelineSection label="OUTCOME PROXIMITY">
             <div className="flex flex-col gap-3 w-full">
-              <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)]" style={{ fontFamily: "var(--font-dm-sans)" }}>
+              <NarrativeText>
                 outcome proximity insight
-              </p>
+              </NarrativeText>
               <TippingPointCard
                 badge={{ text: "Positive tipping point", bg: "rgba(117,235,62,0.19)", border: "#bdf6c0", color: "#359707" }}
                 shotName="BH Lift Cross" count="7x"
@@ -381,9 +382,9 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
           {/* 4. POST SHOT RECOVERY */}
           <TimelineSection label="POST SHOT RECOVERY">
             <div className="flex flex-col gap-3 w-full">
-              <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)]" style={{ fontFamily: "var(--font-dm-sans)" }}>
+              <NarrativeText>
                 narrative: recovery insight
-              </p>
+              </NarrativeText>
               <TippingPointCard
                 badge={{ text: "Faster", bg: "rgba(117,235,62,0.19)", border: "#bdf6c0", color: "#359707" }}
                 shotName="Clear" count="48x"
@@ -405,9 +406,9 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
           {/* 5. ADAPTIVE PERFORMANCE */}
           <TimelineSection label="ADAPTIVE PERFORMANCE" isLast>
             <div className="flex flex-col gap-3 w-full">
-              <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)]" style={{ fontFamily: "var(--font-dm-sans)" }}>
+              <NarrativeText>
                 Effectiveness peaks in Endgame (63.2) and drops in Pre Interval (46.9)
-              </p>
+              </NarrativeText>
               <TippingPointCard
                 badge={{ text: "Championship performance", bg: "rgba(211,160,255,0.17)", border: "#ac4eff", color: "#ac4eff" }}
                 shotName="Clear" count="48x"
@@ -416,9 +417,9 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
                 onView={() => open({ title: "Championship Clear", subtitle: "48x", timestamps: TS, sectionLabel: "ADAPTIVE PERFORMANCE" })}
               />
               <div className="h-px w-full bg-[var(--grey-900,#efece6)]" />
-              <p className="text-sm font-medium leading-[1.4] text-[var(--text-heading,#161616)]" style={{ fontFamily: "var(--font-dm-sans)" }}>
+              <NarrativeText>
                 A 16 point effectiveness gap between scoring phases suggests inconsistency under different game situations.
-              </p>
+              </NarrativeText>
             </div>
           </TimelineSection>
         </div>
