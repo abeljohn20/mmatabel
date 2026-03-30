@@ -660,14 +660,14 @@ export function ShotDetailSheet({
               </div>
             )}
           </div>
-          <div style={{ textAlign: "center", fontSize: 11, color: "#aaa", marginTop: 8, marginBottom: 4 }}>
+          <div style={{ textAlign: "center", fontSize: 11, color: "#aaa", marginTop: 4, marginBottom: 0 }}>
             {filteredShots.length} of {shots.length} shots shown
           </div>
 
           {/* ─── 3D Shot scatter court ─── */}
-          <div style={{ marginTop: 24 }}>
+          <div style={{ marginTop: 8 }}>
             {/* 3D Court — opponent half only */}
-            <div style={{ perspective: 600, perspectiveOrigin: "50% 20%", margin: "0 auto", maxWidth: 340 }}>
+            <div style={{ perspective: 600, perspectiveOrigin: "50% 20%", margin: "0 auto", maxWidth: 380, padding: "0 28px", transform: "scale(1.1)", transformOrigin: "center top" }}>
               <div style={{
                 position: "relative",
                 transformOrigin: "50% 100%",
@@ -687,7 +687,7 @@ export function ShotDetailSheet({
                   background: "#4a9e3f",
                   borderRadius: 4,
                   boxShadow: "0 8px 30px rgba(0,0,0,0.25)",
-                  overflow: "hidden",
+                  overflow: "visible",
                 }}>
                   {/* Court lines SVG — opponent half only */}
                   <svg viewBox="0 0 200 160" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }}>
@@ -707,7 +707,7 @@ export function ShotDetailSheet({
                     <text x="100" y="148" textAnchor="middle" fontSize="7" fill="white" opacity="0.5">Net</text>
                   </svg>
 
-                  {/* Length overlay bands — constrained to the shot's landing zone */}
+                  {/* Length side bracket indicators */}
                   {(() => {
                     if (!hasLength) return null;
                     const { zone, lengthType } = getShotLandingInfo(shotName);
@@ -715,52 +715,112 @@ export function ShotDetailSheet({
                     const zr = OPPONENT_ZONES[zone];
                     if (!zr) return null;
 
-                    // Parse zone rect percentages
                     const zt = parseFloat(zr.top);
-                    const zl = parseFloat(zr.left);
-                    const zw = parseFloat(zr.width);
                     const zh = parseFloat(zr.height);
 
-                    // Split the zone into 3 bands vertically
-                    // Drop type: good at bottom (near net), bad at top (far from net)
-                    // Lift type: good at top (near back line), bad at bottom (short)
+                    // Drop: good near net (bottom), bad far (top)
+                    // Lift: good near back (top), bad short (bottom)
                     const bands = lengthType === "drop"
                       ? [
-                          { key: "bad", label: "Bad", bg: "#f8d9d9", color: "rgba(180,50,50,0.85)", top: zt, height: zh * 0.35 },
-                          { key: "average", label: "Avg", bg: "#f0ecc1", color: "rgba(150,140,30,0.85)", top: zt + zh * 0.35, height: zh * 0.30 },
-                          { key: "good", label: "Good", bg: "#c7f6ba", color: "rgba(40,120,20,0.85)", top: zt + zh * 0.65, height: zh * 0.35 },
+                          { key: "bad", color: "#e53e3e", top: zt, height: zh * 0.35 },
+                          { key: "average", color: "#f59e0b", top: zt + zh * 0.35, height: zh * 0.30 },
+                          { key: "good", color: "#22c55e", top: zt + zh * 0.65, height: zh * 0.35 },
                         ]
                       : [
-                          { key: "good", label: "Good", bg: "#c7f6ba", color: "rgba(40,120,20,0.85)", top: zt, height: zh * 0.35 },
-                          { key: "average", label: "Avg", bg: "#f0ecc1", color: "rgba(150,140,30,0.85)", top: zt + zh * 0.35, height: zh * 0.30 },
-                          { key: "bad", label: "Bad", bg: "#f8d9d9", color: "rgba(180,50,50,0.85)", top: zt + zh * 0.65, height: zh * 0.35 },
+                          { key: "good", color: "#22c55e", top: zt, height: zh * 0.35 },
+                          { key: "average", color: "#f59e0b", top: zt + zh * 0.35, height: zh * 0.30 },
+                          { key: "bad", color: "#e53e3e", top: zt + zh * 0.65, height: zh * 0.35 },
                         ];
 
+                    const bracketWidth = 4;
+                    const labelTexts = lengthType === "drop"
+                      ? ["Bad", "Avg", "Good"]
+                      : ["Good", "Avg", "Bad"];
+
                     return (
-                      <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+                      <>
+                        {/* Left side brackets + "LENGTH" label */}
+                        <div style={{ position: "absolute", left: -24, top: 0, bottom: 0, width: 20, pointerEvents: "none", zIndex: 6 }}>
+                          {bands.map((band, bi) => {
+                            if (lengthFilter !== "all" && lengthFilter !== band.key) return null;
+                            const opacity = lengthFilter === band.key ? 1 : 0.6;
+                            return (
+                              <div key={band.key} style={{ position: "absolute", top: `${band.top}%`, height: `${band.height}%`, left: 2, width: bracketWidth }}>
+                                {/* Bracket: top cap + vertical line + bottom cap */}
+                                <div style={{ position: "absolute", top: 0, left: 0, width: bracketWidth + 4, height: 1.5, background: band.color, opacity }} />
+                                <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: 1.5, background: band.color, opacity }} />
+                                <div style={{ position: "absolute", bottom: 0, left: 0, width: bracketWidth + 4, height: 1.5, background: band.color, opacity }} />
+                              </div>
+                            );
+                          })}
+                          {/* "LENGTH" vertical text */}
+                          <div style={{
+                            position: "absolute",
+                            top: `${zt}%`,
+                            height: `${zh}%`,
+                            left: -14,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            writingMode: "vertical-rl" as any,
+                            transform: "rotate(180deg)",
+                            fontSize: 8,
+                            fontWeight: 700,
+                            color: "#999",
+                            letterSpacing: "1.5px",
+                          }}>
+                            LENGTH
+                          </div>
+                        </div>
+
+                        {/* Right side brackets + "LENGTH" label */}
+                        <div style={{ position: "absolute", right: -24, top: 0, bottom: 0, width: 20, pointerEvents: "none", zIndex: 6 }}>
+                          {bands.map((band, bi) => {
+                            if (lengthFilter !== "all" && lengthFilter !== band.key) return null;
+                            const opacity = lengthFilter === band.key ? 1 : 0.6;
+                            return (
+                              <div key={band.key} style={{ position: "absolute", top: `${band.top}%`, height: `${band.height}%`, right: 2, width: bracketWidth }}>
+                                <div style={{ position: "absolute", top: 0, right: 0, width: bracketWidth + 4, height: 1.5, background: band.color, opacity }} />
+                                <div style={{ position: "absolute", top: 0, bottom: 0, right: 0, width: 1.5, background: band.color, opacity }} />
+                                <div style={{ position: "absolute", bottom: 0, right: 0, width: bracketWidth + 4, height: 1.5, background: band.color, opacity }} />
+                              </div>
+                            );
+                          })}
+                          <div style={{
+                            position: "absolute",
+                            top: `${zt}%`,
+                            height: `${zh}%`,
+                            right: -14,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            writingMode: "vertical-rl" as any,
+                            fontSize: 8,
+                            fontWeight: 700,
+                            color: "#999",
+                            letterSpacing: "1.5px",
+                          }}>
+                            LENGTH
+                          </div>
+                        </div>
+
+                        {/* Subtle horizontal zone lines on court */}
                         {bands.map((band) => {
                           if (lengthFilter !== "all" && lengthFilter !== band.key) return null;
                           return (
-                            <div
-                              key={band.key}
-                              style={{
-                                position: "absolute",
-                                top: `${band.top}%`,
-                                left: `${zl}%`,
-                                width: `${zw}%`,
-                                height: `${band.height}%`,
-                                background: band.bg,
-                                opacity: lengthFilter === band.key ? 0.7 : 0.4,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                              }}
-                            >
-                              <span style={{ fontSize: 9, fontWeight: 600, color: band.color }}>{band.label} Length</span>
-                            </div>
+                            <div key={`line-${band.key}`} style={{
+                              position: "absolute",
+                              top: `${band.top + band.height}%`,
+                              left: "10%",
+                              right: "10%",
+                              height: 1,
+                              background: band.color,
+                              opacity: 0.25,
+                              pointerEvents: "none",
+                            }} />
                           );
                         })}
-                      </div>
+                      </>
                     );
                   })()}
 

@@ -12,6 +12,13 @@ export interface VideoTimelineRange {
   label: string;   // e.g. "11-14 pts"
 }
 
+export interface VideoSheetStep {
+  who: "You" | "Opp";
+  action: string;
+  effLabel?: string;
+  effColor?: string;
+}
+
 export interface VideoSheetData {
   title: string;
   subtitle?: string;
@@ -20,6 +27,25 @@ export interface VideoSheetData {
   /** Streak ranges — when provided, timeline shows colored blocks instead of ticks */
   streakRanges?: VideoTimelineRange[];
   sectionLabel?: string;
+  /** Count label e.g. "10x" */
+  count?: string;
+  /** Sequence steps to display below description */
+  steps?: VideoSheetStep[];
+  /** Badge text e.g. "Best receive" */
+  badge?: string;
+  badgeBg?: string;
+  badgeBorder?: string;
+  badgeColor?: string;
+  /** Streak runs for rendering streak bar in bottom sheet */
+  gameRuns?: { score: string; type: "player" | "opponent"; length: number; start_rally: number; start_ts?: number | null; end_ts?: number | null }[];
+  gameTotalRallies?: number;
+  /** Shot comparison — "better option" info */
+  betterOption?: string;
+  betterEff?: string;
+  betterEffColor?: string;
+  shotEff?: string;
+  shotEffColor?: string;
+  diffLabel?: string;
 }
 
 interface VideoSheetProps extends VideoSheetData {
@@ -76,6 +102,20 @@ export function VideoSheet({
   timestamps,
   streakRanges,
   sectionLabel,
+  count,
+  steps,
+  gameRuns,
+  gameTotalRallies,
+  badge,
+  badgeBg,
+  badgeBorder,
+  badgeColor,
+  betterOption,
+  betterEff,
+  betterEffColor,
+  shotEff,
+  shotEffColor,
+  diffLabel,
 }: VideoSheetProps) {
   const [visible, setVisible] = useState(false);
   const [rendered, setRendered] = useState(false);
@@ -475,6 +515,12 @@ export function VideoSheet({
                     {subtitle}
                   </span>
                 )}
+                {count && (
+                  <>
+                    <span style={{ fontSize: 12, color: "#868686", margin: "0 4px" }}>•</span>
+                    <span style={{ fontSize: 14, color: "#868686", fontFamily: "var(--font-dm-sans)" }}>{count}</span>
+                  </>
+                )}
               </div>
 
               {description && (
@@ -490,6 +536,138 @@ export function VideoSheet({
                   {description}
                 </p>
               )}
+
+              {/* Sequence steps */}
+              {steps && steps.length > 0 && (
+                <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 12 }}>
+                  {steps.map((step, i) => {
+                    const isYou = step.who === "You";
+                    return (
+                      <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                          <div style={{
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                            padding: "0 8px", borderRadius: 4,
+                            backgroundColor: isYou ? "#dee5ff" : "#fcd4d9",
+                          }}>
+                            <span style={{ fontSize: 12, lineHeight: 1.6, color: isYou ? "#6141ef" : "#a22618", fontFamily: "var(--font-dm-sans)" }}>{step.who}</span>
+                          </div>
+                          <span style={{ fontSize: 12, color: "#000", fontFamily: "var(--font-dm-sans)" }}>{step.action}</span>
+                        </div>
+                        {step.effLabel && (
+                          <span style={{ fontSize: 12, fontWeight: 600, color: step.effColor || "#868686", fontFamily: "var(--font-dm-sans)" }}>{step.effLabel}</span>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Shot comparison (better option) */}
+              {betterOption && (
+                <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 12 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: "var(--bg-elv-2, #f6f6f6)", padding: 8, borderRadius: 8 }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                      <span style={{ fontSize: 12, color: "var(--text-subtext, #6d6d6d)", fontWeight: 300, fontFamily: "var(--font-dm-sans)" }}>Shot you played</span>
+                      <span style={{ fontSize: 14, fontWeight: 500, color: "#3e3a32", fontFamily: "var(--font-dm-sans)" }}>{title}</span>
+                    </div>
+                    {shotEff && <span style={{ fontSize: 14, fontWeight: 500, color: shotEffColor || "#eb3030", fontFamily: "var(--font-dm-sans)" }}>{shotEff}</span>}
+                  </div>
+                  {diffLabel && <p style={{ fontSize: 12, color: "#5c5850", textAlign: "center", fontFamily: "var(--font-dm-sans)" }}>{diffLabel}</p>}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: "rgba(255,255,255,0.57)", padding: 8, borderRadius: 8, border: "1px solid #eee", boxShadow: "0px 4px 4px rgba(215,215,215,0.29)" }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                      <span style={{ fontSize: 12, color: "var(--text-subtext, #6d6d6d)", fontWeight: 300, fontFamily: "var(--font-dm-sans)" }}>Better option</span>
+                      <span style={{ fontSize: 14, fontWeight: 500, color: "#3e3a32", fontFamily: "var(--font-dm-sans)" }}>{betterOption}</span>
+                    </div>
+                    {betterEff && <span style={{ fontSize: 14, fontWeight: 500, color: betterEffColor || "#27e72e", fontFamily: "var(--font-dm-sans)" }}>{betterEff}</span>}
+                  </div>
+                </div>
+              )}
+
+              {/* Badge */}
+              {badge && (
+                <div style={{ display: "flex", alignItems: "center", marginTop: 8 }}>
+                  <div style={{ display: "inline-flex", alignItems: "center", padding: "2px 8px", borderRadius: 4, backgroundColor: badgeBg || "rgba(117,235,62,0.19)", border: `1px solid ${badgeBorder || "#bdf6c0"}` }}>
+                    <span style={{ fontSize: 12, fontWeight: 500, color: badgeColor || "#359707", fontFamily: "var(--font-dm-sans)" }}>{badge}</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Streak bar */}
+              {gameRuns && gameRuns.length > 0 && (() => {
+                const total = gameTotalRallies || 40;
+                const sorted = [...gameRuns].sort((a, b) => a.start_rally - b.start_rally);
+                const segs: { type: "gap" | "player" | "opponent"; flex: number; run?: typeof gameRuns[0] }[] = [];
+                let cur = 0;
+                for (const run of sorted) {
+                  const gap = run.start_rally - cur;
+                  if (gap > 0) segs.push({ type: "gap", flex: gap });
+                  segs.push({ type: run.type, flex: Math.max(run.length, 3), run });
+                  cur = run.start_rally + run.length;
+                }
+                const trail = total - cur;
+                if (trail > 0) segs.push({ type: "gap", flex: trail });
+
+                return (
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 16 }}>
+                    <div style={{ display: "flex", alignItems: "center", padding: "0 8px" }}>
+                      <div style={{ display: "inline-flex", alignItems: "center", padding: "2px 8px", borderRadius: 4, backgroundColor: "#dfefff" }}>
+                        <span style={{ fontSize: 12, color: "#2990fd", fontFamily: "var(--font-dm-sans)" }}>You</span>
+                      </div>
+                    </div>
+                    {/* Labels above */}
+                    <div style={{ display: "flex", width: "100%", minHeight: 18 }}>
+                      {segs.map((seg, i) => (
+                        <div key={i} style={{ flex: seg.flex, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          {seg.type === "player" && seg.run && (
+                            <span style={{ fontSize: 12, fontWeight: 500, color: "#3e95f3", whiteSpace: "nowrap", fontFamily: "var(--font-dm-sans)" }}>{seg.run.score} pts</span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    {/* Bar */}
+                    <div style={{ display: "flex", width: "100%", borderRadius: 6, overflow: "hidden", backgroundColor: "#e8e8e8", height: 48 }}>
+                      {segs.map((seg, i) => {
+                        if (seg.type === "gap") return <div key={i} style={{ flex: seg.flex, backgroundColor: "#e8e8e8" }} />;
+                        const isPlayer = seg.type === "player";
+                        return (
+                          <button key={i} type="button" onClick={() => {
+                            if (seg.run) {
+                              const ts = [seg.run.start_ts, seg.run.end_ts].filter(Boolean) as number[];
+                              if (ts.length > 0 && videoRef.current) {
+                                videoRef.current.currentTime = ts[0];
+                              }
+                            }
+                          }} style={{
+                            flex: seg.flex, border: "none", borderRadius: 6, height: 48, cursor: "pointer",
+                            backgroundColor: isPlayer ? "#3e95f3" : "#f5364d",
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                          }}>
+                            <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+                              <path d="M5.33 3.33L12 8L5.33 12.67V3.33Z" stroke="white" strokeWidth="1.5" strokeLinejoin="round" fill="none" />
+                            </svg>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    {/* Labels below */}
+                    <div style={{ display: "flex", width: "100%", minHeight: 18 }}>
+                      {segs.map((seg, i) => (
+                        <div key={i} style={{ flex: seg.flex, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          {seg.type === "opponent" && seg.run && (
+                            <span style={{ fontSize: 12, fontWeight: 500, color: "#f5364d", whiteSpace: "nowrap", fontFamily: "var(--font-dm-sans)" }}>{seg.run.score} pts</span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", padding: "0 8px" }}>
+                      <div style={{ display: "inline-flex", alignItems: "center", padding: "2px 8px", borderRadius: 4, backgroundColor: "#fcd4d9" }}>
+                        <span style={{ fontSize: 12, color: "#a22618", fontFamily: "var(--font-dm-sans)" }}>Opp</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
           </div>
         </div>

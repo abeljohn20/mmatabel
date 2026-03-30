@@ -291,7 +291,7 @@ export function OpeningPhaseTab({ analysisView = "your", onOpenVideo }: Props) {
                 effValue={rg.best.eff_value}
                 description={rg.best.description?.startsWith("[narrative") ? `${rg.best.shot_name} is your most effective receive option.` : rg.best.description}
                 buttonLabel={rg.best.button_label}
-                onView={() => open({ title: rg.best.shot_name, subtitle: rg.best.eff_label, description: rg.best.description, timestamps: rg.best.timestamps_seconds || [], sectionLabel: "RECEIVE GAME" })}
+                onView={() => open({ title: rg.best.shot_name, subtitle: rg.best.eff_label, description: rg.best.description, timestamps: rg.best.timestamps_seconds || [], sectionLabel: "RECEIVE GAME", badge: "Best receive", badgeBg: "rgba(117,235,62,0.19)", badgeBorder: "#bdf6c0", badgeColor: "#359707" })}
               />
               <div className="h-px w-full bg-[var(--grey-900,#efece6)]" />
               <ReceiveCard
@@ -302,7 +302,7 @@ export function OpeningPhaseTab({ analysisView = "your", onOpenVideo }: Props) {
                 effValue={rg.worst.eff_value}
                 description={rg.worst.description?.startsWith("[narrative") ? `${rg.worst.shot_name} is your least effective receive.` : rg.worst.description}
                 buttonLabel={rg.worst.button_label}
-                onView={() => open({ title: rg.worst.shot_name, subtitle: rg.worst.eff_label, description: rg.worst.description, timestamps: rg.worst.timestamps_seconds || [], sectionLabel: "RECEIVE GAME" })}
+                onView={() => open({ title: rg.worst.shot_name, subtitle: rg.worst.eff_label, description: rg.worst.description, timestamps: rg.worst.timestamps_seconds || [], sectionLabel: "RECEIVE GAME", badge: "Worst receive", badgeBg: "rgba(255,78,100,0.17)", badgeBorder: "#ff4e64", badgeColor: "#ff4e64" })}
               />
             </div>
           </TimelineSection>
@@ -346,7 +346,7 @@ export function OpeningPhaseTab({ analysisView = "your", onOpenVideo }: Props) {
                   description={seq.description?.startsWith("[narrative") ? "Winning sequence pattern." : seq.description}
                   steps={seq.steps}
                   buttonLabel={seq.button_label}
-                  onView={() => open({ title: seq.title, subtitle: seq.eff_label, description: seq.description, timestamps: seq.timestamps_seconds || [], sectionLabel: "WINNING OPENINGS" })}
+                  onView={() => open({ title: seq.title, subtitle: seq.eff_label, description: seq.description, timestamps: seq.timestamps_seconds || [], sectionLabel: "WINNING OPENINGS", count: seq.count, steps: seq.steps })}
                 />
               ))}
             </TimelineSection>
@@ -365,7 +365,7 @@ export function OpeningPhaseTab({ analysisView = "your", onOpenVideo }: Props) {
                   description={seq.description?.startsWith("[narrative") ? "Losing sequence pattern." : seq.description}
                   steps={seq.steps}
                   buttonLabel={seq.button_label}
-                  onView={() => open({ title: seq.title, subtitle: seq.eff_label, description: seq.description, timestamps: seq.timestamps_seconds || [], sectionLabel: "LOSING OPENINGS" })}
+                  onView={() => open({ title: seq.title, subtitle: seq.eff_label, description: seq.description, timestamps: seq.timestamps_seconds || [], sectionLabel: "LOSING OPENINGS", count: seq.count, steps: seq.steps })}
                 />
               ))}
             </TimelineSection>

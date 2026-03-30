@@ -293,7 +293,7 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
                 betterOption="Overhead clear" betterEff="51%" betterEffColor="#27e72e"
                 diffLabel="24.3% more effective shot"
                 buttonLabel="View Backhand Clear"
-                onView={() => open({ title: "Backhand Clear", subtitle: "26% Eff.", description: "Backhand clear when overhead clear was available", timestamps: TS, sectionLabel: "SHOT CHOICE ISSUES" })}
+                onView={() => open({ title: "Backhand Clear", subtitle: "26% Eff.", description: "Backhand clear when overhead clear was available", timestamps: TS, sectionLabel: "SHOT CHOICE ISSUES", shotEff: "26%", shotEffColor: "#eb3030", betterOption: "Overhead clear", betterEff: "51%", betterEffColor: "#27e72e", diffLabel: "24.3% more effective shot", badge: "Rear backhand corner", badgeBg: "#f8f8f8", badgeBorder: "#929edd", badgeColor: "#071f97" })}
               />
               <div className="h-px w-full bg-[var(--grey-900,#efece6)]" />
               <ShotComparisonCard
@@ -303,7 +303,7 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
                 betterOption="Net play" betterEff="62%" betterEffColor="#27e72e"
                 diffLabel="25.4% more effective shot"
                 buttonLabel="View Passive lifts/clears"
-                onView={() => open({ title: "Passive Lifts/Clears", subtitle: "36.7% Eff.", description: "Passive lifts/clears when net play was available", timestamps: TS, sectionLabel: "SHOT CHOICE ISSUES" })}
+                onView={() => open({ title: "Passive Lifts/Clears", subtitle: "36.7% Eff.", description: "Passive lifts/clears when net play was available", timestamps: TS, sectionLabel: "SHOT CHOICE ISSUES", shotEff: "36.7%", shotEffColor: "#eb3030", betterOption: "Net play", betterEff: "62%", betterEffColor: "#27e72e", diffLabel: "25.4% more effective shot", badge: "Front Court", badgeBg: "#fff6fe", badgeBorder: "#d7b6d4", badgeColor: "#97078b" })}
               />
             </div>
           </TimelineSection>

@@ -358,11 +358,22 @@ export function PatternsTab({ analysisView = "your", onOpenVideo, narrative }: P
               {pred.cards.map((c: any, i: number) => {
                 const eff = c.effectiveness || 0;
                 const effColor = eff >= 65 ? "#2dc535" : eff >= 45 ? "#f59e0b" : "#ff4e64";
+                // Build steps from ALL patterns for the bottom sheet
+                const allPatternSteps = pred.cards.map((pc: any) => {
+                  const pcEff = pc.effectiveness || 0;
+                  const pcColor = pcEff >= 65 ? "#2dc535" : pcEff >= 45 ? "#f59e0b" : "#ff4e64";
+                  return [
+                    { who: "Opp" as const, action: pc.opp_action },
+                    { who: "You" as const, action: pc.your_action, effLabel: pc.eff_label, effColor: pcColor },
+                  ];
+                }).flat();
                 return (
                   <PredictablePatternCard key={i} effLabel={c.eff_label} effColor={effColor}
                     oppAction={c.opp_action} yourAction={c.your_action} count={c.count_label} buttonLabel={c.button_label}
                     onView={() => open({ title: `${c.opp_action} → ${c.your_action}`, subtitle: c.eff_label,
-                      description: `Pattern: ${c.count_label}`, timestamps: c.timestamps_seconds || [], sectionLabel: "PREDICTABLE PATTERNS" })} />
+                      description: pred.insight_text?.startsWith("[narrative") ? "Predictability patterns" : pred.insight_text,
+                      timestamps: c.timestamps_seconds || [], sectionLabel: "PREDICTABLE PATTERNS",
+                      count: c.count_label, steps: allPatternSteps })} />
                 );
               })}
 
@@ -381,7 +392,7 @@ export function PatternsTab({ analysisView = "your", onOpenVideo, narrative }: P
                   count={seq.count}
                   description={seq.description?.startsWith("[narrative") ? "Winning pattern sequence." : seq.description}
                   steps={seq.steps} buttonLabel={seq.button_label}
-                  onView={() => open({ title: "Winning Pattern", subtitle: seq.count, timestamps: seq.timestamps_seconds || [], sectionLabel: "WINNING PATTERNS" })} />
+                  onView={() => open({ title: seq.title?.startsWith("[narrative") ? `Winning sequence` : seq.title, subtitle: seq.count, description: seq.description?.startsWith("[narrative") ? "Winning pattern sequence." : seq.description, timestamps: seq.timestamps_seconds || [], sectionLabel: "WINNING PATTERNS", count: seq.count, steps: seq.steps })} />
               ))}
             </TimelineSection>
           ) : !hasPatterns ? (
@@ -402,7 +413,7 @@ export function PatternsTab({ analysisView = "your", onOpenVideo, narrative }: P
                   count={seq.count}
                   description={seq.description?.startsWith("[narrative") ? "Losing pattern sequence." : seq.description}
                   steps={seq.steps} buttonLabel={seq.button_label}
-                  onView={() => open({ title: "Losing Pattern", subtitle: seq.count, timestamps: seq.timestamps_seconds || [], sectionLabel: "LOSING PATTERNS" })} />
+                  onView={() => open({ title: seq.title?.startsWith("[narrative") ? `Losing sequence` : seq.title, subtitle: seq.count, description: seq.description?.startsWith("[narrative") ? "Losing pattern sequence." : seq.description, timestamps: seq.timestamps_seconds || [], sectionLabel: "LOSING PATTERNS", count: seq.count, steps: seq.steps })} />
               ))}
             </TimelineSection>
           )}

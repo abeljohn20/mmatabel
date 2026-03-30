@@ -201,6 +201,20 @@ export default function Home() {
         timestamps={videoSheet?.timestamps ?? []}
         streakRanges={videoSheet?.streakRanges}
         sectionLabel={videoSheet?.sectionLabel}
+        count={videoSheet?.count}
+        steps={videoSheet?.steps}
+        badge={videoSheet?.badge}
+        badgeBg={videoSheet?.badgeBg}
+        badgeBorder={videoSheet?.badgeBorder}
+        badgeColor={videoSheet?.badgeColor}
+        betterOption={videoSheet?.betterOption}
+        betterEff={videoSheet?.betterEff}
+        betterEffColor={videoSheet?.betterEffColor}
+        shotEff={videoSheet?.shotEff}
+        shotEffColor={videoSheet?.shotEffColor}
+        diffLabel={videoSheet?.diffLabel}
+        gameRuns={videoSheet?.gameRuns}
+        gameTotalRallies={videoSheet?.gameTotalRallies}
       />
     </div>
   );

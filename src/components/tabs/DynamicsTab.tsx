@@ -40,8 +40,8 @@ function TimelineSection({ color, icon, label, children, isLast = false }: {
 /* ─── Play Icon SVG ─── */
 function PlayIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M5.33 3.33L12 8L5.33 12.67V3.33Z" fill="white" />
+    <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+      <path d="M5.33 3.33L12 8L5.33 12.67V3.33Z" stroke="white" strokeWidth="1.5" strokeLinejoin="round" fill="none" />
     </svg>
   );
 }
@@ -72,29 +72,59 @@ function StreakBar({ runs, totalRallies, onClickRun }: {
   if (trailing > 0) segments.push({ type: "gap", flexBasis: trailing });
 
   return (
-    <div className="flex flex-col gap-6 p-1 w-full">
-      <div className="flex items-center justify-center px-2 rounded bg-[#dfefff] self-start">
-        <span className="text-[10px] font-normal text-[#2990fd] leading-[1.6]">You</span>
+    <div className="flex flex-col gap-2 w-full">
+      {/* You badge */}
+      <div className="flex items-center justify-center px-2 py-0.5 rounded bg-[#dfefff] self-start">
+        <span className="text-xs font-normal text-[#2990fd] leading-[1.6]" style={{ fontFamily: "var(--font-dm-sans)" }}>You</span>
       </div>
-      <div className="flex w-full rounded bg-[#eee] items-end" style={{ minHeight: 52 }}>
-        {segments.map((seg, i) => {
-          if (seg.type === "gap") return <div key={i} style={{ flex: seg.flexBasis }} />;
-          const isPlayer = seg.type === "player";
-          return (
-            <div key={i} className="flex flex-col gap-0.5 items-center" style={{ flex: seg.flexBasis }}>
-              {isPlayer && <span className="text-xs font-medium text-[#2990fd] leading-[1.6] text-center w-full whitespace-nowrap">{seg.run!.score} pts</span>}
-              <button type="button" onClick={() => onClickRun?.(seg.run!)}
-                className={`${isPlayer ? "bg-[#3e95f3]" : "bg-[#f5364d]"} h-8 rounded-[3px] w-full flex items-center justify-center cursor-pointer active:opacity-80`}
-                style={{ border: "none" }}>
+
+      {/* Timeline bar */}
+      <div className="relative w-full">
+        {/* Player labels (above bar) */}
+        <div className="flex w-full mb-1" style={{ minHeight: 18 }}>
+          {segments.map((seg, i) => {
+            if (seg.type === "gap") return <div key={i} style={{ flex: seg.flexBasis }} />;
+            const isPlayer = seg.type === "player";
+            return (
+              <div key={i} className="flex items-center justify-center" style={{ flex: seg.flexBasis }}>
+                {isPlayer && <span className="text-xs font-medium text-[#3e95f3] text-center whitespace-nowrap" style={{ fontFamily: "var(--font-dm-sans)" }}>{seg.run!.score} pts</span>}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Bar */}
+        <div className="flex w-full rounded-[6px] overflow-hidden bg-[#e8e8e8]" style={{ height: 48 }}>
+          {segments.map((seg, i) => {
+            if (seg.type === "gap") return <div key={i} className="bg-[#e8e8e8]" style={{ flex: seg.flexBasis }} />;
+            const isPlayer = seg.type === "player";
+            return (
+              <button key={i} type="button" onClick={() => onClickRun?.(seg.run!)}
+                className={`${isPlayer ? "bg-[#3e95f3]" : "bg-[#f5364d]"} flex items-center justify-center cursor-pointer active:opacity-80`}
+                style={{ flex: seg.flexBasis, border: "none", borderRadius: 6, height: 48 }}>
                 <PlayIcon />
               </button>
-              {!isPlayer && <span className="text-xs font-medium text-[#f5364d] leading-[1.6] text-center w-full whitespace-nowrap">{seg.run!.score} pts</span>}
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
+
+        {/* Opponent labels (below bar) */}
+        <div className="flex w-full mt-1" style={{ minHeight: 18 }}>
+          {segments.map((seg, i) => {
+            if (seg.type === "gap") return <div key={i} style={{ flex: seg.flexBasis }} />;
+            const isPlayer = seg.type === "player";
+            return (
+              <div key={i} className="flex items-center justify-center" style={{ flex: seg.flexBasis }}>
+                {!isPlayer && <span className="text-xs font-medium text-[#f5364d] text-center whitespace-nowrap" style={{ fontFamily: "var(--font-dm-sans)" }}>{seg.run!.score} pts</span>}
+              </div>
+            );
+          })}
+        </div>
       </div>
-      <div className="flex items-center justify-center px-2 rounded bg-[#fcd4d9] self-start">
-        <span className="text-[10px] font-normal text-[#a22618] leading-[1.6]">Opp</span>
+
+      {/* Opp badge */}
+      <div className="flex items-center justify-center px-2 py-0.5 rounded bg-[#fcd4d9] self-start">
+        <span className="text-xs font-normal text-[#a22618] leading-[1.6]" style={{ fontFamily: "var(--font-dm-sans)" }}>Opp</span>
       </div>
     </div>
   );
@@ -201,7 +231,7 @@ export function DynamicsTab({ report, narrative, onOpenVideo }: Props) {
                       totalRallies={g.total_rallies || 40}
                       onClickRun={(run) => {
                         const ts = [run.start_ts, run.end_ts].filter(Boolean) as number[];
-                        open({ title: `Game ${g.game} — ${run.type === "player" ? "Your" : "Opponent"} Streak`, subtitle: `${run.score} pts`, description: ntp?.insight ?? `${run.length}-point run.`, timestamps: ts, sectionLabel: "STREAKS" });
+                        open({ title: `Game ${g.game} — ${run.type === "player" ? "Your" : "Opponent"} Streak`, subtitle: `${run.score} pts`, description: ntp?.insight ?? `${run.length}-point run.`, timestamps: ts, sectionLabel: "STREAKS", gameRuns: g.runs, gameTotalRallies: g.total_rallies || 40 });
                       }}
                     />
                   </div>

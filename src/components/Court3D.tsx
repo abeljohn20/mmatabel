@@ -55,9 +55,9 @@ function opponentZonePos(row: number, col: number): [number, number, number] {
 const CAM_PLAYER: [number, number, number] = [0, 11, 10];
 const CAM_PLAYER_LOOK: [number, number, number] = [0, 0, 0.5];
 
-/* Opponent view: steeper top-down angle so back zones are easier to read */
-const CAM_OPPONENT: [number, number, number] = [0, 13, 1.5];
-const CAM_OPPONENT_LOOK: [number, number, number] = [0, 0, -3];
+/* Opponent view: close top-down, focused on opponent half */
+const CAM_OPPONENT: [number, number, number] = [0, 10, 0.5];
+const CAM_OPPONENT_LOOK: [number, number, number] = [0, 0, -3.5];
 
 /* ─── Fixed camera controller — no zoom, no scroll ─── */
 /* Smoothly animates between player and opponent view on zone tap only */
@@ -407,6 +407,7 @@ function OpponentZonePanel({
                     padding: "5px 10px",
                     boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
                     cursor: onShotClick ? "pointer" : "default",
+                    minWidth: 120,
                     width: "fit-content",
                   }}
                 >
