@@ -72,7 +72,7 @@ function StadiumBg() {
 
 /* ─── Main component ─── */
 
-export function ShotArsenalTab({ analysisView = "your", onOpenVideo, externalShotIndex }: { analysisView?: "your" | "opponent"; onOpenVideo?: (data: VideoSheetData) => void; externalShotIndex?: number } = {}) {
+export function ShotArsenalTab({ analysisView = "your", onOpenVideo, externalShotIndex, onShotNavigation }: { analysisView?: "your" | "opponent"; onOpenVideo?: (data: VideoSheetData) => void; externalShotIndex?: number; onShotNavigation?: (index: number) => void } = {}) {
   const isDesktop = useIsDesktop();
   const [arsenalData, setArsenalData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -414,16 +414,7 @@ export function ShotArsenalTab({ analysisView = "your", onOpenVideo, externalSho
         } : undefined}
         onShotIndexChange={isDesktop ? (index) => {
           setDesktopShotIndex(index);
-          // Seek the desktop video panel to this shot's timestamp
-          if (onOpenVideo && selectedShot && filteredTimestamps[index] != null) {
-            onOpenVideo({
-              title: selectedShot.name,
-              subtitle: `${selectedShot.eff}% Eff.`,
-              description: `${filteredTimestamps.length} instances`,
-              timestamps: filteredTimestamps,
-              sectionLabel: "SHOT ARSENAL",
-            });
-          }
+          onShotNavigation?.(index);
         } : undefined}
         externalShotIndex={isDesktop ? (externalShotIndex ?? desktopShotIndex) : undefined}
       />

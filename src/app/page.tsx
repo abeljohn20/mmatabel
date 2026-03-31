@@ -245,7 +245,7 @@ export default function Home() {
           <div style={{ padding: 40, textAlign: "center", color: "#999" }}>Loading…</div>
         ) : (
           <>
-            {activeTab === "arsenal" && <ShotArsenalTab analysisView={analysisView} onOpenVideo={isDesktop ? updateDesktopVideo : undefined} externalShotIndex={isDesktop ? videoShotIndex : undefined} />}
+            {activeTab === "arsenal" && <ShotArsenalTab analysisView={analysisView} onOpenVideo={isDesktop ? updateDesktopVideo : undefined} externalShotIndex={isDesktop ? videoShotIndex : undefined} onShotNavigation={isDesktop ? setVideoShotIndex : undefined} />}
             {activeTab !== "arsenal" && (
               <SectionNavigator sections={currentSections} contentRef={contentRef}>
                 {activeTab === "opening" && <OpeningPhaseTab analysisView={analysisView} onOpenVideo={openVideoSheet} />}
@@ -301,6 +301,7 @@ export default function Home() {
             videoSrc="/match-video.mp4"
             onClose={() => { setDesktopVideo(null); setVideoSheet(null); }}
             onIndexChange={setVideoShotIndex}
+            externalIndex={videoShotIndex}
           />
         </div>
 

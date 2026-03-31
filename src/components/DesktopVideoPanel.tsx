@@ -27,9 +27,11 @@ interface Props {
   onClose: () => void;
   /** Called when the user navigates to a different instance index via prev/next/tick */
   onIndexChange?: (index: number) => void;
+  /** External index override — when set, seeks to this index */
+  externalIndex?: number;
 }
 
-export function DesktopVideoPanel({ data, videoSrc, onIndexChange }: Props) {
+export function DesktopVideoPanel({ data, videoSrc, onIndexChange, externalIndex }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -51,6 +53,14 @@ export function DesktopVideoPanel({ data, videoSrc, onIndexChange }: Props) {
       videoRef.current.currentTime = Math.max(0, timestamps[0] - SEEK_PADDING);
     }
   }, [data?.title]);
+
+  // Sync external index from court dot clicks
+  useEffect(() => {
+    if (externalIndex != null && externalIndex !== currentIndex && externalIndex < timestamps.length) {
+      setCurrentIndex(externalIndex);
+      seekToIndex(externalIndex);
+    }
+  }, [externalIndex]);
 
   // Track playback time
   const handleTimeUpdate = useCallback(() => {
