@@ -352,7 +352,7 @@ export function PatternsTab({ analysisView = "your", onOpenVideo, narrative }: P
                       <div className="flex flex-wrap gap-3 w-full">
                         {g.shots.map((s: any, si: number) => (
                           <ShotTile key={si} name={s.name} effLabel={s.eff_label || ""} count={s.count} buttonLabel={s.button_label}
-                            onView={() => open({ title: s.name, subtitle: s.eff_label || s.count, count: s.count, timestamps: s.timestamps_seconds || [], sectionLabel: "TEMPO CONTROL" })} />
+                            onView={() => open({ title: s.name, count: s.count, timestamps: s.timestamps_seconds || [], sectionLabel: "TEMPO CONTROL", badge: g.title, badgeBg: g.title.toLowerCase().includes("fast") ? "rgba(255,78,100,0.12)" : "rgba(245,158,11,0.12)", badgeBorder: g.title.toLowerCase().includes("fast") ? "#ff4e64" : "#f59e0b", badgeColor: g.title.toLowerCase().includes("fast") ? "#ff4e64" : "#f59e0b" })} />
                         ))}
                       </div>
                     </div>
@@ -383,22 +383,26 @@ export function PatternsTab({ analysisView = "your", onOpenVideo, narrative }: P
                   style={{ color: pred.variant === "danger" ? "#9f0c0c" : "#e79d1c", fontFamily: "var(--font-dm-sans)" }}>{pred.message}</p>
               </div>
 
-              {pred.cards.map((c: any, i: number) => {
-                const eff = c.effectiveness || 0;
-                const effColor = eff >= 65 ? "#2dc535" : eff >= 45 ? "#f59e0b" : "#ff4e64";
-                const thisPatternSteps = [
-                  { who: "Opp" as const, action: c.opp_action },
-                  { who: "You" as const, action: c.your_action, effLabel: c.eff_label, effColor },
-                ];
-                return (
-                  <PredictablePatternCard key={i} effLabel={c.eff_label} effColor={effColor}
-                    oppAction={c.opp_action} yourAction={c.your_action} count={c.count_label} buttonLabel={c.button_label}
-                    onView={() => open({ title: `${c.opp_action} → ${c.your_action}`, subtitle: c.eff_label,
-                      description: pred.insight_text?.startsWith("[narrative") ? "Predictability patterns" : pred.insight_text,
-                      timestamps: c.timestamps_seconds || [], sectionLabel: "PREDICTABLE PATTERNS",
-                      count: c.count_label, steps: thisPatternSteps })} />
-                );
-              })}
+              <div className="flex gap-3 w-full overflow-x-auto" style={{ scrollbarWidth: "none", msOverflowStyle: "none" as any, WebkitOverflowScrolling: "touch" }}>
+                {pred.cards.map((c: any, i: number) => {
+                  const eff = c.effectiveness || 0;
+                  const effColor = eff >= 65 ? "#2dc535" : eff >= 45 ? "#f59e0b" : "#ff4e64";
+                  const thisPatternSteps = [
+                    { who: "Opp" as const, action: c.opp_action },
+                    { who: "You" as const, action: c.your_action, effLabel: c.eff_label, effColor },
+                  ];
+                  return (
+                    <div key={i} style={{ flex: "0 0 75%", minWidth: 0 }}>
+                      <PredictablePatternCard effLabel={c.eff_label} effColor={effColor}
+                        oppAction={c.opp_action} yourAction={c.your_action} count={c.count_label} buttonLabel={c.button_label}
+                        onView={() => open({ title: `${c.opp_action} → ${c.your_action}`, subtitle: c.eff_label,
+                          description: pred.insight_text?.startsWith("[narrative") ? "Predictability patterns" : pred.insight_text,
+                          timestamps: c.timestamps_seconds || [], sectionLabel: "PREDICTABLE PATTERNS",
+                          count: c.count_label, steps: thisPatternSteps })} />
+                    </div>
+                  );
+                })}
+              </div>
 
               <NarrativeText>
                 {pred.insight_text?.startsWith("[narrative") ? "Predictability insight will be available with narrative analysis." : pred.insight_text}

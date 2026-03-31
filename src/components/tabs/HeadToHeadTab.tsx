@@ -233,8 +233,30 @@ export function HeadToHeadTab({ report, narrative, onOpenVideo }: Props) {
                         runs={g.runs}
                         totalRallies={g.total_rallies || 40}
                         onClickRun={(run) => {
-                          const ts = [run.start_ts, run.end_ts].filter(Boolean) as number[];
-                          open({ title: `Game ${g.game} — ${run.type === "player" ? "Your" : "Opponent"} Streak`, subtitle: `${run.score} pts`, description: ntp?.insight ?? `${run.length}-point run.`, timestamps: ts, sectionLabel: "STREAKS", gameRuns: g.runs, gameTotalRallies: g.total_rallies || 40 });
+                          // Build timestamps from all runs for navigation
+                          const allTs = g.runs
+                            .filter((r: any) => r.start_ts != null)
+                            .map((r: any) => r.start_ts as number)
+                            .sort((a: number, b: number) => a - b);
+                          // Build streak ranges for colored timeline blocks
+                          const ranges = g.runs
+                            .filter((r: any) => r.start_ts != null && r.end_ts != null)
+                            .map((r: any) => ({
+                              start: Math.min(r.start_ts, r.end_ts),
+                              end: Math.max(r.start_ts, r.end_ts),
+                              type: r.type as "player" | "opponent",
+                              label: `${r.score} pts`,
+                            }));
+                          open({
+                            title: `Game ${g.game} — ${run.type === "player" ? "Your" : "Opponent"} Streak`,
+                            subtitle: `${run.score} pts`,
+                            description: ntp?.insight ?? `${run.length}-point run.`,
+                            timestamps: allTs.length > 0 ? allTs : [run.start_ts, run.end_ts].filter(Boolean) as number[],
+                            streakRanges: ranges,
+                            sectionLabel: "STREAKS",
+                            gameRuns: g.runs,
+                            gameTotalRallies: g.total_rallies || 40,
+                          });
                         }}
                       />
                     </div>

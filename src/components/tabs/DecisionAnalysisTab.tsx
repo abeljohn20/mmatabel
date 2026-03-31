@@ -348,8 +348,8 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
             </div>
           </TimelineSection>
 
-          {/* 3. OUTCOME PROXIMITY */}
-          <TimelineSection label="OUTCOME PROXIMITY">
+          {/* 3. TIPPING POINTS */}
+          <TimelineSection label="TIPPING POINTS">
             <div className="flex flex-col gap-3 w-full">
               <NarrativeText>
                 outcome proximity insight
@@ -359,14 +359,14 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
                 shotName="BH Lift Cross" count="7x"
                 description="our backhand netkeep becomes a weapon in pressure situations, with effectiveness jumping from 62% to 91%. In tight moments like at 14-13, you execute it with precision to control the net; in neutral phases, it is less decisive."
                 buttonLabel="View BH Lift Cross"
-                onView={() => open({ title: "BH Lift Cross", subtitle: "Positive", description: "our backhand netkeep becomes a weapon in pressure situations, with effectiveness jumping from 62% to 91%.", timestamps: TS, sectionLabel: "OUTCOME PROXIMITY", count: "7x", badge: "Positive tipping point", badgeBg: "rgba(117,235,62,0.19)", badgeBorder: "#bdf6c0", badgeColor: "#359707" })}
+                onView={() => open({ title: "BH Lift Cross", subtitle: "Positive", description: "our backhand netkeep becomes a weapon in pressure situations, with effectiveness jumping from 62% to 91%. In tight moments like at 14-13, you execute it with precision to control the net; in neutral phases, it is less decisive.", timestamps: TS, sectionLabel: "TIPPING POINTS", count: "7x", badge: "Positive tipping point", badgeBg: "rgba(117,235,62,0.19)", badgeBorder: "#bdf6c0", badgeColor: "#359707" })}
               />
               <TippingPointCard
                 badge={{ text: "Positive tipping point", bg: "rgba(117,235,62,0.19)", border: "#bdf6c0", color: "#359707" }}
                 shotName="FH Lift Cross" count="5x"
                 description="our backhand netkeep becomes a weapon in pressure situations, with effectiveness jumping from 62% to 91%. In tight moments like at 14-13, you execute it with precision to control the net; in neutral phases, it is less decisive."
                 buttonLabel="View FH Lift Cross"
-                onView={() => open({ title: "FH Lift Cross", subtitle: "Positive", description: "our backhand netkeep becomes a weapon in pressure situations, with effectiveness jumping from 62% to 91%.", timestamps: TS.slice(0,4), sectionLabel: "OUTCOME PROXIMITY", count: "5x", badge: "Positive tipping point", badgeBg: "rgba(117,235,62,0.19)", badgeBorder: "#bdf6c0", badgeColor: "#359707" })}
+                onView={() => open({ title: "FH Lift Cross", subtitle: "Positive", description: "our backhand netkeep becomes a weapon in pressure situations, with effectiveness jumping from 62% to 91%. In tight moments like at 14-13, you execute it with precision to control the net; in neutral phases, it is less decisive.", timestamps: TS.slice(0,4), sectionLabel: "TIPPING POINTS", count: "5x", badge: "Positive tipping point", badgeBg: "rgba(117,235,62,0.19)", badgeBorder: "#bdf6c0", badgeColor: "#359707" })}
               />
               <div className="h-px w-full bg-[var(--grey-900,#efece6)]" />
               <TippingPointCard
@@ -374,7 +374,7 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
                 shotName="BH Defense Cross" count="6x"
                 description="Your flat game exchanges break down under pressure, dropping from 100% effectiveness to just 45%. While reliable in neutral rallies, this shot became a source of errors in critical moments like at 18-17, likely due to rushed pace."
                 buttonLabel="View BH Defense Cross"
-                onView={() => open({ title: "BH Defense Cross", subtitle: "Negative", description: "Your flat game exchanges break down under pressure, dropping from 100% effectiveness to just 45%.", timestamps: TS, sectionLabel: "OUTCOME PROXIMITY", count: "6x", badge: "Negative tipping point", badgeBg: "rgba(255,78,100,0.17)", badgeBorder: "#ff4e64", badgeColor: "#ff4e64" })}
+                onView={() => open({ title: "BH Defense Cross", subtitle: "Negative", description: "Your flat game exchanges break down under pressure, dropping from 100% effectiveness to just 45%. While reliable in neutral rallies, this shot became a source of errors in critical moments like at 18-17, likely due to rushed pace.", timestamps: TS, sectionLabel: "TIPPING POINTS", count: "6x", badge: "Negative tipping point", badgeBg: "rgba(255,78,100,0.17)", badgeBorder: "#ff4e64", badgeColor: "#ff4e64" })}
               />
             </div>
           </TimelineSection>

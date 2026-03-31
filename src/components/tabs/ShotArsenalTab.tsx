@@ -267,8 +267,8 @@ export function ShotArsenalTab({ analysisView = "your", onOpenVideo }: { analysi
     return (
       <div
         style={{
-          position: "relative",
-          height: "100%",
+          position: "absolute",
+          inset: 0,
           background: "linear-gradient(180deg, #f8f9fa 0%, #e8ecf0 25%, #dde4e9 50%, #d0dbd4 75%, #c5d5c8 100%)",
           display: "flex",
           alignItems: "center",
@@ -290,8 +290,8 @@ export function ShotArsenalTab({ analysisView = "your", onOpenVideo }: { analysi
   return (
     <div
       style={{
-        position: "relative",
-        height: "100%",
+        position: "absolute",
+        inset: 0,
         background: "linear-gradient(180deg, #f8f9fa 0%, #e8ecf0 25%, #dde4e9 50%, #d0dbd4 75%, #c5d5c8 100%)",
         overflow: "hidden",
         display: "flex",

@@ -66,7 +66,7 @@ export default function Home() {
     decisions: [
       { id: "SHOT CHOICE ISSUES", label: "SHOT CHOICE ISSUES" },
       { id: "RALLY BLUEPRINT", label: "RALLY BLUEPRINT" },
-      { id: "OUTCOME PROXIMITY", label: "OUTCOME PROXIMITY" },
+      { id: "TIPPING POINTS", label: "TIPPING POINTS" },
       { id: "POST SHOT RECOVERY", label: "POST SHOT RECOVERY" },
       { id: "ADAPTIVE PERFORMANCE", label: "ADAPTIVE PERFORMANCE" },
     ],
@@ -237,7 +237,7 @@ export default function Home() {
         ref={contentRef}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
-        style={{ flex: 1, minHeight: 0, background: activeTab === "arsenal" ? "#f8f9fa" : "#fafafa", overflowY: activeTab === "arsenal" ? "hidden" : "auto" }}
+        style={{ flex: 1, minHeight: 0, position: "relative", background: activeTab === "arsenal" ? "#f8f9fa" : "#fafafa", overflowY: activeTab === "arsenal" ? "hidden" : "auto" }}
       >
         {loading ? (
           <div style={{ padding: 40, textAlign: "center", color: "#999" }}>Loading…</div>
