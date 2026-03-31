@@ -132,6 +132,7 @@ interface ShotDetailSheetProps {
   hasLength?: boolean; // whether this shot type has length data (drops/clears/lifts)
   hasHeight?: boolean; // whether this shot type has height data (lifts/clears only)
   narrative?: string;
+  hideVideo?: boolean;
 }
 
 /* ─── Filter options ─── */
@@ -260,6 +261,7 @@ export function ShotDetailSheet({
   hasLength = false,
   hasHeight = false,
   narrative,
+  hideVideo = false,
 }: ShotDetailSheetProps) {
   const [accuracyFilter, setAccuracyFilter] = useState<AccuracyFilter>("all");
   const [lengthFilter, setLengthFilter] = useState<LengthFilter>("all");
@@ -442,8 +444,8 @@ export function ShotDetailSheet({
             <div style={{ flex: 1, height: 1, background: "var(--brand-orange, #fa642d)" }} />
           </div>
 
-          {/* Video player (fixed at top) */}
-          <div
+          {/* Video player (fixed at top) — hidden on desktop */}
+          {!hideVideo && <div
             style={{
               margin: "12px 0 0",
               background: "#1a1a1a",
@@ -544,7 +546,7 @@ export function ShotDetailSheet({
             <div style={{ position: "absolute", top: 8, right: 12, fontSize: 11, color: "rgba(255,255,255,0.7)", background: "rgba(0,0,0,0.4)", padding: "2px 8px", borderRadius: 10 }}>
               {currentShotIndex + 1}/{filteredShots.length}
             </div>
-          </div>
+          </div>}
         </div>{/* end fixed top */}
 
         {/* ─── Scrollable content ─── */}

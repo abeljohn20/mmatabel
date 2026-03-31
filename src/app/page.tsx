@@ -80,8 +80,18 @@ export default function Home() {
   const currentSections = TAB_SECTIONS[activeTab] || [];
   const tabIds = useMemo(() => TABS.map(t => t.id), []);
 
+  // Desktop-only video data (updates left panel without opening bottom sheet)
+  const [desktopVideo, setDesktopVideo] = useState<VideoSheetData | null>(null);
+
   function openVideoSheet(data: VideoSheetData) {
     setVideoSheet(data);
+    // Also update desktop video panel
+    if (isDesktop) setDesktopVideo(data);
+  }
+
+  // Update only the left video panel (no bottom sheet)
+  function updateDesktopVideo(data: VideoSheetData) {
+    setDesktopVideo(data);
   }
 
   // ─── Swipe between tabs (mobile only) ───
@@ -233,7 +243,7 @@ export default function Home() {
           <div style={{ padding: 40, textAlign: "center", color: "#999" }}>Loading…</div>
         ) : (
           <>
-            {activeTab === "arsenal" && <ShotArsenalTab analysisView={analysisView} />}
+            {activeTab === "arsenal" && <ShotArsenalTab analysisView={analysisView} onOpenVideo={isDesktop ? updateDesktopVideo : undefined} />}
             {activeTab !== "arsenal" && (
               <SectionNavigator sections={currentSections} contentRef={contentRef}>
                 {activeTab === "opening" && <OpeningPhaseTab analysisView={analysisView} onOpenVideo={openVideoSheet} />}
@@ -285,9 +295,9 @@ export default function Home() {
         {/* Left: persistent video panel — always visible */}
         <div style={{ flex: "1 1 60%", minWidth: 0 }}>
           <DesktopVideoPanel
-            data={videoSheet}
+            data={desktopVideo ?? videoSheet}
             videoSrc="/match-video.mp4"
-            onClose={() => setVideoSheet(null)}
+            onClose={() => { setDesktopVideo(null); setVideoSheet(null); }}
           />
         </div>
 

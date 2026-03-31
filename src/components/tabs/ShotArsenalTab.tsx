@@ -4,6 +4,8 @@ import { useState, useCallback, useEffect, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { ShotDetailSheet } from "@/components/ShotDetailSheet";
 import { Headline } from "@/components/Narrative";
+import { useIsDesktop } from "@/lib/useIsDesktop";
+import type { VideoSheetData } from "@/components/VideoSheet";
 
 /* ─── Types ─── */
 
@@ -70,7 +72,8 @@ function StadiumBg() {
 
 /* ─── Main component ─── */
 
-export function ShotArsenalTab({ analysisView = "your" }: { analysisView?: "your" | "opponent" } = {}) {
+export function ShotArsenalTab({ analysisView = "your", onOpenVideo }: { analysisView?: "your" | "opponent"; onOpenVideo?: (data: VideoSheetData) => void } = {}) {
+  const isDesktop = useIsDesktop();
   const [arsenalData, setArsenalData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [selectedZone, setSelectedZone] = useState<string | null>(null);
@@ -239,8 +242,20 @@ export function ShotArsenalTab({ analysisView = "your" }: { analysisView?: "your
   const handleShotClick = useCallback(
     (shotName: string, count: number, eff: number) => {
       setSelectedShot({ name: shotName, count, eff });
+      // On desktop, also send timestamps to the left video panel
+      if (isDesktop && onOpenVideo) {
+        const detail = findShotDetail(shotName);
+        const timestamps = detail?.video?.timestamps_seconds || [];
+        onOpenVideo({
+          title: shotName,
+          subtitle: `${eff}% Eff.`,
+          description: `${count} instances`,
+          timestamps,
+          sectionLabel: "SHOT ARSENAL",
+        });
+      }
     },
-    []
+    [isDesktop, onOpenVideo, findShotDetail]
   );
 
   const handleCloseSheet = useCallback(() => {
@@ -384,6 +399,7 @@ export function ShotArsenalTab({ analysisView = "your" }: { analysisView?: "your
         hasLength={hasLength}
         hasHeight={hasHeight}
         narrative={headline}
+        hideVideo={isDesktop}
       />
     </div>
   );

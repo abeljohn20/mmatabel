@@ -131,8 +131,11 @@ export function VideoSheet({
   const [selectedRunIdx, setSelectedRunIdx] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showControls, setShowControls] = useState(true);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [isSeeking, setIsSeeking] = useState(false);
   const controlsTimer = useRef<NodeJS.Timeout | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const timelineRef = useRef<HTMLDivElement>(null);
 
   // Build sorted runs for streak navigation
   const sortedRuns = useMemo(() => {
@@ -249,6 +252,30 @@ export function VideoSheet({
     setShowControls(true);
     if (isPlaying) hideControlsAfterDelay();
   }, [isPlaying, hideControlsAfterDelay]);
+
+  // Seek by dragging the timeline
+  const seekFromEvent = useCallback((clientX: number) => {
+    const bar = timelineRef.current;
+    const vid = videoRef.current;
+    if (!bar || !vid) return;
+    const rect = bar.getBoundingClientRect();
+    const pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+    vid.currentTime = pct * (vid.duration || 1);
+    setCurrentTime(vid.currentTime);
+  }, []);
+
+  const handleSeekStart = useCallback((clientX: number) => {
+    setIsSeeking(true);
+    seekFromEvent(clientX);
+  }, [seekFromEvent]);
+
+  const handleSeekMove = useCallback((clientX: number) => {
+    if (isSeeking) seekFromEvent(clientX);
+  }, [isSeeking, seekFromEvent]);
+
+  const handleSeekEnd = useCallback(() => {
+    setIsSeeking(false);
+  }, []);
 
   const hasStreakRanges = streakRanges && streakRanges.length > 0;
   const hasGameRuns = sortedRuns.length > 0;
@@ -398,6 +425,7 @@ export function VideoSheet({
                 onClick={handleVideoTap}
                 onPlay={() => { setIsPlaying(true); hideControlsAfterDelay(); }}
                 onPause={() => { setIsPlaying(false); setShowControls(true); }}
+                onTimeUpdate={() => { if (!isSeeking && videoRef.current) setCurrentTime(videoRef.current.currentTime); }}
                 style={{ width: "100%", height: "100%", objectFit: "cover", cursor: "pointer" }}
                 onLoadedMetadata={() => seekTo(0)}
               />
@@ -440,15 +468,26 @@ export function VideoSheet({
                 </TransportButton>
               </div>
 
-              {/* Timeline bar */}
+              {/* Timeline bar with drag handle */}
               <div
+                ref={timelineRef}
+                onMouseDown={(e) => handleSeekStart(e.clientX)}
+                onMouseMove={(e) => handleSeekMove(e.clientX)}
+                onMouseUp={handleSeekEnd}
+                onMouseLeave={handleSeekEnd}
+                onTouchStart={(e) => handleSeekStart(e.touches[0].clientX)}
+                onTouchMove={(e) => handleSeekMove(e.touches[0].clientX)}
+                onTouchEnd={handleSeekEnd}
                 style={{
                   position: "absolute",
-                  bottom: 8,
+                  bottom: 4,
                   left: 12,
                   right: 12,
+                  height: 20,
                   display: "flex",
                   alignItems: "center",
+                  cursor: "pointer",
+                  touchAction: "none",
                 }}
               >
                 <div
@@ -463,17 +502,66 @@ export function VideoSheet({
                 >
                   {/* Progress fill (when no streaks) */}
                   {!hasStreakRanges && !hasGameRuns && (
-                    <div
-                      style={{
-                        position: "absolute",
-                        left: 0,
-                        top: 0,
-                        height: 4,
-                        width: `${((timestamps[currentIndex] || 0) / videoDuration) * 100}%`,
-                        background: "white",
-                        borderRadius: 20,
-                      }}
-                    />
+                    <>
+                      <div
+                        style={{
+                          position: "absolute",
+                          left: 0,
+                          top: 0,
+                          height: 4,
+                          width: `${(currentTime / videoDuration) * 100}%`,
+                          background: "white",
+                          borderRadius: 20,
+                        }}
+                      />
+                      {/* Drag handle */}
+                      <div
+                        style={{
+                          position: "absolute",
+                          left: `${(currentTime / videoDuration) * 100}%`,
+                          top: -4,
+                          width: 12,
+                          height: 12,
+                          borderRadius: "50%",
+                          background: "white",
+                          transform: "translateX(-6px)",
+                          boxShadow: "0 1px 4px rgba(0,0,0,0.3)",
+                          zIndex: 10,
+                        }}
+                      />
+                    </>
+                  )}
+
+                  {/* Progress fill + drag handle for streak modes */}
+                  {(hasStreakRanges || hasGameRuns) && (
+                    <>
+                      <div
+                        style={{
+                          position: "absolute",
+                          left: 0,
+                          top: 0,
+                          height: 4,
+                          width: `${(currentTime / videoDuration) * 100}%`,
+                          background: "rgba(255,255,255,0.5)",
+                          borderRadius: 20,
+                          zIndex: 1,
+                        }}
+                      />
+                      <div
+                        style={{
+                          position: "absolute",
+                          left: `${(currentTime / videoDuration) * 100}%`,
+                          top: -4,
+                          width: 12,
+                          height: 12,
+                          borderRadius: "50%",
+                          background: "white",
+                          transform: "translateX(-6px)",
+                          boxShadow: "0 1px 4px rgba(0,0,0,0.3)",
+                          zIndex: 10,
+                        }}
+                      />
+                    </>
                   )}
 
                   {/* Streak range blocks from streakRanges prop */}
