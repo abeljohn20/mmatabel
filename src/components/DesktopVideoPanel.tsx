@@ -25,9 +25,11 @@ interface Props {
   data: VideoSheetData | null;
   videoSrc: string;
   onClose: () => void;
+  /** Called when the user navigates to a different instance index via prev/next/tick */
+  onIndexChange?: (index: number) => void;
 }
 
-export function DesktopVideoPanel({ data, videoSrc }: Props) {
+export function DesktopVideoPanel({ data, videoSrc, onIndexChange }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -90,16 +92,18 @@ export function DesktopVideoPanel({ data, videoSrc }: Props) {
     setCurrentIndex((i) => {
       const next = Math.max(0, i - 1);
       seekToIndex(next);
+      onIndexChange?.(next);
       return next;
     });
     setShowControls(true);
     if (isPlaying) startHideTimer();
-  }, [seekToIndex, isPlaying, startHideTimer]);
+  }, [seekToIndex, isPlaying, startHideTimer, onIndexChange]);
 
   const handleNext = useCallback(() => {
     setCurrentIndex((i) => {
       const next = Math.min(timestamps.length - 1, i + 1);
       seekToIndex(next);
+      onIndexChange?.(next);
       return next;
     });
     setShowControls(true);
@@ -239,7 +243,7 @@ export function DesktopVideoPanel({ data, videoSrc }: Props) {
 
             {/* Instance ticks */}
             {!hasStreakRanges && timestamps.map((ts, i) => (
-              <div key={i} onClick={(e) => { e.stopPropagation(); setCurrentIndex(i); seekToIndex(i); }}
+              <div key={i} onClick={(e) => { e.stopPropagation(); setCurrentIndex(i); seekToIndex(i); onIndexChange?.(i); }}
                 style={{ position: "absolute", left: `${(ts / duration) * 100}%`, top: -5, width: 4, height: 14, background: i === currentIndex ? "#ec5e26" : "rgba(255,255,255,0.6)", borderRadius: 15, transform: "translateX(-2px)", cursor: "pointer", zIndex: i === currentIndex ? 3 : 1 }} />
             ))}
 

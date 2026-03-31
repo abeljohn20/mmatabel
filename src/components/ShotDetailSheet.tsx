@@ -133,6 +133,12 @@ interface ShotDetailSheetProps {
   hasHeight?: boolean; // whether this shot type has height data (lifts/clears only)
   narrative?: string;
   hideVideo?: boolean;
+  /** Called when filters change — sends filtered video timestamps to parent for desktop video sync */
+  onFilteredTimestampsChange?: (timestamps: number[]) => void;
+  /** Called when current shot index changes (for desktop sync) */
+  onShotIndexChange?: (index: number) => void;
+  /** External shot index override (from desktop video panel navigation) */
+  externalShotIndex?: number;
 }
 
 /* ─── Filter options ─── */
@@ -262,6 +268,9 @@ export function ShotDetailSheet({
   hasHeight = false,
   narrative,
   hideVideo = false,
+  onFilteredTimestampsChange,
+  onShotIndexChange,
+  externalShotIndex,
 }: ShotDetailSheetProps) {
   const [accuracyFilter, setAccuracyFilter] = useState<AccuracyFilter>("all");
   const [lengthFilter, setLengthFilter] = useState<LengthFilter>("all");
@@ -331,13 +340,39 @@ export function ShotDetailSheet({
     return true;
   });
 
+  // Sync external shot index from desktop video panel
+  useEffect(() => {
+    if (externalShotIndex != null && externalShotIndex !== currentShotIndex && externalShotIndex < filteredShots.length) {
+      setCurrentShotIndex(externalShotIndex);
+    }
+  }, [externalShotIndex]);
+
+  // Sync filtered timestamps to desktop video panel
+  useEffect(() => {
+    if (onFilteredTimestampsChange && isOpen) {
+      const ts = filteredShots
+        .map((s) => s.videoTime)
+        .filter((t): t is number => t != null && t > 0)
+        .sort((a, b) => a - b);
+      onFilteredTimestampsChange(ts);
+    }
+  }, [filteredShots.length, accuracyFilter, lengthFilter, heightFilter, isOpen, onFilteredTimestampsChange]);
+
   const handlePrev = useCallback(() => {
-    setCurrentShotIndex((i) => Math.max(0, i - 1));
-  }, []);
+    setCurrentShotIndex((i) => {
+      const next = Math.max(0, i - 1);
+      onShotIndexChange?.(next);
+      return next;
+    });
+  }, [onShotIndexChange]);
 
   const handleNext = useCallback(() => {
-    setCurrentShotIndex((i) => Math.min(filteredShots.length - 1, i + 1));
-  }, [filteredShots.length]);
+    setCurrentShotIndex((i) => {
+      const next = Math.min(filteredShots.length - 1, i + 1);
+      onShotIndexChange?.(next);
+      return next;
+    });
+  }, [filteredShots.length, onShotIndexChange]);
 
   if (!rendered) return null;
 
@@ -860,6 +895,7 @@ export function ShotDetailSheet({
                         key={i}
                         onClick={() => {
                           setCurrentShotIndex(i);
+                          onShotIndexChange?.(i);
                           const t = shot.videoTime;
                           if (videoRef.current && t != null) videoRef.current.currentTime = t;
                         }}

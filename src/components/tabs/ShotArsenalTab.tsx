@@ -72,7 +72,7 @@ function StadiumBg() {
 
 /* ─── Main component ─── */
 
-export function ShotArsenalTab({ analysisView = "your", onOpenVideo }: { analysisView?: "your" | "opponent"; onOpenVideo?: (data: VideoSheetData) => void } = {}) {
+export function ShotArsenalTab({ analysisView = "your", onOpenVideo, externalShotIndex }: { analysisView?: "your" | "opponent"; onOpenVideo?: (data: VideoSheetData) => void; externalShotIndex?: number } = {}) {
   const isDesktop = useIsDesktop();
   const [arsenalData, setArsenalData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -82,6 +82,8 @@ export function ShotArsenalTab({ analysisView = "your", onOpenVideo }: { analysi
     count: number;
     eff: number;
   } | null>(null);
+  const [desktopShotIndex, setDesktopShotIndex] = useState(0);
+  const [filteredTimestamps, setFilteredTimestamps] = useState<number[]>([]);
   const [camY, setCamY] = useState(0);   // up/down offset
   const [camZ, setCamZ] = useState(0);   // front/back offset
 
@@ -400,6 +402,30 @@ export function ShotArsenalTab({ analysisView = "your", onOpenVideo }: { analysi
         hasHeight={hasHeight}
         narrative={headline}
         hideVideo={isDesktop}
+        onFilteredTimestampsChange={isDesktop && onOpenVideo && selectedShot ? (timestamps) => {
+          setFilteredTimestamps(timestamps);
+          onOpenVideo({
+            title: selectedShot.name,
+            subtitle: `${selectedShot.eff}% Eff.`,
+            description: `${timestamps.length} instances`,
+            timestamps,
+            sectionLabel: "SHOT ARSENAL",
+          });
+        } : undefined}
+        onShotIndexChange={isDesktop ? (index) => {
+          setDesktopShotIndex(index);
+          // Seek the desktop video panel to this shot's timestamp
+          if (onOpenVideo && selectedShot && filteredTimestamps[index] != null) {
+            onOpenVideo({
+              title: selectedShot.name,
+              subtitle: `${selectedShot.eff}% Eff.`,
+              description: `${filteredTimestamps.length} instances`,
+              timestamps: filteredTimestamps,
+              sectionLabel: "SHOT ARSENAL",
+            });
+          }
+        } : undefined}
+        externalShotIndex={isDesktop ? (externalShotIndex ?? desktopShotIndex) : undefined}
       />
     </div>
   );

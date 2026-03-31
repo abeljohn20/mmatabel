@@ -82,6 +82,8 @@ export default function Home() {
 
   // Desktop-only video data (updates left panel without opening bottom sheet)
   const [desktopVideo, setDesktopVideo] = useState<VideoSheetData | null>(null);
+  // Sync shot index between desktop video panel and ShotDetailSheet
+  const [videoShotIndex, setVideoShotIndex] = useState(0);
 
   function openVideoSheet(data: VideoSheetData) {
     setVideoSheet(data);
@@ -243,7 +245,7 @@ export default function Home() {
           <div style={{ padding: 40, textAlign: "center", color: "#999" }}>Loading…</div>
         ) : (
           <>
-            {activeTab === "arsenal" && <ShotArsenalTab analysisView={analysisView} onOpenVideo={isDesktop ? updateDesktopVideo : undefined} />}
+            {activeTab === "arsenal" && <ShotArsenalTab analysisView={analysisView} onOpenVideo={isDesktop ? updateDesktopVideo : undefined} externalShotIndex={isDesktop ? videoShotIndex : undefined} />}
             {activeTab !== "arsenal" && (
               <SectionNavigator sections={currentSections} contentRef={contentRef}>
                 {activeTab === "opening" && <OpeningPhaseTab analysisView={analysisView} onOpenVideo={openVideoSheet} />}
@@ -298,6 +300,7 @@ export default function Home() {
             data={desktopVideo ?? videoSheet}
             videoSrc="/match-video.mp4"
             onClose={() => { setDesktopVideo(null); setVideoSheet(null); }}
+            onIndexChange={setVideoShotIndex}
           />
         </div>
 
