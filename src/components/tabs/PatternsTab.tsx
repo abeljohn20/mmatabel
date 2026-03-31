@@ -13,7 +13,7 @@ function TimelineSection({ color, icon, label, children, isLast = false }: {
   const lineColor = color === "orange" ? "#ff7441" : color === "green" ? "#23a62a" : "#eb3030";
   const labelColor = color === "orange" ? "var(--brand-orange, #fa642d)" : color === "green" ? "#23a62a" : "#eb3030";
   return (
-    <div className="flex flex-col items-start w-full">
+    <div className="flex flex-col items-start w-full" data-section-id={label}>
       <div className="flex gap-3 items-start w-full">
         <div className="flex flex-col items-center justify-between self-stretch shrink-0">
           <Image src={icon} alt="" width={24} height={24} />
@@ -140,33 +140,60 @@ function ShotTile({ name, effLabel, count, buttonLabel, onView }: {
   );
 }
 
-/* ─── Predictable Pattern Card ─── */
+/* ─── Predictable Pattern Card (matches Figma) ─── */
 function PredictablePatternCard({ effLabel, effColor, oppAction, yourAction, count, buttonLabel, onView }: {
   effLabel: string; effColor: string; oppAction: string; yourAction: string; count: string; buttonLabel: string; onView?: () => void;
 }) {
+  // Parse count like "8/12" or "17/26" for progress bar
+  const countParts = count.match(/(\d+)\s*\/\s*(\d+)/);
+  const numerator = countParts ? parseInt(countParts[1]) : 0;
+  const denominator = countParts ? parseInt(countParts[2]) : 1;
+  const progressPct = denominator > 0 ? (numerator / denominator) * 100 : 0;
+
   return (
-    <div className="bg-[var(--bg-elv-1,#fafafa)] border border-[var(--stroke-st-elv1,#f5f5f5)] flex flex-col gap-3 p-2 rounded-lg w-full">
-      <div className="flex items-center justify-between w-full">
-        <span className="text-base font-semibold tracking-[-0.4px]" style={{ color: effColor, fontFamily: "var(--font-dm-sans)" }}>{effLabel}</span>
+    <div style={{
+      background: "var(--bg-elv-1, #fafafa)",
+      border: "1px solid var(--stroke-st-elv1, #f5f5f5)",
+      borderRadius: 12,
+      padding: "16px",
+      width: "100%",
+      display: "flex",
+      flexDirection: "column",
+      gap: 12,
+    }}>
+      {/* Effectiveness label */}
+      <span style={{ fontSize: 22, fontWeight: 600, letterSpacing: "-0.5px", color: effColor, lineHeight: 1.2 }}>
+        {effLabel}
+      </span>
+
+      {/* Opp action → */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <span style={{
+          background: "#fcd4d9", color: "#a22618", fontSize: 12, fontWeight: 400,
+          padding: "2px 10px", borderRadius: 4, lineHeight: 1.6,
+        }}>Opp</span>
+        <span style={{ fontSize: 14, fontWeight: 500, color: "#383838" }}>{oppAction}</span>
+        <span style={{ fontSize: 14, color: "#383838" }}>→</span>
       </div>
-      <div className="flex flex-col gap-2 w-full">
-        <div className="flex items-center gap-2">
-          <div className="bg-[#fcd4d9] flex items-center justify-center px-2 rounded">
-            <span className="text-xs font-normal text-[#a22618] leading-[1.6]" style={{ fontFamily: "var(--font-dm-sans)" }}>Opp</span>
-          </div>
-          <span className="text-xs font-medium text-[#383838]" style={{ fontFamily: "var(--font-dm-sans)" }}>{oppAction}</span>
-          <span className="text-xs font-medium text-[#383838]">→</span>
+
+      {/* You action */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <span style={{
+          background: "#dee5ff", color: "#6141ef", fontSize: 12, fontWeight: 400,
+          padding: "2px 10px", borderRadius: 4, lineHeight: 1.6,
+        }}>You</span>
+        <span style={{ fontSize: 14, fontWeight: 500, color: "#383838" }}>{yourAction}</span>
+      </div>
+
+      {/* Progress bar + count */}
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div style={{ flex: 1, height: 4, background: "#e0e0e0", borderRadius: 2, overflow: "hidden" }}>
+          <div style={{ width: `${progressPct}%`, height: "100%", background: "#e53e3e", borderRadius: 2 }} />
         </div>
-        <div className="flex items-center gap-2">
-          <div className="bg-[#dee5ff] flex items-center justify-center px-2 rounded">
-            <span className="text-xs font-normal text-[#6141ef] leading-[1.6]" style={{ fontFamily: "var(--font-dm-sans)" }}>You</span>
-          </div>
-          <span className="text-xs font-medium text-[#383838]" style={{ fontFamily: "var(--font-dm-sans)" }}>{yourAction}</span>
-        </div>
+        <span style={{ fontSize: 13, fontWeight: 400, color: "#868686", whiteSpace: "nowrap" }}>{count}</span>
       </div>
-      <div className="flex items-center justify-between w-full">
-        <span className="text-xs font-normal text-[#868686]" style={{ fontFamily: "var(--font-dm-sans)" }}>{count}</span>
-      </div>
+
+      {/* View button */}
       <ViewButton label={buttonLabel} onClick={onView} />
     </div>
   );
@@ -325,7 +352,7 @@ export function PatternsTab({ analysisView = "your", onOpenVideo, narrative }: P
                       <div className="flex flex-wrap gap-3 w-full">
                         {g.shots.map((s: any, si: number) => (
                           <ShotTile key={si} name={s.name} effLabel={s.eff_label || ""} count={s.count} buttonLabel={s.button_label}
-                            onView={() => open({ title: s.name, subtitle: s.eff_label || s.count, timestamps: s.timestamps_seconds || [], sectionLabel: "TEMPO CONTROL" })} />
+                            onView={() => open({ title: s.name, subtitle: s.eff_label || s.count, count: s.count, timestamps: s.timestamps_seconds || [], sectionLabel: "TEMPO CONTROL" })} />
                         ))}
                       </div>
                     </div>
@@ -359,22 +386,17 @@ export function PatternsTab({ analysisView = "your", onOpenVideo, narrative }: P
               {pred.cards.map((c: any, i: number) => {
                 const eff = c.effectiveness || 0;
                 const effColor = eff >= 65 ? "#2dc535" : eff >= 45 ? "#f59e0b" : "#ff4e64";
-                // Build steps from ALL patterns for the bottom sheet
-                const allPatternSteps = pred.cards.map((pc: any) => {
-                  const pcEff = pc.effectiveness || 0;
-                  const pcColor = pcEff >= 65 ? "#2dc535" : pcEff >= 45 ? "#f59e0b" : "#ff4e64";
-                  return [
-                    { who: "Opp" as const, action: pc.opp_action },
-                    { who: "You" as const, action: pc.your_action, effLabel: pc.eff_label, effColor: pcColor },
-                  ];
-                }).flat();
+                const thisPatternSteps = [
+                  { who: "Opp" as const, action: c.opp_action },
+                  { who: "You" as const, action: c.your_action, effLabel: c.eff_label, effColor },
+                ];
                 return (
                   <PredictablePatternCard key={i} effLabel={c.eff_label} effColor={effColor}
                     oppAction={c.opp_action} yourAction={c.your_action} count={c.count_label} buttonLabel={c.button_label}
                     onView={() => open({ title: `${c.opp_action} → ${c.your_action}`, subtitle: c.eff_label,
                       description: pred.insight_text?.startsWith("[narrative") ? "Predictability patterns" : pred.insight_text,
                       timestamps: c.timestamps_seconds || [], sectionLabel: "PREDICTABLE PATTERNS",
-                      count: c.count_label, steps: allPatternSteps })} />
+                      count: c.count_label, steps: thisPatternSteps })} />
                 );
               })}
 

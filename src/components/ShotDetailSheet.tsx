@@ -350,6 +350,7 @@ export function ShotDetailSheet({
     <>
       {/* Overlay */}
       <div
+        className="shot-detail-overlay"
         onClick={onClose}
         style={{
           position: "fixed",
@@ -363,95 +364,88 @@ export function ShotDetailSheet({
         aria-hidden="true"
       />
 
-      {/* Sheet */}
+      {/* Container: close button + sheet */}
       <div
+        className="shot-detail-container"
         style={{
           position: "fixed",
           left: 0,
           right: 0,
           bottom: 0,
-          top: 0,
           zIndex: 999,
-          background: "#ffffff",
-          borderRadius: "16px 16px 0 0",
-          transform: visible ? "translateY(0)" : "translateY(100%)",
-          transition: "transform 0.35s cubic-bezier(0.32, 0.72, 0, 1)",
           display: "flex",
           flexDirection: "column",
-          overflow: "hidden",
+          alignItems: "center",
+          gap: 12,
+          transform: visible ? "translateY(0)" : "translateY(100%)",
+          transition: "transform 0.35s cubic-bezier(0.32, 0.72, 0, 1)",
+          pointerEvents: "none",
         }}
         role="dialog"
         aria-modal="true"
         aria-label={`${shotName} shot details`}
       >
-        {/* ─── Header ─── */}
-        <div
+        {/* Floating close button */}
+        <button
+          onClick={onClose}
           style={{
+            width: 40,
+            height: 40,
+            borderRadius: 99999,
+            background: "rgba(255,255,255,0.56)",
+            border: "none",
+            cursor: "pointer",
             display: "flex",
             alignItems: "center",
-            padding: "16px 16px 12px",
-            gap: 12,
-            borderBottom: "1px solid #f0f0f0",
+            justifyContent: "center",
             flexShrink: 0,
+            pointerEvents: "auto",
           }}
+          aria-label="Close"
         >
-          <button
-            onClick={onClose}
-            style={{
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              fontSize: 24,
-              lineHeight: 1,
-              color: "#333",
-              padding: "4px 8px 4px 0",
-              fontWeight: 300,
-            }}
-            aria-label="Close shot details"
-          >
-            &#8249;
-          </button>
-          <div style={{ flex: 1 }}>
-            <span
-              style={{
-                fontSize: 18,
-                fontWeight: 600,
-                color: "#161616",
-                letterSpacing: "-0.3px",
-              }}
-            >
-              {shotName}
-            </span>
-          </div>
-          <span
-            style={{
-              fontSize: 16,
-              fontWeight: 700,
-              color: "#888",
-              letterSpacing: "-0.3px",
-            }}
-          >
-            {shotCount}X
-          </span>
-        </div>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#666" strokeWidth="2" strokeLinecap="round">
+            <line x1="5" y1="5" x2="15" y2="15" />
+            <line x1="15" y1="5" x2="5" y2="15" />
+          </svg>
+        </button>
 
-        {/* ─── Scrollable content ─── */}
+        {/* Sheet */}
         <div
-          ref={scrollRef}
           style={{
-            flex: 1,
-            overflowY: "auto",
-            overflowX: "hidden",
-            WebkitOverflowScrolling: "touch",
-            padding: "0 12px 32px",
+            width: "100%",
+            height: "90dvh",
+            background: "var(--bg-elv-1, #fafafa)",
+            borderRadius: "20px 20px 0 0",
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden",
+            pointerEvents: "auto",
           }}
         >
-          {/* ─── Video player — full width, no radius, sticky ─── */}
+        {/* ─── Fixed top: Header + Video ─── */}
+        <div style={{ flexShrink: 0 }}>
+          {/* Section label header */}
           <div
             style={{
-              marginTop: 0,
-              marginLeft: -16,
-              marginRight: -16,
+              padding: "16px 12px 0",
+              display: "flex",
+              alignItems: "center",
+              gap: 12,
+            }}
+          >
+            <span style={{ fontSize: 16, fontWeight: 600, color: "#282520", letterSpacing: "-0.3px" }}>
+              {shotName}
+            </span>
+            <span style={{ fontSize: 14, fontWeight: 300, color: "#7d7971" }}>
+              {shotCount}X
+            </span>
+            <div style={{ flex: 1, height: 1, background: "var(--brand-orange, #fa642d)" }} />
+          </div>
+
+          {/* Video player (fixed at top) */}
+          <div
+            style={{
+              margin: "12px 0 0",
               background: "#1a1a1a",
               borderRadius: 0,
               overflow: "hidden",
@@ -551,6 +545,19 @@ export function ShotDetailSheet({
               {currentShotIndex + 1}/{filteredShots.length}
             </div>
           </div>
+        </div>{/* end fixed top */}
+
+        {/* ─── Scrollable content ─── */}
+        <div
+          ref={scrollRef}
+          style={{
+            flex: 1,
+            overflowY: "auto",
+            overflowX: "hidden",
+            WebkitOverflowScrolling: "touch",
+            padding: "0 12px 32px",
+          }}
+        >
 
           {/* ─── Narrative ─── */}
           {narrative && (
@@ -566,7 +573,7 @@ export function ShotDetailSheet({
               }}
               data-narrative
             >
-              {"<narrative> "}{narrative}
+              {narrative}
             </p>
           )}
 
@@ -888,7 +895,8 @@ export function ShotDetailSheet({
 
           {/* filters moved above court */}
         </div>
-      </div>
+      </div>{/* end sheet */}
+      </div>{/* end container */}
     </>
   );
 }

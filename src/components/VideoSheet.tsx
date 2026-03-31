@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import Image from "next/image";
 
 /* ─── Types ─── */
@@ -17,6 +17,8 @@ export interface VideoSheetStep {
   action: string;
   effLabel?: string;
   effColor?: string;
+  eff_label?: string;
+  eff_color?: string;
 }
 
 export interface VideoSheetData {
@@ -36,6 +38,8 @@ export interface VideoSheetData {
   badgeBg?: string;
   badgeBorder?: string;
   badgeColor?: string;
+  /** Multiple badges (e.g. Blueprint cards with 2 pills) */
+  badges?: { text: string; bg: string; border: string; color: string }[];
   /** Streak runs for rendering streak bar in bottom sheet */
   gameRuns?: { score: string; type: "player" | "opponent"; length: number; start_rally: number; start_ts?: number | null; end_ts?: number | null }[];
   gameTotalRallies?: number;
@@ -52,6 +56,8 @@ interface VideoSheetProps extends VideoSheetData {
   isOpen: boolean;
   onClose: () => void;
   videoSrc: string;
+  /** Hide the video player (desktop mode — video plays elsewhere) */
+  hideVideo?: boolean;
 }
 
 /* ─── Transport button ─── */
@@ -110,17 +116,29 @@ export function VideoSheet({
   badgeBg,
   badgeBorder,
   badgeColor,
+  badges,
   betterOption,
   betterEff,
   betterEffColor,
   shotEff,
   shotEffColor,
   diffLabel,
+  hideVideo,
 }: VideoSheetProps) {
   const [visible, setVisible] = useState(false);
   const [rendered, setRendered] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedRunIdx, setSelectedRunIdx] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [showControls, setShowControls] = useState(true);
+  const controlsTimer = useRef<NodeJS.Timeout | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Build sorted runs for streak navigation
+  const sortedRuns = useMemo(() => {
+    if (!gameRuns || gameRuns.length === 0) return [];
+    return [...gameRuns].sort((a, b) => a.start_rally - b.start_rally);
+  }, [gameRuns]);
 
   useEffect(() => {
     if (isOpen) {
@@ -136,46 +154,116 @@ export function VideoSheet({
   }, [isOpen]);
 
   useEffect(() => {
-    if (isOpen) setCurrentIndex(0);
-  }, [isOpen, title]);
+    if (isOpen) {
+      setCurrentIndex(0);
+      setIsPlaying(false);
+      setShowControls(true);
+      if (controlsTimer.current) clearTimeout(controlsTimer.current);
+      // Find which run matches the title to highlight it
+      if (sortedRuns.length > 0 && title) {
+        const idx = sortedRuns.findIndex(r => title.includes(r.type === "player" ? "Your" : "Opponent") && title.includes(r.score));
+        setSelectedRunIdx(idx >= 0 ? idx : 0);
+      } else {
+        setSelectedRunIdx(0);
+      }
+    }
+  }, [isOpen, title, sortedRuns]);
 
   const seekTo = useCallback(
     (index: number) => {
       if (videoRef.current && timestamps[index] != null) {
-        videoRef.current.currentTime = timestamps[index];
+        // 1-second padding before the instance
+        videoRef.current.currentTime = Math.max(0, timestamps[index] - 1);
       }
     },
     [timestamps]
   );
 
   const handlePrev = useCallback(() => {
-    setCurrentIndex((i) => {
-      const next = Math.max(0, i - 1);
-      if (videoRef.current && timestamps[next] != null)
-        videoRef.current.currentTime = timestamps[next];
-      return next;
-    });
-  }, [timestamps]);
+    if (sortedRuns.length > 0) {
+      // Navigate between streaks
+      setSelectedRunIdx((i) => {
+        const next = Math.max(0, i - 1);
+        const run = sortedRuns[next];
+        if (run && videoRef.current) {
+          const ts = run.start_ts ?? run.end_ts;
+          if (ts != null) videoRef.current.currentTime = Math.max(0, ts - 1);
+        }
+        return next;
+      });
+    } else {
+      setCurrentIndex((i) => {
+        const next = Math.max(0, i - 1);
+        if (videoRef.current && timestamps[next] != null)
+          videoRef.current.currentTime = Math.max(0, timestamps[next] - 1);
+        return next;
+      });
+    }
+  }, [timestamps, sortedRuns]);
 
   const handleNext = useCallback(() => {
-    setCurrentIndex((i) => {
-      const next = Math.min(timestamps.length - 1, i + 1);
-      if (videoRef.current && timestamps[next] != null)
-        videoRef.current.currentTime = timestamps[next];
-      return next;
-    });
-  }, [timestamps]);
+    if (sortedRuns.length > 0) {
+      // Navigate between streaks
+      setSelectedRunIdx((i) => {
+        const next = Math.min(sortedRuns.length - 1, i + 1);
+        const run = sortedRuns[next];
+        if (run && videoRef.current) {
+          const ts = run.start_ts ?? run.end_ts;
+          if (ts != null) videoRef.current.currentTime = Math.max(0, ts - 1);
+        }
+        return next;
+      });
+    } else {
+      setCurrentIndex((i) => {
+        const next = Math.min(timestamps.length - 1, i + 1);
+        if (videoRef.current && timestamps[next] != null)
+          videoRef.current.currentTime = Math.max(0, timestamps[next] - 1);
+        return next;
+      });
+    }
+  }, [timestamps, sortedRuns]);
+
+  const hideControlsAfterDelay = useCallback(() => {
+    if (controlsTimer.current) clearTimeout(controlsTimer.current);
+    controlsTimer.current = setTimeout(() => {
+      if (videoRef.current && !videoRef.current.paused) setShowControls(false);
+    }, 2000);
+  }, []);
 
   const handlePlayPause = useCallback(() => {
     if (videoRef.current) {
-      if (videoRef.current.paused) videoRef.current.play();
-      else videoRef.current.pause();
+      if (videoRef.current.paused) {
+        videoRef.current.play();
+        setIsPlaying(true);
+        hideControlsAfterDelay();
+      } else {
+        videoRef.current.pause();
+        setIsPlaying(false);
+        setShowControls(true);
+        if (controlsTimer.current) clearTimeout(controlsTimer.current);
+      }
     }
-  }, []);
+  }, [hideControlsAfterDelay]);
+
+  const handleVideoTap = useCallback(() => {
+    setShowControls(true);
+    if (isPlaying) hideControlsAfterDelay();
+  }, [isPlaying, hideControlsAfterDelay]);
+
+  const hasStreakRanges = streakRanges && streakRanges.length > 0;
+  const hasGameRuns = sortedRuns.length > 0;
+  // Build timeline ranges from gameRuns for the video progress bar
+  const gameRunRanges = useMemo(() => {
+    if (!hasGameRuns) return [];
+    return sortedRuns.map(run => ({
+      start_ts: run.start_ts ?? 0,
+      end_ts: run.end_ts ?? (run.start_ts ?? 0) + 30,
+      type: run.type,
+    }));
+  }, [hasGameRuns, sortedRuns]);
 
   if (!rendered) return null;
 
-  const hasStreakRanges = streakRanges && streakRanges.length > 0;
   const videoDuration = videoRef.current?.duration || 2377;
 
   const subtitleColor = (() => {
@@ -191,6 +279,7 @@ export function VideoSheet({
     <>
       {/* Overlay */}
       <div
+        className={hideVideo ? "video-sheet-overlay" : ""}
         onClick={onClose}
         style={{
           position: "fixed",
@@ -206,6 +295,7 @@ export function VideoSheet({
 
       {/* Container: close button + sheet */}
       <div
+        className={hideVideo ? "video-sheet-container" : ""}
         style={{
           position: "fixed",
           left: 0,
@@ -290,8 +380,8 @@ export function VideoSheet({
             <div style={{ flex: 1, height: 1, background: "var(--brand-orange, #fa642d)" }} />
           </div>
 
-            {/* Video player (fixed) */}
-            <div
+            {/* Video player (fixed) — hidden on desktop when hideVideo=true */}
+            {!hideVideo && <div
               style={{
                 background: "#363636",
                 overflow: "hidden",
@@ -300,16 +390,21 @@ export function VideoSheet({
                 margin: "12px 0 0",
               }}
             >
+              {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
               <video
                 ref={videoRef}
                 src={videoSrc}
                 playsInline
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                onClick={handleVideoTap}
+                onPlay={() => { setIsPlaying(true); hideControlsAfterDelay(); }}
+                onPause={() => { setIsPlaying(false); setShowControls(true); }}
+                style={{ width: "100%", height: "100%", objectFit: "cover", cursor: "pointer" }}
                 onLoadedMetadata={() => seekTo(0)}
               />
 
-              {/* Transport controls */}
+              {/* Transport controls — auto-hide when playing */}
               <div
+                onClick={handleVideoTap}
                 style={{
                   position: "absolute",
                   top: "50%",
@@ -320,6 +415,9 @@ export function VideoSheet({
                   alignItems: "center",
                   justifyContent: "center",
                   gap: 18,
+                  opacity: showControls ? 1 : 0,
+                  transition: "opacity 0.3s ease",
+                  pointerEvents: showControls ? "auto" : "none",
                 }}
               >
                 <TransportButton onClick={handlePrev} label="Previous instance" size={36}>
@@ -363,8 +461,8 @@ export function VideoSheet({
                     overflow: "visible",
                   }}
                 >
-                  {/* Progress fill */}
-                  {!hasStreakRanges && (
+                  {/* Progress fill (when no streaks) */}
+                  {!hasStreakRanges && !hasGameRuns && (
                     <div
                       style={{
                         position: "absolute",
@@ -378,36 +476,44 @@ export function VideoSheet({
                     />
                   )}
 
-                  {/* Streak range blocks on the timeline */}
+                  {/* Streak range blocks from streakRanges prop */}
                   {hasStreakRanges && streakRanges.map((range, i) => {
                     const leftPct = (range.start / videoDuration) * 100;
                     const widthPct = ((range.end - range.start) / videoDuration) * 100;
                     const isPlayer = range.type === "player";
                     const color = isPlayer ? "#3e95f3" : "#f5364d";
-
                     return (
-                      <div
-                        key={i}
-                        onClick={() => {
-                          // Find the closest timestamp within this range
-                          const closest = timestamps.reduce((best, ts, idx) =>
-                            ts >= range.start && ts <= range.end ? idx : best, 0
-                          );
-                          setCurrentIndex(closest);
-                          if (videoRef.current) videoRef.current.currentTime = range.start;
-                        }}
-                        style={{
-                          position: "absolute",
-                          left: `${leftPct}%`,
-                          top: -3,
-                          width: `${Math.max(widthPct, 2)}%`,
-                          height: 10,
-                          background: color,
-                          borderRadius: 15,
-                          cursor: "pointer",
-                          zIndex: 2,
-                        }}
-                      />
+                      <div key={i} onClick={() => {
+                        const closest = timestamps.reduce((best, ts, idx) => ts >= range.start && ts <= range.end ? idx : best, 0);
+                        setCurrentIndex(closest);
+                        if (videoRef.current) videoRef.current.currentTime = range.start;
+                      }} style={{
+                        position: "absolute", left: `${leftPct}%`, top: -3,
+                        width: `${Math.max(widthPct, 2)}%`, height: 10,
+                        background: color, borderRadius: 15, cursor: "pointer", zIndex: 2,
+                      }} />
+                    );
+                  })}
+
+                  {/* Streak range blocks from gameRuns */}
+                  {hasGameRuns && !hasStreakRanges && gameRunRanges.map((range, i) => {
+                    const leftPct = (range.start_ts / videoDuration) * 100;
+                    const widthPct = ((range.end_ts - range.start_ts) / videoDuration) * 100;
+                    const isPlayer = range.type === "player";
+                    const color = isPlayer ? "#3e95f3" : "#f5364d";
+                    const isSelected = i === selectedRunIdx;
+                    return (
+                      <div key={i} onClick={() => {
+                        setSelectedRunIdx(i);
+                        if (videoRef.current) videoRef.current.currentTime = range.start_ts;
+                      }} style={{
+                        position: "absolute", left: `${leftPct}%`, top: -4,
+                        width: `${Math.max(widthPct, 2)}%`, height: 12,
+                        background: color, borderRadius: 15, cursor: "pointer",
+                        zIndex: isSelected ? 3 : 2,
+                        opacity: isSelected ? 1 : 0.7,
+                        boxShadow: isSelected ? `0 0 0 2px white` : "none",
+                      }} />
                     );
                   })}
                 </div>
@@ -465,9 +571,9 @@ export function VideoSheet({
                   borderRadius: 10,
                 }}
               >
-                {currentIndex + 1}/{timestamps.length}
+                {hasGameRuns ? `${selectedRunIdx + 1}/${sortedRuns.length}` : `${currentIndex + 1}/${timestamps.length}`}
               </div>
-            </div>
+            </div>}
           </div>{/* end fixed top */}
 
           {/* ─── SCROLLABLE CONTENT ─── */}
@@ -480,14 +586,35 @@ export function VideoSheet({
               paddingBottom: 32,
             }}
           >
-            {/* Title + subtitle row */}
+            {/* Content — same order as cards: badges → title → description → steps → comparison */}
             <div style={{ padding: "20px 16px 0" }}>
+              {/* Badges (multiple) — rendered BEFORE title, matching card layout */}
+              {badges && badges.length > 0 && (
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 8 }}>
+                  {badges.map((b, i) => (
+                    <div key={i} style={{ display: "inline-flex", alignItems: "center", padding: "2px 8px", borderRadius: 4, backgroundColor: b.bg, border: `1px solid ${b.border}` }}>
+                      <span style={{ fontSize: 12, fontWeight: 500, color: b.color, fontFamily: "var(--font-dm-sans)" }}>{b.text}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Single badge — rendered BEFORE title */}
+              {!badges && badge && (
+                <div style={{ display: "flex", alignItems: "center", marginBottom: 8 }}>
+                  <div style={{ display: "inline-flex", alignItems: "center", padding: "2px 8px", borderRadius: 4, backgroundColor: badgeBg || "rgba(117,235,62,0.19)", border: `1px solid ${badgeBorder || "#bdf6c0"}` }}>
+                    <span style={{ fontSize: 12, fontWeight: 500, color: badgeColor || "#359707", fontFamily: "var(--font-dm-sans)" }}>{badge}</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Title + subtitle + count */}
               <div
                 style={{
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  gap: 8,
+                  alignItems: "baseline",
+                  flexWrap: "wrap",
+                  gap: "4px 8px",
                 }}
               >
                 <span
@@ -519,12 +646,13 @@ export function VideoSheet({
                 )}
                 {count && (
                   <>
-                    <span style={{ fontSize: 12, color: "#868686", margin: "0 4px" }}>•</span>
+                    <span style={{ fontSize: 12, color: "#868686", margin: "0 2px" }}>•</span>
                     <span style={{ fontSize: 14, color: "#868686", fontFamily: "var(--font-dm-sans)" }}>{count}</span>
                   </>
                 )}
               </div>
 
+              {/* Description */}
               {description && (
                 <p
                   style={{
@@ -539,25 +667,26 @@ export function VideoSheet({
                 </p>
               )}
 
-              {/* Sequence steps */}
+              {/* Sequence steps — horizontal flow with arrows, matching card layout */}
               {steps && steps.length > 0 && (
-                <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 12 }}>
+                <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "4px 8px", marginTop: 12 }}>
                   {steps.map((step, i) => {
                     const isYou = step.who === "You";
+                    const eff = step.effLabel || step.eff_label || "";
+                    const effColor = step.effColor || step.eff_color || "#868686";
                     return (
-                      <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                          <div style={{
-                            display: "flex", alignItems: "center", justifyContent: "center",
-                            padding: "0 8px", borderRadius: 4,
-                            backgroundColor: isYou ? "#dee5ff" : "#fcd4d9",
-                          }}>
-                            <span style={{ fontSize: 12, lineHeight: 1.6, color: isYou ? "#6141ef" : "#a22618", fontFamily: "var(--font-dm-sans)" }}>{step.who}</span>
-                          </div>
-                          <span style={{ fontSize: 12, color: "#000", fontFamily: "var(--font-dm-sans)" }}>{step.action}</span>
+                      <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                        {i > 0 && <span style={{ fontSize: 12, fontWeight: 500, color: "#383838" }}>→</span>}
+                        <div style={{
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          padding: "0 8px", borderRadius: 4,
+                          backgroundColor: isYou ? "#dee5ff" : "#fcd4d9",
+                        }}>
+                          <span style={{ fontSize: 12, lineHeight: 1.6, color: isYou ? "#6141ef" : "#a22618", fontFamily: "var(--font-dm-sans)" }}>{step.who}</span>
                         </div>
-                        {step.effLabel && (
-                          <span style={{ fontSize: 12, fontWeight: 600, color: step.effColor || "#868686", fontFamily: "var(--font-dm-sans)" }}>{step.effLabel}</span>
+                        <span style={{ fontSize: 12, fontWeight: 500, color: "#383838", fontFamily: "var(--font-dm-sans)" }}>{step.action}</span>
+                        {eff && eff !== "" && (
+                          <span style={{ fontSize: 12, fontWeight: 600, color: effColor, fontFamily: "var(--font-dm-sans)" }}>{eff}</span>
                         )}
                       </div>
                     );
@@ -586,14 +715,6 @@ export function VideoSheet({
                 </div>
               )}
 
-              {/* Badge */}
-              {badge && (
-                <div style={{ display: "flex", alignItems: "center", marginTop: 8 }}>
-                  <div style={{ display: "inline-flex", alignItems: "center", padding: "2px 8px", borderRadius: 4, backgroundColor: badgeBg || "rgba(117,235,62,0.19)", border: `1px solid ${badgeBorder || "#bdf6c0"}` }}>
-                    <span style={{ fontSize: 12, fontWeight: 500, color: badgeColor || "#359707", fontFamily: "var(--font-dm-sans)" }}>{badge}</span>
-                  </div>
-                </div>
-              )}
 
               {/* Streak bar */}
               {gameRuns && gameRuns.length > 0 && (() => {
@@ -610,6 +731,9 @@ export function VideoSheet({
                 const trail = total - cur;
                 if (trail > 0) segs.push({ type: "gap", flex: trail });
 
+                // Find which run index in sorted array corresponds to selectedRunIdx
+                let runCounter = 0;
+
                 return (
                   <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 16 }}>
                     <div style={{ display: "flex", alignItems: "center", padding: "0 8px" }}>
@@ -617,7 +741,7 @@ export function VideoSheet({
                         <span style={{ fontSize: 12, color: "#2990fd", fontFamily: "var(--font-dm-sans)" }}>You</span>
                       </div>
                     </div>
-                    {/* Labels above */}
+                    {/* Player labels above */}
                     <div style={{ display: "flex", width: "100%", minHeight: 18 }}>
                       {segs.map((seg, i) => (
                         <div key={i} style={{ flex: seg.flex, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -627,23 +751,26 @@ export function VideoSheet({
                         </div>
                       ))}
                     </div>
-                    {/* Bar */}
+                    {/* Bar with highlight */}
                     <div style={{ display: "flex", width: "100%", borderRadius: 6, overflow: "hidden", backgroundColor: "#e8e8e8", height: 48 }}>
                       {segs.map((seg, i) => {
                         if (seg.type === "gap") return <div key={i} style={{ flex: seg.flex, backgroundColor: "#e8e8e8" }} />;
                         const isPlayer = seg.type === "player";
+                        const thisRunIdx = runCounter++;
+                        const isSelected = thisRunIdx === selectedRunIdx;
                         return (
                           <button key={i} type="button" onClick={() => {
+                            setSelectedRunIdx(thisRunIdx);
                             if (seg.run) {
-                              const ts = [seg.run.start_ts, seg.run.end_ts].filter(Boolean) as number[];
-                              if (ts.length > 0 && videoRef.current) {
-                                videoRef.current.currentTime = ts[0];
-                              }
+                              const ts = seg.run.start_ts ?? seg.run.end_ts;
+                              if (ts != null && videoRef.current) videoRef.current.currentTime = ts;
                             }
                           }} style={{
-                            flex: seg.flex, border: "none", borderRadius: 6, height: 48, cursor: "pointer",
+                            flex: seg.flex, border: isSelected ? "2px solid white" : "none", borderRadius: 6, height: 48, cursor: "pointer",
                             backgroundColor: isPlayer ? "#3e95f3" : "#f5364d",
+                            opacity: isSelected ? 1 : 0.5,
                             display: "flex", alignItems: "center", justifyContent: "center",
+                            transition: "opacity 0.2s, border 0.2s",
                           }}>
                             <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
                               <path d="M5.33 3.33L12 8L5.33 12.67V3.33Z" stroke="white" strokeWidth="1.5" strokeLinejoin="round" fill="none" />
@@ -652,7 +779,7 @@ export function VideoSheet({
                         );
                       })}
                     </div>
-                    {/* Labels below */}
+                    {/* Opponent labels below */}
                     <div style={{ display: "flex", width: "100%", minHeight: 18 }}>
                       {segs.map((seg, i) => (
                         <div key={i} style={{ flex: seg.flex, display: "flex", alignItems: "center", justifyContent: "center" }}>

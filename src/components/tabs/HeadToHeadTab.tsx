@@ -14,7 +14,7 @@ function TimelineSection({ color, icon, label, children, isLast = false }: {
   const lineColor = color === "orange" ? "#ff7441" : color === "green" ? "#23a62a" : "#eb3030";
   const labelColor = color === "orange" ? "var(--brand-orange, #fa642d)" : color === "green" ? "#23a62a" : "#eb3030";
   return (
-    <div className="flex flex-col items-start w-full">
+    <div className="flex flex-col items-start w-full" data-section-id={label}>
       <div className="flex gap-3 items-start w-full">
         <div className="flex flex-col items-center justify-between self-stretch shrink-0">
           <Image src={icon} alt="" width={24} height={24} />
@@ -156,8 +156,8 @@ function StyleCard({ label, styleName, styleKey, description }: {
       </div>
       <NarrativeText>{description}</NarrativeText>
       {illustration && (
-        <div className="absolute" style={{ right: 4, top: -20, width: 64, height: 67 }}>
-          <Image src={illustration} alt={styleKey} width={64} height={67} style={{ objectFit: "contain", width: 64, height: 67 }} />
+        <div className="absolute" style={{ right: -12, top: -32, width: 96, height: 100 }}>
+          <Image src={illustration} alt={styleKey} width={96} height={100} style={{ objectFit: "contain", width: 96, height: 100 }} />
         </div>
       )}
     </div>

@@ -5,7 +5,7 @@ export function NarrativeText({ children }: { children: React.ReactNode }) {
       style={{ fontFamily: "var(--font-dm-sans)" }}
       data-narrative
     >
-      {"<narrative> "}{children}
+      {children}
     </p>
   );
 }
@@ -17,7 +17,7 @@ export function Headline({ children }: { children: React.ReactNode }) {
       style={{ fontFamily: "var(--font-dm-sans)" }}
       data-narrative="headline"
     >
-      {"<headline> "}{children}
+      {children}
     </p>
   );
 }

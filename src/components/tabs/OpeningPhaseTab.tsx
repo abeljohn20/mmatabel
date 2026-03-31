@@ -30,7 +30,7 @@ function TimelineSection({
         : "#eb3030";
 
   return (
-    <div className="flex flex-col items-start w-full">
+    <div className="flex flex-col items-start w-full" data-section-id={label}>
       <div className="flex gap-3 items-start w-full">
         <div className="flex flex-col items-center justify-between self-stretch shrink-0">
           <Image src={icon} alt="" width={24} height={24} />
@@ -319,7 +319,7 @@ export function OpeningPhaseTab({ analysisView = "your", onOpenVideo }: Props) {
                   pct={row.pct}
                   count={row.count}
                   buttonLabel={row.button_label}
-                  onView={() => open({ title: row.label, subtitle: row.eff_label, description: `${row.label} pattern (${row.count})`, timestamps: row.timestamps_seconds || [], sectionLabel: "RECEIVE PREDICTABILITY" })}
+                  onView={() => open({ title: row.label, subtitle: row.eff_label, description: `${row.label} pattern (${row.count})`, count: row.count, timestamps: row.timestamps_seconds || [], sectionLabel: "RECEIVE PREDICTABILITY" })}
                 />
               ))}
             </div>

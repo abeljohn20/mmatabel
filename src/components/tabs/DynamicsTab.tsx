@@ -14,7 +14,7 @@ function TimelineSection({ color, icon, label, children, isLast = false }: {
   const lineColor = color === "orange" ? "#ff7441" : color === "green" ? "#23a62a" : "#eb3030";
   const labelColor = color === "orange" ? "var(--brand-orange, #fa642d)" : color === "green" ? "#23a62a" : "#eb3030";
   return (
-    <div className="flex flex-col items-start w-full">
+    <div className="flex flex-col items-start w-full" data-section-id={label}>
       <div className="flex gap-3 items-start w-full">
         <div className="flex flex-col items-center justify-between self-stretch shrink-0">
           <Image src={icon} alt="" width={24} height={24} />

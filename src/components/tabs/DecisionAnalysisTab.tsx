@@ -12,7 +12,7 @@ function TimelineSection({ label, children, isLast = false }: {
   label: string; children: React.ReactNode; isLast?: boolean;
 }) {
   return (
-    <div className="flex flex-col items-start w-full">
+    <div className="flex flex-col items-start w-full" data-section-id={label}>
       <div className="flex gap-3 items-start w-full">
         <div className="flex flex-col items-center justify-between self-stretch shrink-0">
           <Image src="/icons/timeline-orange.svg" alt="" width={24} height={24} />
@@ -198,7 +198,7 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
                   title="Opponent balanced approach in long rallies"
                   description="Your opponent was prone to unforced errors early in the game and after the mid-game interval, which created your scoring streaks."
                   buttonLabel="View Evidence"
-                  onView={() => open({ title: "Short Rally Blueprint", subtitle: "Balanced", timestamps: TS.slice(0,3), sectionLabel: "RALLY BLUEPRINT" })}
+                  onView={() => open({ title: "Short Rally Blueprint", subtitle: "Balanced", description: "Your opponent was prone to unforced errors early in the game and after the mid-game interval, which created your scoring streaks.", timestamps: TS.slice(0,3), sectionLabel: "RALLY BLUEPRINT", badges: [{ text: "Short Rallies", bg: "#fff6fe", border: "#d7b6d4", color: "#97078b" }, { text: "Balanced", bg: "rgba(117,235,62,0.19)", border: "#bdf6c0", color: "#359707" }] })}
                 />
                 <BlueprintCard
                   badges={[
@@ -208,7 +208,7 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
                   title="Opponent balanced approach in long rallies"
                   description="Your opponent was prone to unforced errors early in the game and after the mid-game interval, which created your scoring streaks."
                   buttonLabel="View Evidence"
-                  onView={() => open({ title: "Medium Rally Blueprint", subtitle: "Attack", timestamps: TS.slice(0,3), sectionLabel: "RALLY BLUEPRINT" })}
+                  onView={() => open({ title: "Medium Rally Blueprint", subtitle: "Attack", description: "Your opponent was prone to unforced errors early in the game and after the mid-game interval, which created your scoring streaks.", timestamps: TS.slice(0,3), sectionLabel: "RALLY BLUEPRINT", badges: [{ text: "Medium Rallies", bg: "#f6fcff", border: "#9dcbe3", color: "#3998c8" }, { text: "Attack", bg: "rgba(235,62,68,0.19)", border: "#f6bdd8", color: "#97071f" }] })}
                 />
                 <BlueprintCard
                   badges={[
@@ -218,7 +218,7 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
                   title="Opponent balanced approach in long rallies"
                   description="Your opponent was prone to unforced errors early in the game and after the mid-game interval, which created your scoring streaks."
                   buttonLabel="View Evidence"
-                  onView={() => open({ title: "Long Rally Blueprint", subtitle: "Defensive", timestamps: TS.slice(0,3), sectionLabel: "RALLY BLUEPRINT" })}
+                  onView={() => open({ title: "Long Rally Blueprint", subtitle: "Defensive", description: "Your opponent was prone to unforced errors early in the game and after the mid-game interval, which created your scoring streaks.", timestamps: TS.slice(0,3), sectionLabel: "RALLY BLUEPRINT", badges: [{ text: "Long Rallies", bg: "#f0ecff", border: "#cec8eb", color: "#5539c8" }, { text: "Defensive", bg: "rgba(166,221,239,0.19)", border: "#dbecfe", color: "#2597cc" }] })}
                 />
               </div>
             </TimelineSection>
@@ -237,7 +237,7 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
                       badge="Clutch tendencies" badgeBg="rgba(117,235,62,0.19)" badgeBorder="#bdf6c0" badgeColor="#359707"
                       title="Rally Extension" description={oppPressure.clutch_tendencies}
                       buttonLabel="View Evidence"
-                      onView={() => open({ title: "Opponent Clutch Tendencies", description: oppPressure.clutch_tendencies, timestamps: [], sectionLabel: "OPPONENT TENDENCIES" })}
+                      onView={() => open({ title: "Opponent Clutch Tendencies", description: oppPressure.clutch_tendencies, timestamps: [], sectionLabel: "OPPONENT TENDENCIES", badge: "Clutch tendencies", badgeBg: "rgba(117,235,62,0.19)", badgeBorder: "#bdf6c0", badgeColor: "#359707" })}
                     />
                   )}
                   {oppPressure.clutch_tendencies && oppPressure.fragile_tendencies && (
@@ -248,7 +248,7 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
                       badge="Fragile tendencies" badgeBg="rgba(255,78,100,0.17)" badgeBorder="#ff4e64" badgeColor="#ff4e64"
                       title="Unforced Errors" description={oppPressure.fragile_tendencies}
                       buttonLabel="View Evidence"
-                      onView={() => open({ title: "Opponent Fragile Tendencies", description: oppPressure.fragile_tendencies, timestamps: [], sectionLabel: "OPPONENT TENDENCIES" })}
+                      onView={() => open({ title: "Opponent Fragile Tendencies", description: oppPressure.fragile_tendencies, timestamps: [], sectionLabel: "OPPONENT TENDENCIES", badge: "Fragile tendencies", badgeBg: "rgba(255,78,100,0.17)", badgeBorder: "#ff4e64", badgeColor: "#ff4e64" })}
                     />
                   )}
                   {oppPressure.fragile_tendencies && oppPressure.championship_performance && (
@@ -259,7 +259,7 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
                       badge="Championship performance" badgeBg="rgba(211,160,255,0.17)" badgeBorder="#ac4eff" badgeColor="#ac4eff"
                       title="Steady Performance" description={oppPressure.championship_performance}
                       buttonLabel="View Evidence"
-                      onView={() => open({ title: "Opponent Championship Performance", description: oppPressure.championship_performance, timestamps: [], sectionLabel: "OPPONENT TENDENCIES" })}
+                      onView={() => open({ title: "Opponent Championship Performance", description: oppPressure.championship_performance, timestamps: [], sectionLabel: "OPPONENT TENDENCIES", badge: "Championship performance", badgeBg: "rgba(211,160,255,0.17)", badgeBorder: "#ac4eff", badgeColor: "#ac4eff" })}
                     />
                   )}
                 </div>
@@ -323,7 +323,7 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
                 title="Opponent balanced approach in long rallies"
                 description="Your opponent was prone to unforced errors early in the game and after the mid-game interval, which created your scoring streaks."
                 buttonLabel="View Evidence"
-                onView={() => open({ title: "Short Rally Blueprint", subtitle: "Balanced", timestamps: TS.slice(0,3), sectionLabel: "RALLY BLUEPRINT" })}
+                onView={() => open({ title: "Short Rally Blueprint", subtitle: "Balanced", description: "Your opponent was prone to unforced errors early in the game and after the mid-game interval, which created your scoring streaks.", timestamps: TS.slice(0,3), sectionLabel: "RALLY BLUEPRINT", badges: [{ text: "Short Rallies", bg: "#fff6fe", border: "#d7b6d4", color: "#97078b" }, { text: "Balanced", bg: "rgba(117,235,62,0.19)", border: "#bdf6c0", color: "#359707" }] })}
               />
               <BlueprintCard
                 badges={[
@@ -333,7 +333,7 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
                 title="Opponent balanced approach in long rallies"
                 description="Your opponent was prone to unforced errors early in the game and after the mid-game interval, which created your scoring streaks."
                 buttonLabel="View Evidence"
-                onView={() => open({ title: "Medium Rally Blueprint", subtitle: "Attack", timestamps: TS.slice(0,3), sectionLabel: "RALLY BLUEPRINT" })}
+                onView={() => open({ title: "Medium Rally Blueprint", subtitle: "Attack", description: "Your opponent was prone to unforced errors early in the game and after the mid-game interval, which created your scoring streaks.", timestamps: TS.slice(0,3), sectionLabel: "RALLY BLUEPRINT", badges: [{ text: "Medium Rallies", bg: "#f6fcff", border: "#9dcbe3", color: "#3998c8" }, { text: "Attack", bg: "rgba(235,62,68,0.19)", border: "#f6bdd8", color: "#97071f" }] })}
               />
               <BlueprintCard
                 badges={[
@@ -343,7 +343,7 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
                 title="Opponent balanced approach in long rallies"
                 description="Your opponent was prone to unforced errors early in the game and after the mid-game interval, which created your scoring streaks."
                 buttonLabel="View Evidence"
-                onView={() => open({ title: "Long Rally Blueprint", subtitle: "Defensive", timestamps: TS.slice(0,3), sectionLabel: "RALLY BLUEPRINT" })}
+                onView={() => open({ title: "Long Rally Blueprint", subtitle: "Defensive", description: "Your opponent was prone to unforced errors early in the game and after the mid-game interval, which created your scoring streaks.", timestamps: TS.slice(0,3), sectionLabel: "RALLY BLUEPRINT", badges: [{ text: "Long Rallies", bg: "#f0ecff", border: "#cec8eb", color: "#5539c8" }, { text: "Defensive", bg: "rgba(166,221,239,0.19)", border: "#dbecfe", color: "#2597cc" }] })}
               />
             </div>
           </TimelineSection>
@@ -359,14 +359,14 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
                 shotName="BH Lift Cross" count="7x"
                 description="our backhand netkeep becomes a weapon in pressure situations, with effectiveness jumping from 62% to 91%. In tight moments like at 14-13, you execute it with precision to control the net; in neutral phases, it is less decisive."
                 buttonLabel="View BH Lift Cross"
-                onView={() => open({ title: "BH Lift Cross", subtitle: "Positive", timestamps: TS, sectionLabel: "OUTCOME PROXIMITY" })}
+                onView={() => open({ title: "BH Lift Cross", subtitle: "Positive", description: "our backhand netkeep becomes a weapon in pressure situations, with effectiveness jumping from 62% to 91%.", timestamps: TS, sectionLabel: "OUTCOME PROXIMITY", count: "7x", badge: "Positive tipping point", badgeBg: "rgba(117,235,62,0.19)", badgeBorder: "#bdf6c0", badgeColor: "#359707" })}
               />
               <TippingPointCard
                 badge={{ text: "Positive tipping point", bg: "rgba(117,235,62,0.19)", border: "#bdf6c0", color: "#359707" }}
                 shotName="FH Lift Cross" count="5x"
                 description="our backhand netkeep becomes a weapon in pressure situations, with effectiveness jumping from 62% to 91%. In tight moments like at 14-13, you execute it with precision to control the net; in neutral phases, it is less decisive."
                 buttonLabel="View FH Lift Cross"
-                onView={() => open({ title: "FH Lift Cross", subtitle: "Positive", timestamps: TS.slice(0,4), sectionLabel: "OUTCOME PROXIMITY" })}
+                onView={() => open({ title: "FH Lift Cross", subtitle: "Positive", description: "our backhand netkeep becomes a weapon in pressure situations, with effectiveness jumping from 62% to 91%.", timestamps: TS.slice(0,4), sectionLabel: "OUTCOME PROXIMITY", count: "5x", badge: "Positive tipping point", badgeBg: "rgba(117,235,62,0.19)", badgeBorder: "#bdf6c0", badgeColor: "#359707" })}
               />
               <div className="h-px w-full bg-[var(--grey-900,#efece6)]" />
               <TippingPointCard
@@ -374,7 +374,7 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
                 shotName="BH Defense Cross" count="6x"
                 description="Your flat game exchanges break down under pressure, dropping from 100% effectiveness to just 45%. While reliable in neutral rallies, this shot became a source of errors in critical moments like at 18-17, likely due to rushed pace."
                 buttonLabel="View BH Defense Cross"
-                onView={() => open({ title: "BH Defense Cross", subtitle: "Negative", timestamps: TS, sectionLabel: "OUTCOME PROXIMITY" })}
+                onView={() => open({ title: "BH Defense Cross", subtitle: "Negative", description: "Your flat game exchanges break down under pressure, dropping from 100% effectiveness to just 45%.", timestamps: TS, sectionLabel: "OUTCOME PROXIMITY", count: "6x", badge: "Negative tipping point", badgeBg: "rgba(255,78,100,0.17)", badgeBorder: "#ff4e64", badgeColor: "#ff4e64" })}
               />
             </div>
           </TimelineSection>
@@ -390,7 +390,7 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
                 shotName="Clear" count="48x"
                 description="After clears, you recover 10.0% faster and are 3.6% less effective."
                 buttonLabel="View Clears"
-                onView={() => open({ title: "Clear Recovery", subtitle: "Faster", timestamps: TS, sectionLabel: "POST SHOT RECOVERY" })}
+                onView={() => open({ title: "Clear Recovery", subtitle: "Faster", description: "After clears, you recover 10.0% faster and are 3.6% less effective.", timestamps: TS, sectionLabel: "POST SHOT RECOVERY", count: "48x", badge: "Faster", badgeBg: "rgba(117,235,62,0.19)", badgeBorder: "#bdf6c0", badgeColor: "#359707" })}
               />
               <div className="h-px w-full bg-[var(--grey-900,#efece6)]" />
               <TippingPointCard
@@ -398,7 +398,7 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
                 shotName="Drop" count="6x"
                 description="After drops, you recover 24.0% slower and are 3.9% less effective."
                 buttonLabel="View Drops"
-                onView={() => open({ title: "Drop Recovery", subtitle: "Slow", timestamps: TS.slice(0,3), sectionLabel: "POST SHOT RECOVERY" })}
+                onView={() => open({ title: "Drop Recovery", subtitle: "Slow", description: "After drops, you recover 24.0% slower and are 3.9% less effective.", timestamps: TS.slice(0,3), sectionLabel: "POST SHOT RECOVERY", count: "6x", badge: "Slow", badgeBg: "rgba(255,78,100,0.17)", badgeBorder: "#ff4e64", badgeColor: "#ff4e64" })}
               />
             </div>
           </TimelineSection>
@@ -414,7 +414,7 @@ export function DecisionAnalysisTab({ analysisView = "your", narrative, onOpenVi
                 shotName="Clear" count="48x"
                 description="After clears, you recover 10.0% faster and are 3.6% less effective."
                 buttonLabel="View Clears"
-                onView={() => open({ title: "Championship Clear", subtitle: "48x", timestamps: TS, sectionLabel: "ADAPTIVE PERFORMANCE" })}
+                onView={() => open({ title: "Championship Clear", subtitle: "48x", description: "After clears, you recover 10.0% faster and are 3.6% less effective.", timestamps: TS, sectionLabel: "ADAPTIVE PERFORMANCE", count: "48x", badge: "Championship performance", badgeBg: "rgba(211,160,255,0.17)", badgeBorder: "#ac4eff", badgeColor: "#ac4eff" })}
               />
               <div className="h-px w-full bg-[var(--grey-900,#efece6)]" />
               <NarrativeText>

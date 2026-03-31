@@ -220,20 +220,11 @@ function CourtLogos() {
   const y = 0.005;    // just above surround
 
   const placements: { pos: [number, number, number]; rotZ: number }[] = [
-    // Left side (3 logos, rotated 90deg so text reads along the sideline)
-    { pos: [-(hw + surround), y, -hl * 0.45], rotZ: Math.PI / 2 },
-    { pos: [-(hw + surround), y, 0], rotZ: Math.PI / 2 },
-    { pos: [-(hw + surround), y, hl * 0.45], rotZ: Math.PI / 2 },
-    // Right side (3 logos)
-    { pos: [(hw + surround), y, -hl * 0.45], rotZ: -Math.PI / 2 },
-    { pos: [(hw + surround), y, 0], rotZ: -Math.PI / 2 },
-    { pos: [(hw + surround), y, hl * 0.45], rotZ: -Math.PI / 2 },
-    // Back baseline (2 logos)
-    { pos: [-hw * 0.3, y, -(hl + surround)], rotZ: 0 },
-    { pos: [hw * 0.3, y, -(hl + surround)], rotZ: 0 },
-    // Front baseline (2 logos)
-    { pos: [-hw * 0.3, y, hl + surround], rotZ: Math.PI },
-    { pos: [hw * 0.3, y, hl + surround], rotZ: Math.PI },
+    // 1 logo per side
+    { pos: [-(hw + surround), y, 0], rotZ: Math.PI / 2 },      // Left
+    { pos: [(hw + surround), y, 0], rotZ: -Math.PI / 2 },       // Right
+    { pos: [0, y, -(hl + surround)], rotZ: 0 },                  // Back
+    { pos: [0, y, hl + surround], rotZ: Math.PI },               // Front
   ];
 
   return (

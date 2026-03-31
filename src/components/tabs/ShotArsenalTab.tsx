@@ -287,7 +287,7 @@ export function ShotArsenalTab({ analysisView = "your" }: { analysisView?: "your
       <StadiumBg />
 
       {/* Headline */}
-      <div style={{ position: "relative", zIndex: 2, padding: "16px 12px 0", maxWidth: "85%" }}>
+      <div style={{ position: "relative", zIndex: 2, padding: "16px 12px 0", maxWidth: "85%", marginBottom: 20 }}>
         <Headline>{headline}</Headline>
       </div>
 
