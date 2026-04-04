@@ -33,6 +33,8 @@ export interface VideoSheetData {
   count?: string;
   /** Sequence steps to display below description */
   steps?: VideoSheetStep[];
+  /** Per-step timestamp ranges — each step maps to a time range in the video for highlighting */
+  stepRanges?: { start: number; end: number }[];
   /** Badge text e.g. "Best receive" */
   badge?: string;
   badgeBg?: string;

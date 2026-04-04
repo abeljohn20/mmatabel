@@ -55,7 +55,7 @@ function ShotComparisonCard({ zoneBadge, title, shotPlayed, shotCount, shotEff, 
   onView?: () => void;
 }) {
   return (
-    <div className="bg-[var(--bg-elv-1,#fafafa)] border border-[#f5f5f5] flex flex-col gap-4 p-2 rounded-lg w-full">
+    <div data-card className="bg-[var(--bg-elv-1,#fafafa)] border border-[#f5f5f5] flex flex-col gap-4 p-2 rounded-lg w-full">
       <div className="flex flex-col gap-3 w-full">
         <div className="flex flex-col gap-2 w-full">
           <Badge {...zoneBadge} />
@@ -105,7 +105,7 @@ function BlueprintCard({ badges, title, description, buttonLabel, onView }: {
   title: string; description: string; buttonLabel: string; onView?: () => void;
 }) {
   return (
-    <div className="bg-[var(--bg-elv-1,#fafafa)] border border-[#f5f5f5] flex flex-col gap-3 p-2 rounded-lg w-full">
+    <div data-card className="bg-[var(--bg-elv-1,#fafafa)] border border-[#f5f5f5] flex flex-col gap-3 p-2 rounded-lg w-full">
       <div className="flex flex-col gap-2 w-full">
         <div className="flex gap-2 items-start">
           {badges.map((b) => <Badge key={b.text} {...b} />)}
@@ -126,7 +126,7 @@ function TippingPointCard({ badge, shotName, count, description, buttonLabel, on
   shotName: string; count: string; description: string; buttonLabel: string; onView?: () => void;
 }) {
   return (
-    <div className="bg-[var(--bg-elv-1,#fafafa)] border border-[#f5f5f5] flex flex-col gap-3 p-2 rounded-lg w-full">
+    <div data-card className="bg-[var(--bg-elv-1,#fafafa)] border border-[#f5f5f5] flex flex-col gap-3 p-2 rounded-lg w-full">
       <div className="flex flex-col gap-2 w-full">
         <Badge {...badge} />
         <div className="flex flex-col gap-1 w-full">
@@ -152,7 +152,7 @@ function OpponentTendencyCard({ badge, badgeBg, badgeBorder, badgeColor, title, 
   title: string; description: string; buttonLabel: string; onView?: () => void;
 }) {
   return (
-    <div className="bg-[var(--bg-elv-1,#fafafa)] border border-[#f5f5f5] flex flex-col gap-3 p-2 rounded-lg w-full">
+    <div data-card className="bg-[var(--bg-elv-1,#fafafa)] border border-[#f5f5f5] flex flex-col gap-3 p-2 rounded-lg w-full">
       <div className="flex flex-col gap-2 w-full">
         <Badge text={badge} bg={badgeBg} border={badgeBorder} color={badgeColor} />
         <div className="flex flex-col gap-1 w-full">

@@ -2,8 +2,17 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import type { VideoSheetData, VideoTimelineRange } from "@/components/VideoSheet";
+import { useSetActiveStep } from "@/lib/ActiveVideoContext";
 
-const SEEK_PADDING = 1; // 1-second padding before evidence frames
+const DEFAULT_SEEK_PADDING = 2; // 2-second padding before evidence frames
+const PATTERN_SEEK_PADDING = 1; // 1-second padding for shot arsenal + winning/losing patterns
+
+function getSeekPadding(sectionLabel?: string): number {
+  if (!sectionLabel) return DEFAULT_SEEK_PADDING;
+  const s = sectionLabel.toUpperCase();
+  if (s.includes("SHOT ARSENAL") || s.includes("WINNING") || s.includes("LOSING")) return PATTERN_SEEK_PADDING;
+  return DEFAULT_SEEK_PADDING;
+}
 
 /* ─── Transport button ─── */
 function TransportButton({ children, onClick, label, size = 44 }: {
@@ -44,13 +53,15 @@ export function DesktopVideoPanel({ data, videoSrc, onIndexChange, externalIndex
   const timestamps = data?.timestamps ?? [];
   const streakRanges = data?.streakRanges;
   const hasStreakRanges = streakRanges && streakRanges.length > 0;
+  const stepRanges = data?.stepRanges;
+  const setActiveStep = useSetActiveStep();
 
   // Reset when data changes
   useEffect(() => {
     setCurrentIndex(0);
     setShowControls(true);
     if (videoRef.current && timestamps.length > 0) {
-      videoRef.current.currentTime = Math.max(0, timestamps[0] - SEEK_PADDING);
+      videoRef.current.currentTime = Math.max(0, timestamps[0] - getSeekPadding(data?.sectionLabel));
     }
   }, [data?.title]);
 
@@ -62,12 +73,42 @@ export function DesktopVideoPanel({ data, videoSrc, onIndexChange, externalIndex
     }
   }, [externalIndex]);
 
-  // Track playback time
+  // Track playback time + active step
   const handleTimeUpdate = useCallback(() => {
     if (!isSeeking && videoRef.current) {
-      setCurrentTime(videoRef.current.currentTime);
+      const t = videoRef.current.currentTime;
+      setCurrentTime(t);
+      // Update active step based on stepRanges
+      // stepRanges may contain nSteps * nInstances entries — use modulo to get step index
+      if (stepRanges && stepRanges.length > 0) {
+        let idx = stepRanges.findIndex((r) => t >= r.start && t < r.end);
+        if (idx === -1) {
+          // Between instances — find which instance we're closest to
+          if (t >= stepRanges[stepRanges.length - 1].end) idx = stepRanges.length - 1;
+          else if (t < stepRanges[0].start) idx = 0;
+          else {
+            // Find the last range that ended before current time
+            for (let j = stepRanges.length - 1; j >= 0; j--) {
+              if (t >= stepRanges[j].start) { idx = j; break; }
+            }
+          }
+        }
+        // Get nSteps from data.steps length, convert flat idx to step index via modulo
+        const nSteps = data?.steps?.length || 1;
+        const stepIdx = idx >= 0 ? idx % nSteps : -1;
+        setActiveStep(stepIdx);
+      }
     }
-  }, [isSeeking]);
+  }, [isSeeking, stepRanges, setActiveStep]);
+
+  // Reset/init active step when data changes — set step 0 if stepRanges exist
+  useEffect(() => {
+    if (stepRanges && stepRanges.length > 0) {
+      setActiveStep(0);
+    } else {
+      setActiveStep(-1);
+    }
+  }, [data?.title, stepRanges, setActiveStep]);
 
   // Auto-hide controls when playing
   const startHideTimer = useCallback(() => {
@@ -94,7 +135,7 @@ export function DesktopVideoPanel({ data, videoSrc, onIndexChange, externalIndex
   // Seek helpers with 1s padding
   const seekToIndex = useCallback((index: number) => {
     if (videoRef.current && timestamps[index] != null) {
-      videoRef.current.currentTime = Math.max(0, timestamps[index] - SEEK_PADDING);
+      videoRef.current.currentTime = Math.max(0, timestamps[index] - getSeekPadding(data?.sectionLabel));
     }
   }, [timestamps]);
 
@@ -164,8 +205,50 @@ export function DesktopVideoPanel({ data, videoSrc, onIndexChange, externalIndex
     };
   }, [isSeeking, handleDragMove, handleDragEnd]);
 
+  // Keyboard shortcuts — arrow keys to seek, space to play/pause
+  const lastArrowPress = useRef<{ key: string; time: number } | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!videoRef.current) return;
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+        e.preventDefault();
+        const now = Date.now();
+        const last = lastArrowPress.current;
+        const isDouble = last && last.key === e.key && now - last.time < 300;
+        const skip = isDouble ? 10 : 5;
+        const dir = e.key === "ArrowRight" ? 1 : -1;
+
+        videoRef.current.currentTime = Math.max(0, Math.min(
+          videoRef.current.duration || 2377,
+          videoRef.current.currentTime + dir * skip
+        ));
+        setCurrentTime(videoRef.current.currentTime);
+        setShowControls(true);
+        if (isPlaying) startHideTimer();
+
+        lastArrowPress.current = { key: e.key, time: now };
+      } else if (e.key === " ") {
+        e.preventDefault();
+        handlePlayPause();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isPlaying, startHideTimer, handlePlayPause]);
+
   const duration = videoRef.current?.duration || 2377;
   const progressPct = (currentTime / duration) * 100;
+
+  const formatTime = (secs: number) => {
+    const m = Math.floor(secs / 60);
+    const s = Math.floor(secs % 60);
+    return `${m}:${s.toString().padStart(2, "0")}`;
+  };
 
   return (
     <div style={{
@@ -223,11 +306,15 @@ export function DesktopVideoPanel({ data, videoSrc, onIndexChange, externalIndex
           </TransportButton>
         </div>
 
-        {/* Timeline bar with draggable seek handle */}
+        {/* Timeline bar with draggable seek handle + duration */}
+        <div style={{
+          position: "absolute", bottom: 12, left: 20, right: 20,
+          display: "flex", alignItems: "center", gap: 10,
+        }}>
         <div
           ref={timelineRef}
           style={{
-            position: "absolute", bottom: 12, left: 20, right: 20,
+            flex: 1,
             height: 20, display: "flex", alignItems: "center",
             cursor: "pointer", touchAction: "none",
           }}
@@ -271,6 +358,15 @@ export function DesktopVideoPanel({ data, videoSrc, onIndexChange, externalIndex
               pointerEvents: "none",
             }} />
           </div>
+        </div>
+        {/* Duration text */}
+        <span style={{
+          fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.7)",
+          whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums",
+          flexShrink: 0,
+        }}>
+          {formatTime(currentTime)} / {formatTime(duration)}
+        </span>
         </div>
 
         {/* Counter */}

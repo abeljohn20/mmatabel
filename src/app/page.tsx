@@ -13,6 +13,7 @@ import { HeadToHeadTab } from "@/components/tabs/HeadToHeadTab";
 
 import { VideoSheet } from "@/components/VideoSheet";
 import type { VideoSheetData } from "@/components/VideoSheet";
+import { ActiveVideoProvider } from "@/lib/ActiveVideoContext";
 import { DesktopVideoPanel } from "@/components/DesktopVideoPanel";
 
 const TABS: { id: TabId; label: string }[] = [
@@ -246,14 +247,19 @@ export default function Home() {
         ) : (
           <>
             {activeTab === "arsenal" && <ShotArsenalTab analysisView={analysisView} onOpenVideo={isDesktop ? updateDesktopVideo : undefined} externalShotIndex={isDesktop ? videoShotIndex : undefined} onShotNavigation={isDesktop ? setVideoShotIndex : undefined} />}
-            {activeTab !== "arsenal" && (
-              <SectionNavigator sections={currentSections} contentRef={contentRef}>
-                {activeTab === "opening" && <OpeningPhaseTab analysisView={analysisView} onOpenVideo={openVideoSheet} />}
-                {activeTab === "patterns" && <PatternsTab analysisView={analysisView} onOpenVideo={openVideoSheet} narrative={narrative} />}
-                {activeTab === "decisions" && <DecisionAnalysisTab analysisView={analysisView} narrative={narrative} onOpenVideo={openVideoSheet} />}
-                {activeTab === "h2h" && <HeadToHeadTab report={report} narrative={narrative} onOpenVideo={openVideoSheet} />}
-              </SectionNavigator>
-            )}
+            {activeTab !== "arsenal" && (() => {
+              const tabContent = (
+                <SectionNavigator sections={currentSections} contentRef={contentRef}>
+                  {activeTab === "opening" && <OpeningPhaseTab analysisView={analysisView} onOpenVideo={openVideoSheet} />}
+                  {activeTab === "patterns" && <PatternsTab analysisView={analysisView} onOpenVideo={openVideoSheet} narrative={narrative} />}
+                  {activeTab === "decisions" && <DecisionAnalysisTab analysisView={analysisView} narrative={narrative} onOpenVideo={openVideoSheet} />}
+                  {activeTab === "h2h" && <HeadToHeadTab report={report} narrative={narrative} onOpenVideo={openVideoSheet} />}
+                </SectionNavigator>
+              );
+              // On desktop, the outer ActiveVideoProvider covers both panels.
+              // On mobile, wrap with its own provider.
+              return isDesktop ? tabContent : <ActiveVideoProvider>{tabContent}</ActiveVideoProvider>;
+            })()}
           </>
         )}
       </div>
@@ -293,6 +299,7 @@ export default function Home() {
   /* ─── DESKTOP LAYOUT ─── */
   if (isDesktop) {
     return (
+      <ActiveVideoProvider>
       <div style={{ display: "flex", width: "100%", height: "100dvh", overflow: "hidden", background: "#f5f5f5" }}>
         {/* Left: persistent video panel — always visible */}
         <div style={{ flex: "1 1 60%", minWidth: 0 }}>
@@ -314,9 +321,9 @@ export default function Home() {
           position: "relative",
         }}>
           {mobileShell}
-          {videoSheetBlock}
         </div>
       </div>
+      </ActiveVideoProvider>
     );
   }
 

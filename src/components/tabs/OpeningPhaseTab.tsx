@@ -116,7 +116,7 @@ function ReceiveCard({ badge, badgeStyle, shotName, effLabel, effValue, descript
   const effColor = effValue >= 65 ? "#2dbd1a" : effValue >= 45 ? "#f59e0b" : "#ff4e64";
 
   return (
-    <div className="bg-[var(--bg-elv-1,#fafafa)] border border-[var(--stroke-st-elv1,#f5f5f5)] flex flex-col gap-3 p-2 rounded-lg w-full">
+    <div data-card className="bg-[var(--bg-elv-1,#fafafa)] border border-[var(--stroke-st-elv1,#f5f5f5)] flex flex-col gap-3 p-2 rounded-lg w-full">
       <div className="flex flex-col gap-2 w-full">
         <div className="flex items-center justify-center px-2 py-0.5 rounded w-fit border" style={{ backgroundColor: badgeBg, borderColor: badgeBorder }}>
           <span className="text-xs font-medium" style={{ color: badgeColor, fontFamily: "var(--font-dm-sans)" }}>{badge}</span>
@@ -143,7 +143,7 @@ function ReceivePredictabilityRow({ label, effLabel, effValue, pct, count, butto
   const barWidth = `${Math.min(100, pct)}%`;
 
   return (
-    <div className="bg-[var(--bg-elv-1,#fafafa)] flex flex-col gap-3 px-3 py-2 rounded-lg overflow-hidden w-full">
+    <div data-card className="bg-[var(--bg-elv-1,#fafafa)] flex flex-col gap-3 px-3 py-2 rounded-lg overflow-hidden w-full">
       <div className="flex flex-col gap-2 w-full">
         <div className="flex flex-wrap items-center justify-between w-full gap-y-1">
           <span className="text-sm font-medium text-[#383838]" style={{ fontFamily: "var(--font-dm-sans)" }}>{label}</span>
@@ -186,7 +186,7 @@ function SequenceCard({ title, effLabel, effColor, count, description, steps, bu
   buttonLabel: string; onView?: () => void;
 }) {
   return (
-    <div className="bg-[var(--bg-elv-1,#fafafa)] border border-[var(--stroke-st-elv1,#f5f5f5)] flex flex-col gap-3 p-2 rounded-lg w-full">
+    <div data-card className="bg-[var(--bg-elv-1,#fafafa)] border border-[var(--stroke-st-elv1,#f5f5f5)] flex flex-col gap-3 p-2 rounded-lg w-full">
       <div className="flex flex-col gap-2 w-full">
         <div className="flex flex-col gap-1 w-full">
           <div className="flex items-center justify-between w-full">

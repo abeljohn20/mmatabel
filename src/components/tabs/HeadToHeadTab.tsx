@@ -59,17 +59,19 @@ interface StreakRun {
 function StreakBar({ runs, totalRallies, onClickRun }: {
   runs: StreakRun[]; totalRallies: number; onClickRun?: (run: StreakRun) => void;
 }) {
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const sorted = [...runs].sort((a, b) => a.start_rally - b.start_rally);
-  const segments: { type: "gap" | "player" | "opponent"; flexBasis: number; run?: StreakRun }[] = [];
+  const segments: { type: "gap" | "player" | "opponent"; flexBasis: number; run?: StreakRun; runIdx: number }[] = [];
   let cursor = 0;
+  let runCounter = 0;
   for (const run of sorted) {
     const gap = run.start_rally - cursor;
-    if (gap > 0) segments.push({ type: "gap", flexBasis: gap });
-    segments.push({ type: run.type, flexBasis: Math.max(run.length, 3), run });
+    if (gap > 0) segments.push({ type: "gap", flexBasis: gap, runIdx: -1 });
+    segments.push({ type: run.type, flexBasis: Math.max(run.length, 3), run, runIdx: runCounter++ });
     cursor = run.start_rally + run.length;
   }
   const trailing = totalRallies - cursor;
-  if (trailing > 0) segments.push({ type: "gap", flexBasis: trailing });
+  if (trailing > 0) segments.push({ type: "gap", flexBasis: trailing, runIdx: -1 });
 
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -88,10 +90,20 @@ function StreakBar({ runs, totalRallies, onClickRun }: {
           {segments.map((seg, i) => {
             if (seg.type === "gap") return <div key={i} className="bg-[#e8e8e8]" style={{ flex: seg.flexBasis }} />;
             const isPlayer = seg.type === "player";
+            const isSelected = seg.runIdx === selectedIdx;
             return (
-              <button key={i} type="button" onClick={() => onClickRun?.(seg.run!)}
-                className={`${isPlayer ? "bg-[#3e95f3]" : "bg-[#f5364d]"} flex items-center justify-center cursor-pointer active:opacity-80`}
-                style={{ flex: seg.flexBasis, border: "none", borderRadius: 6, height: 48 }}>
+              <button key={i} type="button" onClick={() => { setSelectedIdx(seg.runIdx); onClickRun?.(seg.run!); }}
+                className="flex items-center justify-center cursor-pointer"
+                style={{
+                  flex: seg.flexBasis, border: "none", borderRadius: 6, height: 48,
+                  backgroundColor: isPlayer ? "#3e95f3" : "#f5364d",
+                  opacity: selectedIdx != null && !isSelected ? 0.5 : 1,
+                  boxShadow: isSelected ? `0 0 0 2px white, 0 0 12px ${isPlayer ? "rgba(62,149,243,0.5)" : "rgba(245,54,77,0.5)"}` : "none",
+                  transform: isSelected ? "scale(1.04)" : "scale(1)",
+                  transition: "all 0.2s ease",
+                  zIndex: isSelected ? 2 : 1,
+                  position: "relative",
+                }}>
                 <PlayIcon />
               </button>
             );

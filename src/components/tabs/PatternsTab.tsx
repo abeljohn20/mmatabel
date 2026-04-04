@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ViewButton } from "@/components/ViewButton";
 import { NarrativeText, Headline } from "@/components/Narrative";
 import type { VideoSheetData } from "@/components/VideoSheet";
+import { useActiveCardId, useActiveStep } from "@/lib/ActiveVideoContext";
 
 /* ─── Timeline Section Wrapper ─── */
 function TimelineSection({ color, icon, label, children, isLast = false }: {
@@ -126,7 +127,7 @@ function ShotTile({ name, effLabel, count, buttonLabel, onView }: {
 }) {
   const effColor = effLabel ? "#ff4e64" : "#868686";
   return (
-    <div className="bg-[var(--bg-elv-2,#f6f6f6)] border border-[#eee] flex flex-col gap-2 p-2 rounded-lg flex-1 min-w-[140px]">
+    <div data-card className="bg-[var(--bg-elv-2,#f6f6f6)] border border-[#eee] flex flex-col gap-2 p-2 rounded-lg flex-1 min-w-[140px]">
       <div className="flex flex-col gap-1">
         <span className="text-xs font-semibold text-[var(--text-heading,#161616)]" style={{ fontFamily: "var(--font-dm-sans)" }}>{name}</span>
         <div className="flex gap-2 items-center">
@@ -151,7 +152,7 @@ function PredictablePatternCard({ effLabel, effColor, oppAction, yourAction, cou
   const progressPct = denominator > 0 ? (numerator / denominator) * 100 : 0;
 
   return (
-    <div style={{
+    <div data-card style={{
       background: "var(--bg-elv-1, #fafafa)",
       border: "1px solid var(--stroke-st-elv1, #f5f5f5)",
       borderRadius: 12,
@@ -200,11 +201,15 @@ function PredictablePatternCard({ effLabel, effColor, oppAction, yourAction, cou
 }
 
 /* ─── Pattern Sequence Card ─── */
-function PatternSequenceCard({ title, count, description, steps, buttonLabel, onView }: {
-  title: string; count: string; description: string; steps: { who: string; action: string }[]; buttonLabel: string; onView?: () => void;
+function PatternSequenceCard({ title, count, description, steps, buttonLabel, onView, cardId }: {
+  title: string; count: string; description: string; steps: { who: string; action: string }[]; buttonLabel: string; onView?: () => void; cardId?: string;
 }) {
+  const activeCardId = useActiveCardId();
+  const activeStepIdx = useActiveStep();
+  const isThisCardActive = !!(cardId && activeCardId && cardId === activeCardId);
+
   return (
-    <div className="bg-[var(--bg-elv-1,#fafafa)] border border-[var(--stroke-st-elv1,#f5f5f5)] flex flex-col gap-3 p-2 rounded-lg w-full">
+    <div data-card className="bg-[var(--bg-elv-1,#fafafa)] border border-[var(--stroke-st-elv1,#f5f5f5)] flex flex-col gap-3 p-2 rounded-lg w-full">
       <div className="flex flex-col gap-2 w-full">
         <div className="flex items-center justify-between w-full">
           <span className="text-sm font-semibold text-[var(--text-heading,#161616)] tracking-[-0.5px]" style={{ fontFamily: "var(--font-dm-sans)" }}>{title}</span>
@@ -215,18 +220,36 @@ function PatternSequenceCard({ title, count, description, steps, buttonLabel, on
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1 w-full">
         {steps.map((step, i) => {
           const isYou = step.who === "You";
+          const isStepActive = isThisCardActive && activeStepIdx === i;
           return (
-            <div key={i} className="flex items-center gap-2">
+            <div key={i} className="flex items-center gap-2" style={{
+              borderRadius: 8,
+              padding: isStepActive ? "3px 6px" : undefined,
+              background: isStepActive ? (isYou ? "rgba(97,65,239,0.18)" : "rgba(245,54,77,0.15)") : undefined,
+              boxShadow: isStepActive ? `0 0 0 2px ${isYou ? "#6141ef" : "#f5364d"}, 0 0 8px ${isYou ? "rgba(97,65,239,0.3)" : "rgba(245,54,77,0.3)"}` : undefined,
+              transition: "all 0.25s ease",
+            }}>
               {i > 0 && <span className="text-xs font-medium text-[#383838]">→</span>}
-              <div className="flex items-center justify-center px-2 rounded" style={{ backgroundColor: isYou ? "#dee5ff" : "#fcd4d9" }}>
-                <span className="text-xs font-normal leading-[1.6]" style={{ color: isYou ? "#6141ef" : "#a22618", fontFamily: "var(--font-dm-sans)" }}>{step.who}</span>
+              <div className="flex items-center justify-center px-2 rounded" style={{
+                backgroundColor: isStepActive ? (isYou ? "#c8bcff" : "#fba3ae") : (isYou ? "#dee5ff" : "#fcd4d9"),
+                transform: isStepActive ? "scale(1.12)" : undefined,
+                transition: "all 0.25s ease",
+              }}>
+                <span className="text-xs leading-[1.6]" style={{
+                  color: isYou ? "#6141ef" : "#a22618",
+                  fontFamily: "var(--font-dm-sans)",
+                  fontWeight: isStepActive ? 600 : 400,
+                }}>{step.who}</span>
               </div>
-              <span className="text-xs font-medium text-[#383838]" style={{ fontFamily: "var(--font-dm-sans)" }}>{step.action}</span>
+              <span className="text-xs text-[#383838]" style={{
+                fontFamily: "var(--font-dm-sans)",
+                fontWeight: isStepActive ? 700 : 500,
+              }}>{step.action}</span>
             </div>
           );
         })}
       </div>
-      <ViewButton label={buttonLabel} onClick={onView} />
+      <ViewButton label={buttonLabel} onClick={onView} cardId={cardId} />
     </div>
   );
 }
@@ -240,7 +263,7 @@ function OpponentPressureCard({
   title: string; description: string; buttonLabel: string; onClickView?: () => void;
 }) {
   return (
-    <div className="bg-[var(--bg-elv-1,#fafafa)] border border-[var(--stroke-st-elv1,#f5f5f5)] flex flex-col gap-3 p-2 rounded-lg w-full">
+    <div data-card className="bg-[var(--bg-elv-1,#fafafa)] border border-[var(--stroke-st-elv1,#f5f5f5)] flex flex-col gap-3 p-2 rounded-lg w-full">
       <div className="flex flex-col gap-2 w-full">
         <div className="flex items-center justify-center px-2 py-0.5 rounded w-fit border"
           style={{ backgroundColor: badgeBg, borderColor: badgeBorder }}>
@@ -347,7 +370,7 @@ export function PatternsTab({ analysisView = "your", onOpenVideo, narrative }: P
                 {tc.groups.map((g: any, gi: number) => (
                   <div key={gi}>
                     {gi > 0 && <div className="h-px w-full bg-[var(--grey-900,#efece6)] mb-3" />}
-                    <div className="bg-[var(--bg-elv-1,#fafafa)] border border-[var(--stroke-st-elv1,#f5f5f5)] flex flex-col gap-3 p-2 rounded-lg w-full">
+                    <div data-card className="bg-[var(--bg-elv-1,#fafafa)] border border-[var(--stroke-st-elv1,#f5f5f5)] flex flex-col gap-3 p-2 rounded-lg w-full">
                       <span className="text-sm font-semibold text-[var(--text-heading,#161616)] tracking-[-0.5px]" style={{ fontFamily: "var(--font-dm-sans)" }}>{g.title}</span>
                       <div className="flex flex-wrap gap-3 w-full">
                         {g.shots.map((s: any, si: number) => (
@@ -418,14 +441,27 @@ export function PatternsTab({ analysisView = "your", onOpenVideo, narrative }: P
                   ? "Winning sequence pattern."
                   : activeData.winning_patterns_insight}
               </NarrativeText>
-              {winPat.map((seq: any, i: number) => (
-                <PatternSequenceCard key={i}
-                  title={seq.title?.startsWith("[narrative") ? `Winning sequence (${seq.count})` : seq.title}
-                  count={seq.count}
-                  description={seq.description?.startsWith("[narrative") ? "Winning pattern sequence." : seq.description}
-                  steps={seq.steps} buttonLabel={seq.button_label}
-                  onView={() => open({ title: seq.title?.startsWith("[narrative") ? `Winning sequence` : seq.title, subtitle: seq.count, description: seq.description?.startsWith("[narrative") ? "Winning pattern sequence." : seq.description, timestamps: seq.timestamps_seconds || [], sectionLabel: "WINNING PATTERNS", count: seq.count, steps: seq.steps })} />
-              ))}
+              {winPat.map((seq: any, i: number) => {
+                const ts = seq.timestamps_seconds || [];
+                const nSteps = (seq.steps || []).length;
+                const stepDuration = 1.5; // ~1.5 seconds per step
+                // Build stepRanges for EVERY instance — each timestamp starts a full step sequence
+                const stepRanges = nSteps > 0 ? ts.flatMap((t: number) =>
+                  Array.from({ length: nSteps }, (_, si) => ({
+                    start: t + si * stepDuration,
+                    end: t + (si + 1) * stepDuration,
+                  }))
+                ) : undefined;
+                const cardId = `win-${i}`;
+                return (
+                  <PatternSequenceCard key={i}
+                    title={seq.title?.startsWith("[narrative") ? `Winning sequence (${seq.count})` : seq.title}
+                    count={seq.count}
+                    description={seq.description?.startsWith("[narrative") ? "Winning pattern sequence." : seq.description}
+                    steps={seq.steps} buttonLabel={seq.button_label} cardId={cardId}
+                    onView={() => open({ title: seq.title?.startsWith("[narrative") ? `Winning sequence` : seq.title, subtitle: seq.count, description: seq.description?.startsWith("[narrative") ? "Winning pattern sequence." : seq.description, timestamps: ts, sectionLabel: "WINNING PATTERNS", count: seq.count, steps: seq.steps, stepRanges })} />
+                );
+              })}
             </TimelineSection>
           ) : !hasPatterns ? (
             <TimelineSection color="green" icon="/icons/timeline-green.svg" label="PATTERNS" isLast>
@@ -444,14 +480,26 @@ export function PatternsTab({ analysisView = "your", onOpenVideo, narrative }: P
                   ? "Losing sequence pattern."
                   : activeData.losing_patterns_insight}
               </NarrativeText>
-              {losePat.map((seq: any, i: number) => (
-                <PatternSequenceCard key={i}
-                  title={seq.title?.startsWith("[narrative") ? `Losing sequence (${seq.count})` : seq.title}
-                  count={seq.count}
-                  description={seq.description?.startsWith("[narrative") ? "Losing pattern sequence." : seq.description}
-                  steps={seq.steps} buttonLabel={seq.button_label}
-                  onView={() => open({ title: seq.title?.startsWith("[narrative") ? `Losing sequence` : seq.title, subtitle: seq.count, description: seq.description?.startsWith("[narrative") ? "Losing pattern sequence." : seq.description, timestamps: seq.timestamps_seconds || [], sectionLabel: "LOSING PATTERNS", count: seq.count, steps: seq.steps })} />
-              ))}
+              {losePat.map((seq: any, i: number) => {
+                const ts = seq.timestamps_seconds || [];
+                const nSteps = (seq.steps || []).length;
+                const stepDuration = 1.5;
+                const stepRanges = nSteps > 0 ? ts.flatMap((t: number) =>
+                  Array.from({ length: nSteps }, (_, si) => ({
+                    start: t + si * stepDuration,
+                    end: t + (si + 1) * stepDuration,
+                  }))
+                ) : undefined;
+                const cardId = `lose-${i}`;
+                return (
+                  <PatternSequenceCard key={i}
+                    title={seq.title?.startsWith("[narrative") ? `Losing sequence (${seq.count})` : seq.title}
+                    count={seq.count}
+                    description={seq.description?.startsWith("[narrative") ? "Losing pattern sequence." : seq.description}
+                    steps={seq.steps} buttonLabel={seq.button_label} cardId={cardId}
+                    onView={() => open({ title: seq.title?.startsWith("[narrative") ? `Losing sequence` : seq.title, subtitle: seq.count, description: seq.description?.startsWith("[narrative") ? "Losing pattern sequence." : seq.description, timestamps: ts, sectionLabel: "LOSING PATTERNS", count: seq.count, steps: seq.steps, stepRanges })} />
+                );
+              })}
             </TimelineSection>
           )}
 
