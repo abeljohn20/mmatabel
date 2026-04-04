@@ -279,6 +279,7 @@ export default function Home() {
       sectionLabel={videoSheet?.sectionLabel}
       count={videoSheet?.count}
       steps={videoSheet?.steps}
+      stepRanges={videoSheet?.stepRanges}
       badge={videoSheet?.badge}
       badgeBg={videoSheet?.badgeBg}
       badgeBorder={videoSheet?.badgeBorder}

@@ -62,6 +62,21 @@ interface VideoSheetProps extends VideoSheetData {
   hideVideo?: boolean;
 }
 
+/* ─── Helpers ─── */
+
+function formatTime(secs: number) {
+  const m = Math.floor(secs / 60);
+  const s = Math.floor(secs % 60);
+  return `${m}:${s.toString().padStart(2, "0")}`;
+}
+
+function getSeekPadding(sectionLabel?: string): number {
+  if (!sectionLabel) return 2;
+  const s = sectionLabel.toUpperCase();
+  if (s.includes("SHOT ARSENAL") || s.includes("WINNING") || s.includes("LOSING")) return 1;
+  return 2;
+}
+
 /* ─── Transport button ─── */
 
 function TransportButton({
@@ -126,6 +141,7 @@ export function VideoSheet({
   shotEffColor,
   diffLabel,
   hideVideo,
+  stepRanges: data_stepRanges,
 }: VideoSheetProps) {
   const [visible, setVisible] = useState(false);
   const [rendered, setRendered] = useState(false);
@@ -135,6 +151,7 @@ export function VideoSheet({
   const [showControls, setShowControls] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
   const [isSeeking, setIsSeeking] = useState(false);
+  const [activeStepIdx, setActiveStepIdx] = useState(-1);
   const controlsTimer = useRef<NodeJS.Timeout | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
@@ -171,6 +188,8 @@ export function VideoSheet({
       } else {
         setSelectedRunIdx(0);
       }
+      // Init step highlighting
+      setActiveStepIdx(data_stepRanges && data_stepRanges.length > 0 ? 0 : -1);
     }
   }, [isOpen, title, sortedRuns]);
 
@@ -178,7 +197,7 @@ export function VideoSheet({
     (index: number) => {
       if (videoRef.current && timestamps[index] != null) {
         // 1-second padding before the instance
-        videoRef.current.currentTime = Math.max(0, timestamps[index] - 1);
+        videoRef.current.currentTime = Math.max(0, timestamps[index] - seekPadding);
       }
     },
     [timestamps]
@@ -192,7 +211,7 @@ export function VideoSheet({
         const run = sortedRuns[next];
         if (run && videoRef.current) {
           const ts = run.start_ts ?? run.end_ts;
-          if (ts != null) videoRef.current.currentTime = Math.max(0, ts - 1);
+          if (ts != null) videoRef.current.currentTime = Math.max(0, ts - seekPadding);
         }
         return next;
       });
@@ -214,7 +233,7 @@ export function VideoSheet({
         const run = sortedRuns[next];
         if (run && videoRef.current) {
           const ts = run.start_ts ?? run.end_ts;
-          if (ts != null) videoRef.current.currentTime = Math.max(0, ts - 1);
+          if (ts != null) videoRef.current.currentTime = Math.max(0, ts - seekPadding);
         }
         return next;
       });
@@ -280,6 +299,8 @@ export function VideoSheet({
   }, []);
 
   const hasStreakRanges = streakRanges && streakRanges.length > 0;
+  const data_nSteps = steps?.length || 0;
+  const seekPadding = getSeekPadding(sectionLabel);
   const hasGameRuns = sortedRuns.length > 0;
   // Build timeline ranges from gameRuns for the video progress bar
   const gameRunRanges = useMemo(() => {
@@ -427,7 +448,26 @@ export function VideoSheet({
                 onClick={handleVideoTap}
                 onPlay={() => { setIsPlaying(true); hideControlsAfterDelay(); }}
                 onPause={() => { setIsPlaying(false); setShowControls(true); }}
-                onTimeUpdate={() => { if (!isSeeking && videoRef.current) setCurrentTime(videoRef.current.currentTime); }}
+                onTimeUpdate={() => {
+                  if (!isSeeking && videoRef.current) {
+                    const t = videoRef.current.currentTime;
+                    setCurrentTime(t);
+                    // Track active step from stepRanges
+                    if (data_stepRanges && data_stepRanges.length > 0 && data_nSteps > 0) {
+                      let idx = data_stepRanges.findIndex((r: {start:number;end:number}) => t >= r.start && t < r.end);
+                      if (idx === -1) {
+                        if (t >= data_stepRanges[data_stepRanges.length - 1].end) idx = data_stepRanges.length - 1;
+                        else if (t < data_stepRanges[0].start) idx = 0;
+                        else {
+                          for (let j = data_stepRanges.length - 1; j >= 0; j--) {
+                            if (t >= data_stepRanges[j].start) { idx = j; break; }
+                          }
+                        }
+                      }
+                      setActiveStepIdx(idx >= 0 ? idx % data_nSteps : -1);
+                    }
+                  }
+                }}
                 style={{ width: "100%", height: "100%", objectFit: "cover", cursor: "pointer" }}
                 onLoadedMetadata={() => seekTo(0)}
               />
@@ -663,6 +703,20 @@ export function VideoSheet({
               >
                 {hasGameRuns ? `${selectedRunIdx + 1}/${sortedRuns.length}` : `${currentIndex + 1}/${timestamps.length}`}
               </div>
+
+              {/* Duration display */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 28,
+                  right: 12,
+                  fontSize: 11,
+                  color: "rgba(255,255,255,0.7)",
+                  fontVariantNumeric: "tabular-nums",
+                }}
+              >
+                {formatTime(currentTime)} / {formatTime(videoRef.current?.duration || 0)}
+              </div>
             </div>}
           </div>{/* end fixed top */}
 
@@ -764,17 +818,27 @@ export function VideoSheet({
                     const isYou = step.who === "You";
                     const eff = step.effLabel || step.eff_label || "";
                     const effColor = step.effColor || step.eff_color || "#868686";
+                    const isStepActive = data_stepRanges && data_stepRanges.length > 0 && activeStepIdx === i;
                     return (
-                      <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <div key={i} style={{
+                        display: "flex", alignItems: "center", gap: 8,
+                        borderRadius: 8,
+                        padding: isStepActive ? "3px 6px" : undefined,
+                        background: isStepActive ? (isYou ? "rgba(97,65,239,0.18)" : "rgba(245,54,77,0.15)") : undefined,
+                        boxShadow: isStepActive ? `0 0 0 2px ${isYou ? "#6141ef" : "#f5364d"}, 0 0 8px ${isYou ? "rgba(97,65,239,0.3)" : "rgba(245,54,77,0.3)"}` : undefined,
+                        transition: "all 0.25s ease",
+                      }}>
                         {i > 0 && <span style={{ fontSize: 12, fontWeight: 500, color: "#383838" }}>→</span>}
                         <div style={{
                           display: "flex", alignItems: "center", justifyContent: "center",
                           padding: "0 8px", borderRadius: 4,
-                          backgroundColor: isYou ? "#dee5ff" : "#fcd4d9",
+                          backgroundColor: isStepActive ? (isYou ? "#c8bcff" : "#fba3ae") : (isYou ? "#dee5ff" : "#fcd4d9"),
+                          transform: isStepActive ? "scale(1.12)" : undefined,
+                          transition: "all 0.25s ease",
                         }}>
-                          <span style={{ fontSize: 12, lineHeight: 1.6, color: isYou ? "#6141ef" : "#a22618", fontFamily: "var(--font-dm-sans)" }}>{step.who}</span>
+                          <span style={{ fontSize: 12, lineHeight: 1.6, color: isYou ? "#6141ef" : "#a22618", fontFamily: "var(--font-dm-sans)", fontWeight: isStepActive ? 600 : 400 }}>{step.who}</span>
                         </div>
-                        <span style={{ fontSize: 12, fontWeight: 500, color: "#383838", fontFamily: "var(--font-dm-sans)" }}>{step.action}</span>
+                        <span style={{ fontSize: 12, fontWeight: isStepActive ? 700 : 500, color: "#383838", fontFamily: "var(--font-dm-sans)" }}>{step.action}</span>
                         {eff && eff !== "" && (
                           <span style={{ fontSize: 12, fontWeight: 600, color: effColor, fontFamily: "var(--font-dm-sans)" }}>{eff}</span>
                         )}
